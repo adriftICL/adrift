@@ -1,0 +1,2 @@
+require './jetsamina'
+run Jetsamina
