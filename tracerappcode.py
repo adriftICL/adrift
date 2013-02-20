@@ -1,10 +1,12 @@
 #load('tracerappdata.mat')
 
+# Just a quick benchmark :) takes one argument: the number of years to run the tracer.
+
 import scipy.io
 import numpy
 from scipy import *
 
-data = scipy.io.loadmat('tracerappdata.mat')
+data = scipy.io.loadmat('data/tracerappdata.mat')
 P = data['P'][0]
 coastp = data['coastp']
 popdens = data['popdens']
@@ -14,7 +16,8 @@ lat = data['lat'][0]
 
 #   maxyears=100;
 
-maxyears = 100
+import sys
+maxyears = int(sys.argv[1])
 
 #   %Initializing
 #   v=zeros(1,size(P{1},1));
@@ -26,8 +29,8 @@ v = zeros((1,P[0].shape[0]))
 #   %or choose a particular location (such as Sydney)
 #   v(sub2ind([numel(lon),numel(lat)],154, 45))=1;
 
-#v[0][154 * len(lat) + 45] = 1
-v[0][153 * len(lat) + 44] = 1
+#v[0][153 * len(lat) + 44] = 1
+v[0][44 * len(lon) + 153] = 1
 
 #   %add white to the color bar so that we can see the continents
 #   colormap('default')
@@ -35,16 +38,15 @@ v[0][153 * len(lat) + 44] = 1
 #   map=cat(1,[1 1 1],map);
 #   colormap(map);
 
-for y in xrange(maxyears):
-    for bm in P:
-        v = v * bm
-
-print "\n".join([str(x) for x in v[0]])
-
 #   for y=1:maxyears;
 #     for bm=1:6
 #       % The vector-matrix multiplication
 #       v=v*P{bm};
+
+for y in xrange(maxyears):
+    for bm in P:
+        v = v * bm
+
 #       
 #       % plotting
 #       vplot=v;
@@ -56,11 +58,8 @@ print "\n".join([str(x) for x in v[0]])
 #     end
 #   end
 
-output = scipy.io.loadmat('output_evs.mat')
-expected_v = output["v"][0]
-#test = v - expected_v
-
-#print [v[0][i] - expected_v[i] for i in xrange(len(v[0]))]
-#print test
-#print sum(test[0])
-#print "\n".join([str(x) for x in expected_v])
+if maxyears == 100:
+    output = scipy.io.loadmat('data/output_evs.mat')
+    expected_v = output["v"][0]
+    if sum(v-expected_v) != 0:
+        print "The script is wrong..."
