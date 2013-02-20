@@ -1,2 +1,4 @@
-PyHAML==0.1.9
-web.py==0.37
+PyHAML
+web.py
+numpy
+scipy
