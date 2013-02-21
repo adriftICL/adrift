@@ -1,9 +1,54 @@
+/* TODO: Convert this to SCSS and get some nicer default styles in here */
+
 * {
     padding: 0;
     margin: 0;
 }
 
+h1 {
+    font-size: 72px;
+    color: #679;
+}
+
 #page_container {
     width: 1024px;
     margin: 0 auto;
+}
+
+.header {
+    overflow: auto;
+    width: 100%;
+}
+
+.header .title {
+    float: left;
+}
+
+.header .title .slogan {
+    margin-left: 7em;
+    color: #78A;
+}
+
+.header .logo {
+    float: right;
+}
+
+ul.navigation {
+    text-align: center;
+    padding: 1em;
+}
+
+ul.navigation li {
+    display: inline;
+    margin: 0 0.8em;
+}
+
+ul.navigation li a {
+    color: #89b;
+    padding: 0.8em;
+    text-decoration: none;
+}
+
+ul.navigation li a:hover {
+    background-color: #eee;
 }

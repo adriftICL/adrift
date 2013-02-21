@@ -9,4 +9,13 @@
     %link(href="/static/stylesheet.css", rel="stylesheet", media="screen")
   %body
     #page_container
+      .header
+        .title
+          %h1 Jetsamina
+          .slogan Tracking stuff on the ocean surface
+        %img.logo(src="/static/logo.jpg")
+      %ul.navigation
+        - for text, href in [("Home", "/"), ("What this app does", "/what"), ("How this app works", "/how"), ("Background information", "/background"), ("About the team", "/team")]:
+          %li(class_=("active" if text == "Home" else ""))
+            %a(href=href)= text
       ${self.body()}
