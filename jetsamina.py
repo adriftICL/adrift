@@ -8,6 +8,10 @@ render = render_mako(directories=['views'], preprocessor=haml.preprocessor)
 urls = (
         '/', 'map',
         '/run/\((.*), (.*)\)', 'run',
+        '/what', 'what',
+        '/how', 'how',
+        '/background', 'background',
+        '/team', 'team',
     )
 
 class map:
@@ -62,6 +66,22 @@ def doit(given_lat, given_lon):
 class run:
     def GET(self, lat, lng):
         return doit(float(lat), float(lng))
+
+class what:
+    def GET(self):
+        return render.what()
+
+class how:
+    def GET(self):
+        return render.how()
+
+class background:
+    def GET(self):
+        return render.background()
+
+class team:
+    def GET(self):
+        return render.team()
 
 if __name__ == '__main__':
     app = web.application(urls, globals())
