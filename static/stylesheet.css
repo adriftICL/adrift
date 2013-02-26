@@ -52,3 +52,7 @@ ul.navigation li a {
 ul.navigation li a:hover {
     background-color: #eee;
 }
+
+.loading {
+    margin: 1em;
+}
