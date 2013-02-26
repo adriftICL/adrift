@@ -64,11 +64,13 @@
 
     heatmap.setMap(map);
     $("#center_map_slider").slider({
+      //min: 1,
+      //max: 360,
+      //value: 180-131.664,
       min: -180,
-      max: +180,
-      default: 0,
+      max: 180,
       slide: function(event, ui) {
-        map.setCenter(new google.maps.LatLng(0, 130.644-ui.value));
+        map.panTo(new google.maps.LatLng(0, 131.664-ui.value));
       }
     });
   });
