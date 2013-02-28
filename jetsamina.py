@@ -36,16 +36,17 @@ def doit(given_lat, given_lon):
 
     v = zeros((1,P[0].shape[0]))
 
-    def find(array, value):
+    def find(array, value, mod):
         best = 9999 + abs(value)
         best_i = -1
         for i in xrange(len(array)):
-            if abs(array[i]-value) < best:
-                best = abs(array[i]-value)
-                best_i = i
+            for delta in [-mod,0,+mod]:
+                if abs(array[i]-value+delta) < best:
+                    best = abs(array[i]-value+delta)
+                    best_i = i
         return best_i
         
-    v[0][find(lat, given_lat) * len(lon) + find(lon, given_lon)] = 1
+    v[0][find(lat, given_lat, 0) * len(lon) + find(lon, given_lon, 360)] = 1
 
     for y in xrange(maxyears):
         for bm in P:
@@ -54,8 +55,8 @@ def doit(given_lat, given_lon):
     heatMapData = []
 
     index = 0
-    for j in lon:
-        for i in lat:
+    for i in lat:
+        for j in lon:
             if v[0][index] > 1e-7:
                 heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
             index += 1
