@@ -1,9 +1,10 @@
 !!! 5
 %html
   %head
-    %title Jetsamina 2.0
+    %title Adrift: tracking the global ocean circulation
     %script(src="//code.jquery.com/jquery-latest.js")
     %script(src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js")
+    %script(src="/static/jquery.blockUI.js")
     %script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization")
     %link(href="/static/ui.css", rel="stylesheet", media="screen")
     %link(href="/static/stylesheet.css", rel="stylesheet", media="screen")
@@ -11,9 +12,7 @@
     #page_container
       .header
         .title
-          %h1 Jetsamina
-          .slogan Tracking stuff on the ocean surface
-        %img.logo(src="/static/logo.jpg")
+        %img.logo(src="/static/adrift_logo_1024pwide.jpg")
       %ul.navigation
         - for text, href in [("Home", "/"), ("What this app does", "/what"), ("How this app works", "/how"), ("Background information", "/background"), ("About the team", "/team")]:
           %li(class_=("active" if text == "Home" else ""))
