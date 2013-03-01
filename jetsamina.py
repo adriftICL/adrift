@@ -1,3 +1,5 @@
+#!/home/adrift/adrift/env/bin/python
+
 import web
 
 # TODO: move this and url handling to spiderman class
@@ -85,5 +87,6 @@ class team:
         return render.team()
 
 if __name__ == '__main__':
+    web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
     app = web.application(urls, globals())
     app.run()
