@@ -36,6 +36,7 @@ h1 {
 }
 
 .header .logo {
+    margin-top: 10px;
     float: right;
 }
 
