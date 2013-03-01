@@ -8,13 +8,18 @@ from web.contrib.template import render_mako
 render = render_mako(directories=['views'], preprocessor=haml.preprocessor)
 
 urls = (
-        '/', 'map',
+        '/', 'under_construction',
+        '/map', 'map',
         '/run/\((.*), (.*)\)', 'run',
         '/what', 'what',
         '/how', 'how',
         '/background', 'background',
         '/team', 'team',
     )
+
+class under_construction:
+    def GET(self):
+        return render.under_construction()
 
 class map:
     def GET(self):
@@ -87,6 +92,8 @@ class team:
         return render.team()
 
 if __name__ == '__main__':
-    web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
+    from sys import argv
+    if not argv[0].endswith("dev_server.py"):
+        web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
     app = web.application(urls, globals())
     app.run()
