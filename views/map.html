@@ -48,7 +48,9 @@
       data: heatMapData,
       radius: 1
     });
+    var marker = new google.maps.Marker({map:map});
     google.maps.event.addListener(map, 'click', function(mouseEvent) {
+      marker.setPosition(mouseEvent.latLng);
       $.get("/run/" + mouseEvent.latLng, function(data) {
         heatmap.setMap(null);
         heatMapData = JSON.parse(data);
