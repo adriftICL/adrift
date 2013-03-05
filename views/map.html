@@ -4,7 +4,7 @@
   $(document).ready(function(){
     // $("#map_canvas").css("width", "1024px");
     var width = $("#map_canvas").width();
-    $("#map_canvas").css("height", width / 1.618 + "px");
+    $("#map_canvas").css("height", width / 1.7 + "px");
 
     var mapOptions = {
       zoom: 2,
@@ -14,7 +14,7 @@
       scrollwheel: false,
       disableDoubleClickZoom: true,
       disableDefaultUI: true,
-      center: new google.maps.LatLng(0, 130.644), // Sydney
+      center: new google.maps.LatLng(31, 130.644), // Sydney
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       styles: [
           {
@@ -72,7 +72,7 @@
       min: -180,
       max: 180,
       slide: function(event, ui) {
-        map.panTo(new google.maps.LatLng(0, 131.664-ui.value));
+        map.panTo(new google.maps.LatLng(31, 131.664-ui.value));
       }
     });
   });
