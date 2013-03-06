@@ -10,9 +10,7 @@
     %link(href="/static/stylesheet.css", rel="stylesheet", media="screen")
   %body
     #page_container
-      .header
-        .title
-        %img.logo(src="/static/adrift_logo_1024pwide.jpg")
+      %img.header(src="/static/adrift_logo_1024pwide.jpg")
       %ul.navigation
         - for text, href in [("Home", "/"), ("What this app does", "/what"), ("How this app works", "/how"), ("Background information", "/background"), ("About the team", "/team")]:
           %li(class_=("active" if text == "Home" else ""))

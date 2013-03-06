@@ -9,6 +9,10 @@
     color: #313131;
 }
 
+body {
+    margin: 1em;
+}
+
 h1 {
     font-family: 'Julius Sans One', sans-serif;
     font-size: 72px;
@@ -19,26 +23,6 @@ h1 {
 #page_container {
     width: 1024px;
     margin: 0 auto;
-}
-
-.header {
-    overflow: auto;
-    width: 100%;
-}
-
-.header .title {
-    float: left;
-}
-
-.header .title .slogan {
-    margin-left: 7em;
-    color: #78A;
-    text-shadow: 0 1px #cdf; /* 235; */
-}
-
-.header .logo {
-    margin-top: 10px;
-    float: right;
 }
 
 ul.navigation {
