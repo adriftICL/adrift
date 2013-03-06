@@ -4,7 +4,7 @@
   $(document).ready(function(){
     // $("#map_canvas").css("width", "1024px");
     var width = $("#map_canvas").width();
-    $("#map_canvas").css("height", width / 1.618 + "px");
+    $("#map_canvas").css("height", width / 1.7 + "px");
 
     var mapOptions = {
       zoom: 2,
@@ -14,7 +14,7 @@
       scrollwheel: false,
       disableDoubleClickZoom: true,
       disableDefaultUI: true,
-      center: new google.maps.LatLng(0, 130.644), // Sydney
+      center: new google.maps.LatLng(31, 130.644), // Sydney
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       styles: [
           {
@@ -25,12 +25,12 @@
           },{
             "featureType": "landscape",
             "stylers": [
-              { "visibility": "off" }
+              { "color": "#ffffff" } 
             ]
           },{
             "featureType": "water",
             "stylers": [
-              { "color": "#409CC2" }
+              { "color": "#309CC0" }
             ]
           }
         ]
@@ -39,7 +39,7 @@
         mapOptions);
 
     $(document).ajaxStart(function(){
-      $.blockUI({ message: '<div class="loading"><img src="/static/busy.gif" /> Loading heat map...</div>' });
+      $.blockUI({ message: '<div class="loading"><img src="/static/busy.gif" /> Loading tracer map...</div>' });
     });
     $(document).ajaxStop($.unblockUI);
 
@@ -48,7 +48,9 @@
       data: heatMapData,
       radius: 1
     });
+    var marker = new google.maps.Marker({map:map});
     google.maps.event.addListener(map, 'click', function(mouseEvent) {
+      marker.setPosition(mouseEvent.latLng);
       $.get("/run/" + mouseEvent.latLng, function(data) {
         heatmap.setMap(null);
         heatMapData = JSON.parse(data);
@@ -72,7 +74,7 @@
       min: -180,
       max: 180,
       slide: function(event, ui) {
-        map.panTo(new google.maps.LatLng(0, 131.664-ui.value));
+        map.panTo(new google.maps.LatLng(31, 131.664-ui.value));
       }
     });
   });
