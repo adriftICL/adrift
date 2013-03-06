@@ -1,4 +1,4 @@
-#!/home/adrift/adrift/env/bin/python
+#!env/bin/python
 
 import web
 
