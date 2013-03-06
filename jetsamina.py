@@ -15,11 +15,16 @@ urls = (
         '/how', 'how',
         '/background', 'background',
         '/team', 'team',
+        '/favicon.ico', 'favicon',
     )
 
 class under_construction:
     def GET(self):
         return render.under_construction()
+
+class favicon:
+    def GET(self):
+        raise web.redirect("/static/favicon.ico")
 
 class map:
     def GET(self):
