@@ -3,7 +3,13 @@
 cd $(dirname "${BASH_SOURCE[0]}")
 if ! [ -e env ]
 then
-    virtualenv env || virtualenv2 env
+    if [ -z "$(which python2.7)" ]
+    then
+        python=python
+    else
+        python=python2.7
+    fi
+    virtualenv -p $python env || virtualenv2 -p $python env
 fi
 . env/bin/activate
 pip install numpy
