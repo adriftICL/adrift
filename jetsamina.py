@@ -73,6 +73,8 @@ def doit(given_lat, given_lon):
                 heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
             index += 1
 
+    web.header("Content-Type", "application/x-javascript")
+
     return json.dumps(heatMapData)
 
 
