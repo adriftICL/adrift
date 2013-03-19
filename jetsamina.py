@@ -35,15 +35,15 @@ import scipy.io
 import json
 from scipy import *
 
-def doit(given_lat, given_lon):
-    data = scipy.io.loadmat('data/tracerappdata.mat')
-    P = data['P'][0]
-    coastp = data['coastp']
-    popdens = data['popdens']
-    lon = data['lon'][0]
-    landpoints = data['landpoints']
-    lat = data['lat'][0]
+data = scipy.io.loadmat('data/tracerappdata.mat')
+P = data['P'][0]
+coastp = data['coastp']
+popdens = data['popdens']
+lon = data['lon'][0]
+landpoints = data['landpoints']
+lat = data['lat'][0]
 
+def doit(given_lat, given_lon):
     maxyears = 10
 
     v = zeros((1,P[0].shape[0]))
@@ -60,23 +60,26 @@ def doit(given_lat, given_lon):
         
     v[0][find(lat, given_lat, 0) * len(lon) + find(lon, given_lon, 360)] = 1
 
+    results = []
+
     for y in xrange(maxyears):
         for bm in P:
             v = v * bm
 
-    heatMapData = []
+        heatMapData = []
 
-    index = 0
-    for i in lat:
-        for j in lon:
-            if v[0][index] > 1e-4:
-                heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
-            index += 1
+        index = 0
+        for i in lat:
+            for j in lon:
+                if v[0][index] > 1e-4:
+                    heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
+                index += 1
+
+        results.append(heatMapData)
 
     web.header("Content-Type", "application/x-javascript")
 
-    return json.dumps(heatMapData)
-
+    return json.dumps(results)
 
 class run:
     def GET(self, lat, lng):
