@@ -69,7 +69,7 @@ def doit(given_lat, given_lon):
     index = 0
     for i in lat:
         for j in lon:
-            if v[0][index] > 1e-7:
+            if v[0][index] > 1e-4:
                 heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
             index += 1
 
