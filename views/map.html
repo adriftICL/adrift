@@ -62,6 +62,7 @@
         heatmap = new google.maps.visualization.HeatmapLayer({
             data: heatMapData,
             radius: 10,
+            maxIntensity : 1e-2 * 1000,
         });
         heatmap.setMap(map);
       });
