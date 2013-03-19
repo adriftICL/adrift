@@ -1,6 +1,28 @@
 %%inherit(file="layout.haml")
 
+#control_panel
+  #notifications
+    Welcome, click on a point on the map
+  #controls
+
+
 :javascript
+  function msgbar_error(message){
+    $elm = $("#notifications");
+    $elm.text(message);
+    $elm.css("color","#F66");
+    $elm.animate({color:"red"},1000,"swing",function(){
+      $elm.animate({color:"#F66"}, 1000);
+    });
+  }
+  function msgbar_correct(message){
+    $elm = $("#notifications");
+    $elm.text(message);
+    $elm.css("color","#2F2");
+    $elm.animate({color:"green"},1000,"swing",function(){
+      $elm.animate({color:"#2F2"}, 1000);
+    });
+  }
   $(document).ready(function(){
     // $("#map_canvas").css("width", "1024px");
     var width = $("#map_canvas").width();
@@ -54,15 +76,21 @@
       $.get("/run/" + mouseEvent.latLng, function(data) {
         heatmap.setMap(null);
         heatMapData = JSON.parse(data);
+        if (heatMapData.length == 0) {
+          msgbar_error("You clicked on land");
+        }
+        else {
+          msgbar_correct("Tracer released!");
+        }
         for(var i = 0; i < heatMapData.length; i++) {
           var x = heatMapData[i].location;
           heatMapData[i].location = new google.maps.LatLng(x.lat, x.lng);
-          heatMapData[i].weight *= 1000;
+          heatMapData[i].weight *= 10000;
         }
         heatmap = new google.maps.visualization.HeatmapLayer({
             data: heatMapData,
             radius: 10,
-            maxIntensity : 1e-2 * 1000,
+            maxIntensity : 1e-2 * 10000,
         });
         heatmap.setMap(map);
       });
