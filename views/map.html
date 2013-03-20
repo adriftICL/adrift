@@ -1,26 +1,24 @@
 %%inherit(file="layout.haml")
 
 #control_panel
-  #notifications
-    Welcome, click on a point on the map
   #controls
 
 
 :javascript
-  function msgbar_error(message){
-    $elm = $("#notifications");
-    $elm.text(message);
-    $elm.css("color","#F66");
-    $elm.animate({color:"red"},1000,"swing",function(){
-      $elm.animate({color:"#F66"}, 1000);
-    });
-  }
-  function msgbar_correct(message){
-    $elm = $("#notifications");
-    $elm.text(message);
-    $elm.css("color","#0A0");
-    $elm.animate({color:"green"},1000,"swing",function(){
-      $elm.animate({color:"#0A0"}, 1000);
+  var global_count = 0;
+  function notification(message, css_class) {
+    var local_count = ++global_count;
+    $elm = $("#notification");
+    $elm.slideUp(400, function(){
+      $elm.attr('class','').addClass(css_class);
+      $elm.text(message);
+      $elm.slideDown(400, function(){
+        setTimeout(function(){
+          if (local_count == global_count) {
+            $elm.slideUp();
+          }
+        }, 5000);
+      });
     });
   }
   $(document).ready(function(){
@@ -77,10 +75,9 @@
         heatmap.setMap(null);
         heatMapData = data[data.length-1];
         if (heatMapData.length == 0) {
-          msgbar_error("You clicked on land");
-        }
-        else {
-          msgbar_correct("Tracer released!");
+          notification("You clicked on land.", "error");
+        } else {
+          notification("This is where the tracer could be after 10 years."); // , "success");
         }
         for(var i = 0; i < heatMapData.length; i++) {
           var x = heatMapData[i].location;
@@ -103,4 +100,8 @@
       }
     });
   });
-#map_canvas
+
+#map_notification_container
+  #notification
+    Welcome, click on a point on the map
+  #map_canvas

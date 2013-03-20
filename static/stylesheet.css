@@ -45,11 +45,34 @@ ul.navigation li a:hover {
     background-color: #eee;
 }
 
-#control_panel{
+#map_notification_container {
+    position: relative;
+}
+
+#notification {
+    position: absolute;
+    border-bottom-right-radius
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    left: 50%;
+    margin-left: -256px;
+    z-index: 10;
     padding: 1em;
-    background-color: #F2F2F2;
-    margin-bottom: 1em;
-    color: #679;
+    color: white;
+    text-align: center;
+    background-color: rgba(100, 100, 100, 0.8);
+    width: 512px;
+}
+
+#notification.error {
+    background-color: rgba(255, 100, 100, 0.8);
+}
+#notification.success {
+    background-color: rgba(50, 200, 50, 0.8);
 }
 
 .loading {
