@@ -51,7 +51,8 @@ ul.navigation li a:hover {
 
 #notification {
     position: absolute;
-    border-bottom-right-radius
+    width: 100%;
+    /*
     -webkit-border-bottom-right-radius: 5px;
     -webkit-border-bottom-left-radius: 5px;
     -moz-border-radius-bottomright: 5px;
@@ -60,12 +61,12 @@ ul.navigation li a:hover {
     border-bottom-left-radius: 5px;
     left: 50%;
     margin-left: -256px;
+    */
     z-index: 10;
     padding: 1em;
     color: white;
     text-align: center;
     background-color: rgba(100, 100, 100, 0.8);
-    width: 512px;
 }
 
 #notification.error {
