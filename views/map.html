@@ -83,7 +83,7 @@
             opacity : 1,
         });
         heatmap.setMap(map);
-        old_heatmap.setMap(null);
+        setTimeout(function(){old_heatmap.setMap(null)},0);
         if (j + 1 < heatMapData.length) {
           setTimeout(function() {
             drawHeatMapData(j+1);
