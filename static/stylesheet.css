@@ -27,6 +27,7 @@ h1 {
 
 ul.navigation {
     text-align: center;
+    font-weight: bold;
     padding: 1em;
 }
 
@@ -76,6 +77,23 @@ ul.navigation li a:hover {
     background-color: rgba(50, 200, 50, 0.8);
 }
 
+#bottombar {
+    padding-top: 1em;
+    width: 1024px;
+}
+#bottombarcclogo{
+    width:100px;
+    float: left;
+}
+#bottombardisclaimertext{
+    font-size:9px;
+    width: 500px;
+    float: left;
+}
+#bottombarcolorbar{
+    width: 400px;
+    float:right;
+}
 .loading {
     margin: 1em;
 }
