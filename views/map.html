@@ -69,28 +69,37 @@
       radius: 1
     });
     var marker = new google.maps.Marker({map:map});
-    google.maps.event.addListener(map, 'click', function(mouseEvent) {
-      marker.setPosition(mouseEvent.latLng);
-      $.getJSON("/run/" + mouseEvent.latLng, function(data) {
-        heatmap.setMap(null);
-        heatMapData = data[data.length-1];
-        if (heatMapData.length == 0) {
-          notification("You clicked on land.", "error");
-        } else {
-          notification("This is where the tracer could be after 10 years."); // , "success");
+    function drawHeatMapData(j) {
+        for(var i = 0; i < heatMapData[j].length; i++) {
+          var x = heatMapData[j][i].location;
+          heatMapData[j][i].location = new google.maps.LatLng(x.lat, x.lng);
+          heatMapData[j][i].weight *= 10000;
         }
-        for(var i = 0; i < heatMapData.length; i++) {
-          var x = heatMapData[i].location;
-          heatMapData[i].location = new google.maps.LatLng(x.lat, x.lng);
-          heatMapData[i].weight *= 10000;
-        }
+        old_heatmap = heatmap;
         heatmap = new google.maps.visualization.HeatmapLayer({
-            data: heatMapData,
+            data: heatMapData[j],
             radius: 10,
             maxIntensity : 1e-2 * 10000,
             opacity : 1,
         });
         heatmap.setMap(map);
+        old_heatmap.setMap(null);
+        if (j + 1 < heatMapData.length) {
+          setTimeout(function() {
+            drawHeatMapData(j+1);
+          },1000);
+        }
+    }
+    google.maps.event.addListener(map, 'click', function(mouseEvent) {
+      marker.setPosition(mouseEvent.latLng);
+      $.getJSON("/run/" + mouseEvent.latLng, function(data) {
+        if (data[0].length == 0) {
+          notification("You clicked on land.", "error");
+        } else {
+          notification("This is where the tracer could be after 10 years."); // , "success");
+        }
+        heatMapData = data;
+        drawHeatMapData(0);
       });
     });
 
