@@ -20,11 +20,13 @@
     }(document, 'script', 'facebook-jssdk'));</script>
 
     #page_container
-        %img.header(src="/static/adrift_logo_1024pwide.jpg")
-        <div style="position:absolute;top:142px;left:485px;">
-          %ul.navigation
-            - for text, href in [("Home", "/"), ("What this app does", "/what"), ("How this app works", "/how"), ("Background information", "/background"), ("About the team", "/team")]:
-              %li(class_=("active" if text == "Home" else ""))
-                %a(href=href)= text
+        <div style="position:relative;">
+          %img.header(src="/static/adrift_logo_1024pwide.jpg")
+          <div style="position:absolute;top:126px;left:200px;">
+            %ul.navigation
+              - for text, href in [("Home", "/"), ("What this app does", "/what"), ("How this app works", "/how"), ("Background information", "/background"), ("About the team", "/team")]:
+               %li(class_=("active" if text == "Home" else ""))
+                 %a(href=href)= text
+          </div>
         </div>
       ${self.body()}
