@@ -33,12 +33,14 @@ ul.navigation {
 
 ul.navigation li {
     display: inline;
-    margin: 0 0.8em;
+    margin: 0.2em;
+    padding: 0.3em;
+    background-color: rgba(256, 256, 256, 0.4);
 }
 
 ul.navigation li a {
     color: #043566;
-    padding: 0.8em;
+    padding: 0.3em;
     text-decoration: none;
 }
 
