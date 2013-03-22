@@ -49,12 +49,13 @@ ul.navigation li a:hover {
 }
 
 #map_notification_container {
+    margin-top: 20px;
     position: relative;
 }
 
 #notification {
     position: absolute;
-    width: 100%;
+    width: 500px;
     /*
     -webkit-border-bottom-right-radius: 5px;
     -webkit-border-bottom-left-radius: 5px;
@@ -66,9 +67,11 @@ ul.navigation li a:hover {
     margin-left: -256px;
     */
     z-index: 10;
-    padding: 1em;
+    padding-left: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     color: white;
-    text-align: center;
+    font-weight: bold;
     background-color: rgba(100, 100, 100, 0.8);
 }
 

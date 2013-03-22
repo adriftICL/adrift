@@ -9,17 +9,8 @@
   function notification(message, css_class) {
     var local_count = ++global_count;
     $elm = $("#notification");
-    $elm.slideUp(400, function(){
-      $elm.attr('class','').addClass(css_class);
-      $elm.text(message);
-      $elm.slideDown(400, function(){
-        setTimeout(function(){
-          if (local_count == global_count) {
-            $elm.slideUp();
-          }
-        }, 5000);
-      });
-    });
+    $elm.attr('class','').addClass(css_class);
+    $elm.text(message);
   }
   $(document).ready(function(){
     // $("#map_canvas").css("width", "1024px");
