@@ -11,6 +11,8 @@
     $elm = $("#notification");
     $elm.attr('class','').addClass(css_class);
     $elm.text(message);
+    $elm = $("#likesbar");
+    $elm.attr('class','').addClass(css_class);
   }
   $(document).ready(function(){
     // $("#map_canvas").css("width", "1024px");
@@ -106,6 +108,11 @@
 #map_notification_container
   #notification
     Welcome, click on a point on the map
+  #likesbar
+    <div class="fb-like" data-href="http://www.adrift.org.au" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false" data-font="arial"></div>
+ 
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.adrift.org.au" data-count="none">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
   #map_canvas
 
 #bottombar

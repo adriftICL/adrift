@@ -55,7 +55,9 @@ ul.navigation li a:hover {
 
 #notification {
     position: absolute;
-    width: 500px;
+    width: 384px;
+    height: 23px;
+    left:458px;
     /*
     -webkit-border-bottom-right-radius: 5px;
     -webkit-border-bottom-left-radius: 5px;
@@ -67,19 +69,39 @@ ul.navigation li a:hover {
     margin-left: -256px;
     */
     z-index: 10;
-    padding-left: 1em;
+    padding-right: 1em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     color: white;
     font-weight: bold;
     background-color: rgba(100, 100, 100, 0.8);
+    text-align:right;
+    float:left;
 }
-
 #notification.error {
     background-color: rgba(255, 100, 100, 0.8);
 }
 #notification.success {
     background-color: rgba(50, 200, 50, 0.8);
+}
+#likesbar{
+    position: absolute;
+    width: 150px;
+    height: 23px;
+    left:858px;
+    float:left;
+    z-index: 10;
+    padding-right: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    color: white;
+    font-weight: bold;
+    background-color: rgba(100, 100, 100, 0.8);
+    text-align:right;
+    float:left;
+}
+#likesbar.error {
+    background-color: rgba(255, 100, 100, 0.8);
 }
 
 #bottombar {
