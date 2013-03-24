@@ -1,5 +1,4 @@
-PyHAML
-web.py
+spiderman
 numpy
 scipy
 flup

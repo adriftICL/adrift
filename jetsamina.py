@@ -1,35 +1,6 @@
 #!env/bin/python
 
-import web
-
-# TODO: move this and url handling to spiderman class
-import haml
-from web.contrib.template import render_mako
-render = render_mako(directories=['views'], preprocessor=haml.preprocessor)
-
-urls = (
-        '/', 'under_construction',
-        '/map', 'map',
-        '/run/\((.*), (.*)\)', 'run',
-        '/what', 'what',
-        '/how', 'how',
-        '/background', 'background',
-        '/team', 'team',
-        '/favicon.ico', 'favicon',
-    )
-
-class under_construction:
-    def GET(self):
-        return render.under_construction()
-
-class favicon:
-    def GET(self):
-        raise web.redirect("/static/favicon.ico")
-
-class map:
-    def GET(self):
-        return render.map()
-
+from spiderman import *
 
 import scipy.io
 import json
@@ -43,7 +14,20 @@ lon = data['lon'][0]
 landpoints = data['landpoints']
 lat = data['lat'][0]
 
-def doit(given_lat, given_lon):
+@get('/')
+def under_construction(): haml()
+
+@get('/map')
+def map(): haml()
+
+@get('/favicon.ico')
+def favicon(): raise web.redirect("/static/favicon.ico")
+
+@get('/run/\((.*), (.*)\)')
+def run_tracer(given_lat, given_lng):
+    given_lat = float(given_lat)
+    given_lng = float(given_lng)
+
     maxyears = 10
 
     v = zeros((1,P[0].shape[0]))
@@ -57,8 +41,8 @@ def doit(given_lat, given_lon):
                     best = abs(array[i]-value+delta)
                     best_i = i
         return best_i
-        
-    v[0][find(lat, given_lat, 0) * len(lon) + find(lon, given_lon, 360)] = 1
+
+    v[0][find(lat, given_lat, 0) * len(lon) + find(lon, given_lng, 360)] = 1
 
     results = []
 
@@ -78,29 +62,16 @@ def doit(given_lat, given_lon):
 
     return json.dumps(results)
 
-class run:
-    def GET(self, lat, lng):
-        return doit(float(lat), float(lng))
+@get('/what')
+def what(): pass
 
-class what:
-    def GET(self):
-        return render.what()
+@get('/how')
+def how(): pass
 
-class how:
-    def GET(self):
-        return render.how()
+@get('/background')
+def background(): pass
 
-class background:
-    def GET(self):
-        return render.background()
+@get('/team')
+def team(): pass
 
-class team:
-    def GET(self):
-        return render.team()
-
-if __name__ == '__main__':
-    from sys import argv
-    if not argv[0].endswith("dev_server.py"):
-        web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
-    app = web.application(urls, globals())
-    app.run()
+run()
