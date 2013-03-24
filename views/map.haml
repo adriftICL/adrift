@@ -3,6 +3,9 @@
 #control_panel
   #controls
 
+- if lat:
+  :javascript
+    window.initial_tracer = new google.maps.LatLng(${lat}, ${lng});
 
 :javascript
   var global_count = 0;
@@ -62,41 +65,50 @@
       radius: 1
     });
     var marker = new google.maps.Marker({map:map});
-    function drawHeatMapData(j) {
-        for(var i = 0; i < heatMapData[j].length; i++) {
-          var x = heatMapData[j][i].location;
-          heatMapData[j][i].location = new google.maps.LatLng(x.lat, x.lng);
-          heatMapData[j][i].weight *= 10000;
-        }
-        old_heatmap = heatmap;
-        heatmap = new google.maps.visualization.HeatmapLayer({
-            data: heatMapData[j],
-            radius: 10,
-            maxIntensity : 1e-2 * 10000,
-            opacity : 1,
-        });
-        heatmap.setMap(map);
-        setTimeout(function(){old_heatmap.setMap(null)},0);
-        if (j + 1 < heatMapData.length) {
-          setTimeout(function() {
-            notification("Tracer after "+Math.floor((j+1)/6)+" years and "+((j+1)%6)*2+" months"); // , "success");        
-            drawHeatMapData(j+1);
-          },1000);
-        }
+    var run_counter = 0;
+    function drawHeatMapData(j, expected_run_counter) {
+      if (run_counter != expected_run_counter) return;
+      for(var i = 0; i < heatMapData[j].length; i++) {
+        var x = heatMapData[j][i].location;
+        heatMapData[j][i].location = new google.maps.LatLng(x.lat, x.lng);
+        heatMapData[j][i].weight *= 10000;
+      }
+      old_heatmap = heatmap;
+      heatmap = new google.maps.visualization.HeatmapLayer({
+          data: heatMapData[j],
+          radius: 10,
+          maxIntensity : 1e-2 * 10000,
+          opacity : 1,
+      });
+      heatmap.setMap(map);
+      setTimeout(function(){old_heatmap.setMap(null)},0);
+      if (j + 1 < heatMapData.length) {
+        setTimeout(function() {
+          notification("Tracer after "+Math.floor((j+1)/6)+" years and "+((j+1)%6)*2+" months"); // , "success");        
+          drawHeatMapData(j+1, expected_run_counter);
+        },1000);
+      }
     }
-    google.maps.event.addListener(map, 'click', function(mouseEvent) {
-      marker.setPosition(mouseEvent.latLng);
-      $.getJSON("/run/" + mouseEvent.latLng, function(data) {
+    function run(latLng) {
+      History.pushState({}, "", latLng);
+      run_counter++;
+      marker.setPosition(latLng);
+      $.getJSON("/run/" + latLng, function(data) {
         if (data[0].length == 0) {
         heatmap.setMap(null);
           notification("You clicked on land.", "error");
           return;
         }
         heatMapData = data;
-        drawHeatMapData(0);
+        drawHeatMapData(0, run_counter);
       });
+    }
+    google.maps.event.addListener(map, 'click', function(mouseEvent) {
+      run(mouseEvent.latLng);
     });
-
+    if (window.initial_tracer) {
+      run(window.initial_tracer);
+    }
     google.maps.event.addListener(map, 'center_changed', function() {
       var newCenter = map.getCenter();
       if (Math.abs(newCenter.lat()-8) > 1e-4) {
