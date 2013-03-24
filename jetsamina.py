@@ -1,6 +1,6 @@
 #!env/bin/python
 
-from spiderman import *
+from spiderman.helpers import *
 
 import scipy.io
 import json
