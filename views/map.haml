@@ -66,6 +66,7 @@
     });
     var marker = new google.maps.Marker({map:map});
     var run_counter = 0;
+    var old_heatmap = null;
     function drawHeatMapData(j, expected_run_counter) {
       if (run_counter != expected_run_counter) return;
       for(var i = 0; i < heatMapData[j].length; i++) {
@@ -81,10 +82,14 @@
           opacity : 1,
       });
       heatmap.setMap(map);
-      setTimeout(function(){old_heatmap.setMap(null)},0);
+      setTimeout(function(){
+        old_heatmap.setMap(null);
+        var years = Math.floor((j+1)/6);
+        var months = (j+1)%6*2;
+        notification("Tracer after " + years + " years and " + months + " months");
+      },0);
       if (j + 1 < heatMapData.length) {
         setTimeout(function() {
-          notification("Tracer after "+Math.floor((j+1)/6)+" years and "+((j+1)%6)*2+" months"); // , "success");        
           drawHeatMapData(j+1, expected_run_counter);
         },1000);
       }
@@ -94,21 +99,26 @@
       run_counter++;
       marker.setPosition(latLng);
       $.getJSON("/run/" + latLng, function(data) {
-        if (data[0].length == 0) {
-        heatmap.setMap(null);
+        if (data.substring) {
+          heatmap.setMap(null);
+          notification(data, "error");
+        } else if (data[0].length == 0) {
+          heatmap.setMap(null);
           notification("You clicked on land.", "error");
-          return;
+        } else {
+          heatMapData = data;
+          drawHeatMapData(0, run_counter);
         }
-        heatMapData = data;
-        drawHeatMapData(0, run_counter);
       });
     }
     google.maps.event.addListener(map, 'click', function(mouseEvent) {
       run(mouseEvent.latLng);
     });
-    if (window.initial_tracer) {
-      run(window.initial_tracer);
-    }
+    google.maps.event.addListenerOnce(map, 'bounds_changed', function(){
+      if (window.initial_tracer) {
+        run(window.initial_tracer);
+      }
+    });
     google.maps.event.addListener(map, 'center_changed', function() {
       var newCenter = map.getCenter();
       if (Math.abs(newCenter.lat()-8) > 1e-4) {

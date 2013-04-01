@@ -11,7 +11,7 @@ P = data['P'][0]
 coastp = data['coastp']
 popdens = data['popdens']
 lon = data['lon'][0]
-landpoints = data['landpoints']
+landpoints = data['landpoints'][0]
 lat = data['lat'][0]
 
 @get('/')
@@ -45,13 +45,20 @@ def run_tracer(given_lat, given_lng):
                     best_i = i
         return best_i
 
-    v[0][find(lat, given_lat, 0) * len(lon) + find(lon, given_lng, 360)] = 1
+    closest_index = find(lat, given_lat, 0) * len(lon) + find(lon, given_lng, 360)
 
-    results = []
+    v[0][closest_index] = 1
 
-    for y in xrange(maxyears):
-        for bm in P:
-            v = v * bm
+    ret = ""
+
+    if landpoints[closest_index] == -1:
+        ret = json.dumps("Sorry! There's no data for that spot.")
+    elif landpoints[closest_index] == -1:
+        ret = json.dumps("You clicked on land.")
+    else:
+        results = []
+
+        def extract_important_points(v):
             heatMapData = []
             index = 0
             for i in lat:
@@ -59,11 +66,18 @@ def run_tracer(given_lat, given_lng):
                     if v[0][index] > 1e-4:
                         heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
                     index += 1
-            results.append(heatMapData)
+            return heatMapData
 
-    web.header("Content-Type", "application/x-javascript")
+        for y in xrange(maxyears):
+            for bm in P:
+                v = v * bm
+                results.append(extract_important_points(v))
 
-    return json.dumps(results)
+        web.header("Content-Type", "application/x-javascript")
+
+        ret = json.dumps(results)
+
+    return ret
 
 @get('/what')
 def what(): pass
