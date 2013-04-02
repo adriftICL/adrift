@@ -55,9 +55,9 @@ ul.navigation li a:hover {
 
 #notification {
     position: absolute;
-    width: 384px;
+    width: 360px;
     height: 23px;
-    left:458px;
+    left:500px;
     /*
     -webkit-border-bottom-right-radius: 5px;
     -webkit-border-bottom-left-radius: 5px;
@@ -86,14 +86,14 @@ ul.navigation li a:hover {
 }
 #likesbar{
     position: absolute;
-    width: 150px;
+    width: 140px;
     height: 23px;
-    left:858px;
+    left:876px;
     float:left;
     z-index: 10;
-    padding-right: 1em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.6em;
+    padding-bottom: 0.4em;
     color: white;
     font-weight: bold;
     background-color: rgba(100, 100, 100, 0.8);
