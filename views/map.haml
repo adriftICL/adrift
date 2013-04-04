@@ -64,7 +64,11 @@
       data: heatMapData,
       radius: 1
     });
-    var marker = new google.maps.Marker({map:map});
+    var image = 'static/duckieMarker.png';
+    var marker = new google.maps.Marker({
+      map:map,
+      icon: image
+    });
     var run_counter = 0;
     var old_heatmap = null;
     function drawHeatMapData(j, expected_run_counter) {
