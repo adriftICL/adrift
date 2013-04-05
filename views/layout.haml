@@ -6,8 +6,10 @@
     %script(src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js")
     %script(src="/static/jquery.blockUI.js")
     %script(src="/static/jquery.history.js")
+    %script(src="/static/jquery.colorbox-min.js")
     %script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization")
     %link(href="/static/ui.css", rel="stylesheet", media="screen")
+    %link(href="/static/colorbox.css", rel="stylesheet", media="screen")
     %link(href="/static/stylesheet.css", rel="stylesheet", media="screen")
   %body
 
@@ -15,14 +17,27 @@
       var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-38940204-1']); _gaq.push(['_trackPageview']);
       (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
     </script>
+    <script>
+      $(document).ready(function(){$(".colorbox").colorbox({width:"800px", top:"250px", maxHeight:"500px", opacity:0.50});});
+     </script>
+     
     #page_container
         <div style="position:relative;">
           %img.header(src="/static/adrift_logo_1024pwide.jpg")
           <div style="position:absolute;top:126px;left:200px;">
-            %ul.navigation
-              - for text, href in [("Home", "/"), ("What this app does", "/what"), ("How this app works", "/how"), ("Background information", "/background"), ("About the team", "/team")]:
-               %li(class_=("active" if text == "Home" else ""))
-                 %a(href=href)= text
+             <ul class="navigation">
+               <li class="navigation"> 
+                 <a class="navigation colorbox" href="map">Home</a>
+               <li class="navigation"> 
+                 <a class="navigation colorbox" href="what">What this app does</a>
+               <li class="navigation"> 
+                 <a class="navigation colorbox" href="how">How this app works</a>
+               <li class="navigation"> 
+                 <a class="navigation colorbox" href="background">Background information</a>
+               <li class="navigation"> 
+                 <a class="navigation colorbox" href="team">About the team</a>
+              </ul>
           </div>
         </div>
+      
       ${self.body()}
