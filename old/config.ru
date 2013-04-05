@@ -1,2 +1,0 @@
-require './jetsamina'
-run Jetsamina
