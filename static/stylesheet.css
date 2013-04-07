@@ -20,6 +20,16 @@ h1 {
     text-shadow: -1px 2px #cdf; /* 235; */
 }
 
+#textbox {
+    padding:30px; 
+    background:#fff;
+    text-align:justify;
+    font-size: 17px;
+}
+p {
+    margin-top:1em; 
+}    
+
 #page_container {
     width: 1024px;
     margin: 0 auto;

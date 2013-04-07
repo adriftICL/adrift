@@ -29,13 +29,13 @@ def under_construction(): haml()
 @get('/map')
 def map(): haml()
 
-@get('/\((.*),\s*(.*)\)')
+@get('/\((.*),(.*)\)')
 def map(lat, lng): return haml(**locals()) # locals lat and lng automatically passed to template
 
 @get('/favicon.ico')
 def favicon(): raise web.redirect("/static/favicon.ico")
 
-@get('/run/\((.*),\s*(.*)\)')
+@get('/run/\((.*),(.*)\)')
 def run_tracer(given_lat, given_lng):
     given_lat = float(given_lat)
     given_lng = float(given_lng)
