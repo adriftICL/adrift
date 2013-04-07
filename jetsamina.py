@@ -6,7 +6,16 @@ import scipy.io
 import json
 from scipy import *
 
-data = scipy.io.loadmat('data/tracerappdata.mat')
+try:
+      data = scipy.io.loadmat('data/tracerappdata.mat')
+except IOError as e:
+      print("({})".format(e))
+      print 
+      print "Error: You need to get the tracerappdata.mat file first. It then goes in ./data/"
+      print "       Contact Erik van Sebille (mailto: e.vansebille@unsw.edu.au) for this."
+      print 
+      exit()
+
 P = data['P'][0]
 coastp = data['coastp']
 popdens = data['popdens']
