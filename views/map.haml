@@ -99,10 +99,12 @@
       }
     }
     function run(latLng) {
-      History.pushState({}, "", latLng);
+      lat = Math.round(10 * latLng.lat()) / 10;
+      lng = Math.round(10 * latLng.lng()) / 10;
+      History.pushState({}, "", "("+lat+", "+lng+")");
       run_counter++;
       marker.setPosition(latLng);
-      $.getJSON("/run/" + latLng, function(data) {
+      $.getJSON("/run/("+lat+", "+lng+")", function(data) {
         if (data.substring) {
           heatmap.setMap(null);
           notification(data, "error");
