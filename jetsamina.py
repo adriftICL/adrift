@@ -42,7 +42,7 @@ def run_tracer(given_lat, given_lng):
     given_lat = float(given_lat)
     given_lng = float(given_lng)
 
-    maxyears = 2
+    maxyears = 10
 
     v = zeros((1,P[0].shape[0]))
 
