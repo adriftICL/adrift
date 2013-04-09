@@ -10,10 +10,10 @@ try:
       data = scipy.io.loadmat('data/tracerappdata.mat')
 except IOError as e:
       print("({})".format(e))
-      print 
+      print
       print "Error: You need to get the tracerappdata.mat file first. It then goes in ./data/"
       print "       Contact Erik van Sebille (mailto: e.vansebille@unsw.edu.au) for this."
-      print 
+      print
       exit()
 
 P = data['P'][0]
@@ -24,13 +24,15 @@ landpoints = data['landpoints'][0]
 lat = data['lat'][0]
 
 @get('/')
-def under_construction(): haml()
+def under_construction(): return haml()
 
 @get('/map')
-def map(): haml()
-
-@get('/\((.*),(.*)\)')
-def map(lat, lng): return haml(**locals()) # locals lat and lng automatically passed to template
+def map():
+    i = web.input()
+    try:
+        return haml(lat=i.lat, lng=i.lng)
+    except AttributeError:
+        return haml()
 
 @get('/favicon.ico')
 def favicon(): raise web.redirect("/static/favicon.ico")
