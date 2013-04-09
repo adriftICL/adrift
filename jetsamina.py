@@ -64,7 +64,7 @@ def run_tracer(given_lat, given_lng):
 
     if landpoints[closest_index] == -1:
         ret = json.dumps("Sorry, we have no data for that ocean area")
-    elif landpoints[closest_index] == -1:
+    elif landpoints[closest_index] == +1:
         ret = json.dumps("You clicked on land, please click on the ocean")
     else:
         results = []
