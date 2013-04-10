@@ -7,10 +7,19 @@
     %script(src="/static/jquery.blockUI.js")
     %script(src="/static/jquery.history.js")
     %script(src="/static/jquery.colorbox-min.js")
+    %script(src="/static/cssua.min.js")
     %script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization")
     %link(href="/static/ui.css", rel="stylesheet", media="screen")
     %link(href="/static/colorbox.css", rel="stylesheet", media="screen")
-    %link(href="/static/stylesheet.css", rel="stylesheet", media="screen")
+          <script>
+            if (cssua.ua.mobile) {
+              document.write("<link href=\"/static/stylesheet_960pwide.css\", rel=\"stylesheet\", media=\"screen\"/>")
+            }
+            else {
+              document.write("<link href=\"/static/stylesheet_1024pwide.css\", rel=\"stylesheet\", media=\"screen\"/>")
+            }
+          </script>
+
   %body
 
     <script type="text/javascript">
@@ -23,8 +32,16 @@
      
     #page_container
         <div style="position:relative;">
-          %img.header(src="/static/adrift_logo_1024pwide.jpg")
-          <div style="position:absolute;top:126px;left:280px;">
+          <script>
+            if (cssua.ua.mobile) { 
+              document.write("<img class=\"header\" src=\"/static/adrift_logo_960pwide.jpg\">")
+              document.write("<div style=\"position:absolute;top:126px;left:216px;\">")
+            }
+            else {
+              document.write("<img class=\"header\" src=\"/static/adrift_logo_1024pwide.jpg\">")            
+              document.write("<div style=\"position:absolute;top:126px;left:280px;\">")
+            }
+          </script>
              <ul class="navigation">
                <li class="navigation"> 
                  <a class="navigation colorbox" href="what">What this app does</a>
