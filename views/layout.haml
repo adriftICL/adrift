@@ -28,7 +28,11 @@
       (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
     </script>
     <script>
-      $(document).ready(function(){$(".colorbox").colorbox({width:"800px", top:"250px", maxHeight:"450px", opacity:0.50});});
+      var top_px = 126;
+      if (cssua.ua.mobile) {
+        top_px = 100;
+      }
+     $(document).ready(function(){$(".colorbox").colorbox({width:"850px", top:top_px+"px", maxHeight:"490px", opacity:0.50});});
      </script>
      
     #page_container

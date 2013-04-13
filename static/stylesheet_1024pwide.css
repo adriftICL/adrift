@@ -3,6 +3,11 @@
     margin: 0 auto;
 }
 
+#map_notification_container {
+    margin-top: 10px;
+    position: relative;
+}
+
 #notification {
     left:509px;
 }
