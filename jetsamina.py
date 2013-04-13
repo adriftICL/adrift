@@ -73,6 +73,7 @@ def run_tracer(given_lat, given_lng):
         ret = json.dumps("You clicked on land, please click on the ocean")
     else:
         if os.path.exists(filename):
+            os.utime(filename,None)
             results=pickle.load(open(filename,"rb"))
         else:
             results = []
@@ -91,7 +92,8 @@ def run_tracer(given_lat, given_lng):
                   for bm in P:
                       v = v * bm
                       results.append(extract_important_points(v))
-        
+
+            os.system("(ls -t SavedReqs/closest_index*|head -n 1000;ls SavedReqs/closest_index*)|sort|uniq -u|xargs rm")
             pickle.dump(results,open(filename,"wb"))
         
         
