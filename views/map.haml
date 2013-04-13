@@ -22,6 +22,15 @@
     var width = $("#map_canvas").width();
     $("#map_canvas").css("height", width / 2 + "px");
 
+    var centre_lon = 30;
+    if (navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(getcurrentLon);
+    }
+    function getcurrentLon(position){
+      centre_lon = Math.round(position.coords.longitude);
+      map.panTo(new google.maps.LatLng(8, centre_lon));
+    }
+
     var mapOptions = {
       zoom: 2,
       maxZoom: 2,
@@ -30,7 +39,7 @@
       scrollwheel: false,
       disableDoubleClickZoom: true,
       disableDefaultUI: true,
-      center: new google.maps.LatLng(8, 130.644), // Sydney
+      center: new google.maps.LatLng(8, centre_lon),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       styles: [
           {
