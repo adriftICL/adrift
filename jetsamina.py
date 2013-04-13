@@ -45,6 +45,7 @@ def run_tracer(given_lat, given_lng):
     given_lng = float(given_lng)
 
     maxyears = 10
+    minplotval = 1e-4
 
     v = zeros((1,P[0].shape[0]))
 
@@ -80,8 +81,9 @@ def run_tracer(given_lat, given_lng):
                 index = 0
                 for i in lat:
                     for j in lon:
-                        if v[0][index] > 1e-4:
-                            heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
+                        if v[0][index] > minplotval:
+                            vval = int(min(v[0][index]*10000,100))
+                            heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': vval})
                         index += 1
                 return heatMapData
 

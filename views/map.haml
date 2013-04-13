@@ -81,13 +81,12 @@
       for(var i = 0; i < heatMapData[j].length; i++) {
         var x = heatMapData[j][i].location;
         heatMapData[j][i].location = new google.maps.LatLng(x.lat, x.lng);
-        heatMapData[j][i].weight *= 10000;
       }
       old_heatmap = heatmap;
       heatmap = new google.maps.visualization.HeatmapLayer({
           data: heatMapData[j],
           radius: 10,
-          maxIntensity : 1e-2 * 10000,
+          maxIntensity : 100,
           opacity : 1,
       });
       heatmap.setMap(map);
