@@ -11,14 +11,15 @@
     %script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization")
     %link(href="/static/ui.css", rel="stylesheet", media="screen")
     %link(href="/static/colorbox.css", rel="stylesheet", media="screen")
-          <script>
-            if (cssua.ua.mobile) {
-              document.write("<link href=\"/static/stylesheet_960pwide.css\", rel=\"stylesheet\", media=\"screen\"/>")
-            }
-            else {
-              document.write("<link href=\"/static/stylesheet_1024pwide.css\", rel=\"stylesheet\", media=\"screen\"/>")
-            }
-          </script>
+    %link(href="/static/stylesheet.css", rel="stylesheet", media="screen")    
+    <script>
+      if (cssua.ua.mobile) {
+        document.write("<link href=\"/static/stylesheet_960pwide.css\", rel=\"stylesheet\", media=\"screen\"/>")
+      }
+      else {
+        document.write("<link href=\"/static/stylesheet_1024pwide.css\", rel=\"stylesheet\", media=\"screen\"/>")
+      }
+    </script>
 
   %body
 
@@ -35,18 +36,18 @@
           <script>
             if (cssua.ua.mobile) { 
               document.write("<img class=\"header\" src=\"/static/adrift_logo_960pwide.jpg\">")
-              document.write("<div style=\"position:absolute;top:126px;left:216px;\">")
+              document.write("<div style=\"position:absolute;top:128px;left:216px;\">")
             }
             else {
               document.write("<img class=\"header\" src=\"/static/adrift_logo_1024pwide.jpg\">")            
-              document.write("<div style=\"position:absolute;top:126px;left:280px;\">")
+              document.write("<div style=\"position:absolute;top:128px;left:280px;\">")
             }
           </script>
              <ul class="navigation">
                <li class="navigation"> 
-                 <a class="navigation colorbox" href="what">What this app does</a>
+                 <a class="navigation colorbox" href="what">What this site does</a>
                <li class="navigation"> 
-                 <a class="navigation colorbox" href="how">How this app works</a>
+                 <a class="navigation colorbox" href="how">How this site works</a>
                <li class="navigation"> 
                  <a class="navigation colorbox" href="background">Background information</a>
                <li class="navigation"> 

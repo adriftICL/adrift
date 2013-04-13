@@ -13,9 +13,8 @@
     var local_count = ++global_count;
     $elm = $("#notification");
     $elm.attr('class','').addClass(css_class);
+    $elm = $("#notification_text");
     $elm.text(message);
-    $elm = $("#likesbar");
-    $elm.attr('class','').addClass(css_class);
   }
   $(document).ready(function(){
     // $("#map_canvas").css("width", "1024px");
@@ -148,26 +147,27 @@
 
 #map_notification_container
   #notification
-    Welcome, click on a point on the ocean
-  #likesbar
-    <!-- AddThis Button BEGIN -->
-    <div class="addthis_toolbox addthis_default_style ">
-      <a class="addthis_button_preferred_1"></a>
-      <a class="addthis_button_preferred_2"></a>
-      <a class="addthis_button_preferred_3"></a>
-      <a class="addthis_button_preferred_4"></a>
-      <a class="addthis_button_compact"></a>
-      <a class="addthis_counter addthis_bubble_style"></a>
-    </div>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-515a706a565cca8a"></script>
-    <!-- AddThis Button END -->
+    #notification_text
+      Welcome, click on a point on the ocean
+    #notification_likesbar
+      <!-- AddThis Button BEGIN -->
+      <div class="addthis_toolbox addthis_default_style ">
+        <a class="addthis_button_preferred_1"></a>
+        <a class="addthis_button_preferred_2"></a>
+        <a class="addthis_button_preferred_3"></a>
+        <a class="addthis_button_preferred_4"></a>
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+      </div>
+      <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-515a706a565cca8a"></script>
+      <!-- AddThis Button END -->
   #map_canvas
 
 #bottombar
 #bottombarcclogo
    <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>
 #bottombardisclaimertext
-  <a href="http://adrift.org.au">Adrift.org.au</a> is intended as an educational app. It should not be used for any policy decisions and comes without any warranty. Any questions and inquiries should be directed to <a href="http://www.erik.vansebille.com">Dr Erik van Sebille</a> at the <a href="http://www.unsw.edu.au">University of New South Wales</a>.
+  <a href="http://adrift.org.au">Adrift.org.au</a> is intended as an educational site. It should not be used for any policy decisions and comes without any warranty. Any inquiries should be directed to <a href="http://www.erik.vansebille.com">Dr Erik van Sebille</a> at the <a href="http://www.unsw.edu.au">University of New South Wales</a>.
  Support for this site is provided by the <a href="http://www.climatescience.org.au/">ARC Centre of Excellence for Climate System Science</a> and the <a href="http://www.nectar.org.au/research-cloud">NeCTAR Research Cloud</a>.
 #bottombarcolorbar
   %img(width="400px", src="/static/colorbar.jpg")

@@ -1,136 +1,18 @@
-/* TODO: Convert this to SCSS and get some nicer default styles in here */
-
-@import url(http://fonts.googleapis.com/css?family=Julius+Sans+One);
-
-* {
-    padding: 0;
-    margin: 0;
-    font-family: arial, sans-serif;
-    color: #313131;
-}
-
-body {
-    margin-top: 1em;
-}
-
-h1 {
-    font-family: 'Julius Sans One', sans-serif;
-    font-size: 72px;
-    color: #679;
-    text-shadow: -1px 2px #cdf; /* 235; */
-}
-
-#textbox {
-    padding:30px; 
-    background:#fff;
-    text-align:justify;
-    font-size: 17px;
-}
-p {
-    margin-top:1em; 
-}    
-
 #page_container {
     width: 1024px;
     margin: 0 auto;
 }
 
-ul.navigation {
-    text-align: center;
-    font-weight: bold;
-    padding: 1em;
-}
-
-ul.navigation li {
-    display: inline;
-    margin: 0.2em;
-    padding: 0.3em;
-    background-color: rgba(256, 256, 256, 0.4);
-}
-
-ul.navigation li a {
-    color: #043566;
-    padding: 0.3em;
-    text-decoration: none;
-}
-
-ul.navigation li a:hover {
-    background-color: #eee;
-}
-
-#map_notification_container {
-    margin-top: 20px;
-    position: relative;
-}
-
 #notification {
-    position: absolute;
-    width: 360px;
-    height: 23px;
-    left:500px;
-    /*
-    -webkit-border-bottom-right-radius: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    -moz-border-radius-bottomright: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    left: 50%;
-    margin-left: -256px;
-    */
-    z-index: 10;
-    padding-right: 1em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    color: white;
-    font-weight: bold;
-    background-color: rgba(100, 100, 100, 0.8);
-    text-align:right;
-    float:left;
-}
-#notification.error {
-    background-color: rgba(255, 100, 100, 0.8);
-}
-#notification.success {
-    background-color: rgba(50, 200, 50, 0.8);
-}
-#likesbar{
-    position: absolute;
-    width: 140px;
-    height: 23px;
-    left:876px;
-    float:left;
-    z-index: 10;
-    padding-right: 0.5em;
-    padding-top: 0.6em;
-    padding-bottom: 0.4em;
-    color: white;
-    font-weight: bold;
-    background-color: rgba(100, 100, 100, 0.8);
-    text-align:right;
-    float:left;
-}
-#likesbar.error {
-    background-color: rgba(255, 100, 100, 0.8);
+    left:509px;
 }
 
 #bottombar {
     padding-top: 1em;
     width: 1024px;
 }
-#bottombarcclogo{
-    width:100px;
-    float: left;
-}
 #bottombardisclaimertext{
     font-size:9px;
     width: 500px;
     float: left;
-}
-#bottombarcolorbar{
-    width: 400px;
-    float:right;
-}
-.loading {
-    margin: 1em;
 }
