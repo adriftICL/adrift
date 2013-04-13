@@ -3,6 +3,8 @@
 from spiderman.helpers import *
 
 import scipy.io
+import cPickle as pickle
+import os
 import json
 from scipy import *
 
@@ -59,6 +61,8 @@ def run_tracer(given_lat, given_lng):
     closest_index = find(lat, given_lat, 0) * len(lon) + find(lon, given_lng, 360)
 
     v[0][closest_index] = 1
+    
+    filename='SavedReqs/closest_index' +str(closest_index).zfill(5)
 
     ret = ""
 
@@ -67,23 +71,28 @@ def run_tracer(given_lat, given_lng):
     elif landpoints[closest_index] == +1:
         ret = json.dumps("You clicked on land, please click on the ocean")
     else:
-        results = []
+        if os.path.exists(filename):
+            results=pickle.load(open(filename,"rb"))
+        else:
+            results = []
+            def extract_important_points(v):
+                heatMapData = []
+                index = 0
+                for i in lat:
+                    for j in lon:
+                        if v[0][index] > 1e-4:
+                            heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
+                        index += 1
+                return heatMapData
 
-        def extract_important_points(v):
-            heatMapData = []
-            index = 0
-            for i in lat:
-                for j in lon:
-                    if v[0][index] > 1e-4:
-                        heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': v[0][index]})
-                    index += 1
-            return heatMapData
-
-        for y in xrange(maxyears):
-            for bm in P:
-                v = v * bm
-                results.append(extract_important_points(v))
-
+            for y in xrange(maxyears):
+                  for bm in P:
+                      v = v * bm
+                      results.append(extract_important_points(v))
+        
+            pickle.dump(results,open(filename,"wb"))
+        
+        
         web.header("Content-Type", "application/x-javascript")
 
         ret = json.dumps(results)
