@@ -10,7 +10,7 @@
 }
 
 body {
-    margin-top: 1em;
+    margin-top: 0em;
 }
 
 h1 {
@@ -73,7 +73,7 @@ ul.navigation li a:hover {
 }
 
 #map_notification_container {
-    margin-top: 20px;
+    margin-top: 10px;
     position: relative;
 }
 
