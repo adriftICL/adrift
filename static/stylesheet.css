@@ -85,7 +85,7 @@ ul.navigation li a:hover {
 }
 #notification_likesbar{
     position: absolute;
-    width: 400px;
+    width: 149px;
     height: 23px;
     float:left;
     z-index: 10;
