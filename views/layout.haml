@@ -11,7 +11,7 @@
     %script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization")
     %link(href="/static/ui.css", rel="stylesheet", media="screen")
     %link(href="/static/colorbox.css", rel="stylesheet", media="screen")
-    %link(href="/static/stylesheet.css", rel="stylesheet", media="screen")    
+    %link(href="/static/stylesheet.css", rel="stylesheet", media="screen")
     <script>
       if (cssua.ua.mobile) {
         document.write("<link href=\"/static/stylesheet_960pwide.css\", rel=\"stylesheet\", media=\"screen\"/>")
@@ -34,30 +34,26 @@
       }
      $(document).ready(function(){$(".colorbox").colorbox({width:"850px", top:top_px+"px", maxHeight:"490px", opacity:0.50});});
      </script>
-     
+
     #page_container
-        <div style="position:relative;">
-          <script>
-            if (cssua.ua.mobile) { 
-              document.write("<img class=\"header\" src=\"/static/adrift_logo_960pwide.jpg\">")
+      %div(style="position:relative;")
+        :javascript
+          if (cssua.ua.mobile) {
+            document.write("<img class=\"header\" src=\"/static/adrift_logo_960pwide.jpg\">")
               document.write("<div style=\"position:absolute;top:39px;left:216px;\">")
             }
             else {
-              document.write("<img class=\"header\" src=\"/static/adrift_logo_1024pwide.jpg\">")            
+              document.write("<img class=\"header\" src=\"/static/adrift_logo_1024pwide.jpg\">")
               document.write("<div style=\"position:absolute;top:65px;left:280px;\">")
             }
-          </script>
-             <ul class="navigation">
-               <li class="navigation"> 
-                 <a class="navigation colorbox" href="what">What this site does</a>
-               <li class="navigation"> 
-                 <a class="navigation colorbox" href="how">How this site works</a>
-               <li class="navigation"> 
-                 <a class="navigation colorbox" href="background">Background information</a>
-               <li class="navigation"> 
-                 <a class="navigation colorbox" href="team">About the team</a>
-              </ul>
-          </div>
-        </div>
-      
+        %ul.navigation
+          %li.navigation
+            <a class="navigation colorbox" href="what">What this site does</a>
+          %li.navigation
+            <a class="navigation colorbox" href="how">How this site works</a>
+          %li.navigation
+            <a class="navigation colorbox" href="background">Background information</a>
+          %li.navigation
+            <a class="navigation colorbox" href="team">About the team</a>
+
       ${self.body()}
