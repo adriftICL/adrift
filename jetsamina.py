@@ -1,29 +1,11 @@
 #!env/bin/python
 
 from spiderman.helpers import *
-
-import scipy.io
-import cPickle as pickle
-import os
 import json
-from scipy import *
+from tracer import run_tracer, is_landpoint, get_closest_index, is_lacking_data
+from cache import get_cached_results, NotCached, cache_results
 
-try:
-      data = scipy.io.loadmat('data/tracerappdata.mat')
-except IOError as e:
-      print("({})".format(e))
-      print
-      print "Error: You need to get the tracerappdata.mat file first. It then goes in ./data/"
-      print "       Contact Erik van Sebille (mailto: e.vansebille@unsw.edu.au) for this."
-      print
-      exit()
-
-P = data['P'][0]
-coastp = data['coastp']
-popdens = data['popdens']
-lon = data['lon'][0]
-landpoints = data['landpoints'][0]
-lat = data['lat'][0]
+SHOULD_CACHE = True
 
 @get('/')
 def under_construction(): return haml()
@@ -40,63 +22,25 @@ def map():
 def favicon(): raise web.redirect("/static/favicon.ico")
 
 @get('/run/\((.*),(.*)\)')
-def run_tracer(given_lat, given_lng):
+def doit(given_lat, given_lng):
     given_lat = float(given_lat)
     given_lng = float(given_lng)
-
-    maxyears = 10
-    minplotval = 1e-4
-
-    v = zeros((1,P[0].shape[0]))
-
-    def find(array, value, mod):
-        best = 9999 + abs(value)
-        best_i = -1
-        for i in xrange(len(array)):
-            for delta in [-mod,0,+mod]:
-                if abs(array[i]-value+delta) < best:
-                    best = abs(array[i]-value+delta)
-                    best_i = i
-        return best_i
-
-    closest_index = find(lat, given_lat, 0) * len(lon) + find(lon, given_lng, 360)
-
-    v[0][closest_index] = 1
-    
-    filename='SavedReqs/closest_index' +str(closest_index).zfill(5)
+    closest_index = get_closest_index(given_lat, given_lng)
 
     ret = ""
 
-    if landpoints[closest_index] == -1:
+    if is_lacking_data(closest_index):
         ret = json.dumps("Sorry, we have no data for that ocean area")
-    elif landpoints[closest_index] == +1:
+    elif is_landpoint(closest_index):
         ret = json.dumps("You clicked on land, please click on the ocean")
     else:
-        if os.path.exists(filename):
-            os.utime(filename,None)
-            results=pickle.load(open(filename,"rb"))
-        else:
-            results = []
-            def extract_important_points(v):
-                heatMapData = []
-                index = 0
-                for i in lat:
-                    for j in lon:
-                        if v[0][index] > minplotval:
-                            vval = int(min(v[0][index]*10000,100))
-                            heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': vval})
-                        index += 1
-                return heatMapData
+        try:
+            results = get_cached_results(closest_index)
+        except NotCached:
+            results = run_tracer(closest_index)
+            if SHOULD_CACHE:
+                cache_results(closest_index, results)
 
-            for y in xrange(maxyears):
-                  for bm in P:
-                      v = v * bm
-                      results.append(extract_important_points(v))
-
-            os.system("(ls -t SavedReqs/closest_index*|head -n 1000;ls SavedReqs/closest_index*)|sort|uniq -u|xargs rm")
-            pickle.dump(results,open(filename,"wb"))
-        
-        
         web.header("Content-Type", "application/x-javascript")
 
         ret = json.dumps(results)
