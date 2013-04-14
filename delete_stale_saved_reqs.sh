@@ -2,4 +2,6 @@
 
 cache_path="$1"
 
-ls -t $cache_path/closest_index* | tail -n+1001 | xargs rm
+# we can store around 15k requests, under-estimate
+
+ls -t $cache_path/closest_index* | tail -n+15001 | xargs rm 2> /dev/null
