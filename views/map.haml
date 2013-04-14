@@ -7,6 +7,10 @@
   :javascript
     window.initial_tracer = new google.maps.LatLng(${float(lat)}, ${float(lng)});
     window.initial_centre = ${float(centre)};
+- else:
+  :javascript
+    window.initial_tracer = null;
+    window.initial_centre = null;
 
 :javascript
   var global_count = 0;
