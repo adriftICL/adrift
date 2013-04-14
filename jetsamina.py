@@ -5,8 +5,6 @@ import json
 from tracer import run_tracer, is_landpoint, get_closest_index, is_lacking_data
 from cache import get_cached_results, NotCached, cache_results
 
-SHOULD_CACHE = True
-
 @get('/')
 def under_construction(): return haml()
 
@@ -21,10 +19,16 @@ def map():
 @get('/favicon.ico')
 def favicon(): raise web.redirect("/static/favicon.ico")
 
-@get('/run/\((.*),(.*)\)')
-def doit(given_lat, given_lng):
-    given_lat = float(given_lat)
-    given_lng = float(given_lng)
+@get('/run')
+def doit():
+    i = web.input()
+    try:
+        given_lat = float(i.lat)
+        given_lng = float(i.lng)
+    except AttributeError:
+        given_lat = -1.1
+        given_lng = 117.8
+
     closest_index = get_closest_index(given_lat, given_lng)
 
     ret = ""
@@ -38,8 +42,7 @@ def doit(given_lat, given_lng):
             results = get_cached_results(closest_index)
         except NotCached:
             results = run_tracer(closest_index)
-            if SHOULD_CACHE:
-                cache_results(closest_index, results)
+            cache_results(closest_index, results)
 
         web.header("Content-Type", "application/x-javascript")
 

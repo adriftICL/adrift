@@ -5,7 +5,7 @@
 
 - if lat:
   :javascript
-    window.initial_tracer = new google.maps.LatLng(${lat}, ${lng});
+    window.initial_tracer = new google.maps.LatLng(${float(lat)}, ${float(lng)});
 
 :javascript
   var global_count = 0;
@@ -116,7 +116,7 @@
       History.pushState({}, document.title, "map?lat="+lat+"&lng="+lng+"");
       run_counter++;
       marker.setPosition(latLng);
-      $.getJSON("/run/("+lat+", "+lng+")", function(data) {
+      $.getJSON("/run?lat="+lat+"&lng="+lng, function(data) {
         if (data.substring) {
           heatmap.setMap(null);
           notification(data, "error");

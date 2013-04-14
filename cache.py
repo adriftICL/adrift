@@ -22,7 +22,7 @@ def get_cached_results(closest_index):
 
 def cache_results(closest_index, results):
     pickle.dump(results, open(get_filename(closest_index), "wb"))
-    subprocess.call(['./delete_stale_cache_results.sh'])
+    subprocess.call(['bash','./delete_stale_cache_results.sh'])
 
 # This takes around 20 GB, zipped
 # if __name__ == "__main__":
