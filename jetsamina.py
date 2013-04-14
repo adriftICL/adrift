@@ -12,7 +12,7 @@ def under_construction(): return haml()
 def map():
     i = web.input()
     try:
-        return haml(lat=i.lat, lng=i.lng)
+        return haml(lat=i.lat, lng=i.lng, centre=i.centre)
     except AttributeError:
         return haml()
 

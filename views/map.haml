@@ -6,6 +6,7 @@
 - if lat:
   :javascript
     window.initial_tracer = new google.maps.LatLng(${float(lat)}, ${float(lng)});
+    window.initial_centre = ${float(centre)};
 
 :javascript
   var global_count = 0;
@@ -22,12 +23,16 @@
     $("#map_canvas").css("height", "512px");
 
     var centre_lon = 30;
-    if (navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(getcurrentLon);
-    }
-    function getcurrentLon(position){
-      centre_lon = Math.round(position.coords.longitude);
-      map.panTo(new google.maps.LatLng(8, centre_lon));
+    if(window.initial_centre) {
+      centre_lon = window.initial_centre;
+    } else {
+      if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(getcurrentLon);
+      }
+      function getcurrentLon(position){
+        centre_lon = Math.round(position.coords.longitude);
+        map.panTo(new google.maps.LatLng(8, centre_lon));
+      }
     }
 
     var mapOptions = {
@@ -80,7 +85,7 @@
     var run_counter = 0;
     var old_heatmap = null;
     var secperframe = 1000;
-    if (cssua.ua.mobile) { 
+    if (cssua.ua.mobile) {
       secperframe = 2000;
     }
 
@@ -110,10 +115,14 @@
         },secperframe);
       }
     }
+    last_lat = null;
+    last_lng = null;
     function run(latLng) {
       lat = Math.round(10 * latLng.lat()) / 10;
       lng = Math.round(10 * latLng.lng()) / 10;
-      History.pushState({}, document.title, "map?lat="+lat+"&lng="+lng+"");
+      last_lat = lat;
+      last_lng = lng;
+      History.pushState({}, document.title, "map?lat="+lat+"&lng="+lng+"&centre="+centre_lon);
       run_counter++;
       marker.setPosition(latLng);
       $.getJSON("/run?lat="+lat+"&lng="+lng, function(data) {
@@ -139,6 +148,10 @@
     });
     google.maps.event.addListener(map, 'center_changed', function() {
       var newCenter = map.getCenter();
+      centre_lon = Math.round(10 * newCenter.lng()) / 10;
+      if (last_lat) {
+        History.pushState({}, document.title, "map?lat="+last_lat+"&lng="+last_lng+"&centre="+centre_lon);
+      }
       if (Math.abs(newCenter.lat()-8) > 1e-4) {
         map.panTo(new google.maps.LatLng(8, newCenter.lng()));
       }
