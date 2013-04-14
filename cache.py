@@ -3,7 +3,7 @@
 from tracer import run_tracer
 import cPickle as pickle
 from os import utime
-
+import subprocess
 from sys import argv
 
 class NotCached(Exception):
@@ -22,9 +22,11 @@ def get_cached_results(closest_index):
 
 def cache_results(closest_index, results):
     pickle.dump(results, open(get_filename(closest_index), "wb"))
+    subprocess.call(['./delete_stale_cache_results.sh'])
 
-if __name__ == "__main__":
-    print "populating cache"
-    for closest_index in xrange(165 * 360):
-        print "  |--> processing closest index #" + str(closest_index)
-        cache_results(closest_index, run_tracer(closest_index))
+# This takes around 20 GB, zipped
+# if __name__ == "__main__":
+#    print "populating cache"
+#    for closest_index in xrange(165 * 360):
+#        print "  |--> processing closest index #" + str(closest_index)
+#        cache_results(closest_index, run_tracer(closest_index))
