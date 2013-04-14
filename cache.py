@@ -25,7 +25,8 @@ def get_cached_results(closest_index):
 
 def cache_results(closest_index, results):
     pickle.dump(results, open(get_filename(closest_index), "wb"))
-    subprocess.call(['bash','./delete_stale_saved_reqs.sh'])
+    # Disable deleting stale saved requests because we have enough space.
+    # subprocess.call(['bash','./delete_stale_saved_reqs.sh'])
 
 # This takes around 20 GB zipped, 150 GB not zipped
 # TODO: compress cache
