@@ -5,4 +5,3 @@ build
 dev_server.py
 *.py[cod]
 *.swp
-SavedReqs/*
