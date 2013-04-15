@@ -9,7 +9,7 @@ from sys import argv
 from bz2 import BZ2File
 
 ## Will raise NotCached if not readable/writable (I think..)
-CACHE_ROOT = "/mnt/cached_requests"
+CACHE_ROOT = "cached_requests"
 
 # open_func = BZ2File
 open_func = open

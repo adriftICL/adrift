@@ -152,7 +152,7 @@
     });
     google.maps.event.addListener(map, 'center_changed', function() {
       var newCenter = map.getCenter();
-      centre_lon = Math.round(10 * newCenter.lng()) / 10;
+      centre_lon = Math.round(10 * ((newCenter.lng()%360 + 540)%360 - 180)) / 10;
       if (last_lat) {
         History.pushState({}, document.title, "map?lat="+last_lat+"&lng="+last_lng+"&centre="+centre_lon);
       }
