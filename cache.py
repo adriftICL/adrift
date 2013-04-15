@@ -10,6 +10,7 @@ from bz2 import BZ2File
 
 ## Will raise NotCached if not readable/writable (I think..)
 CACHE_ROOT = "cached_requests"
+NUMTOSAVE = "15001"
 
 # open_func = BZ2File
 open_func = open
@@ -33,9 +34,9 @@ def get_cached_results(closest_index):
 def cache_results(closest_index, results):
     try:
         pickle.dump(results, open_func(get_filename(closest_index), "wb"))
-        subprocess.call(['bash','./delete_stale_saved_reqs.sh', CACHE_ROOT])
     except:
         raise NotWritten()
+    subprocess.call(['bash','./delete_stale_saved_reqs.sh', CACHE_ROOT, NUMTOSAVE])
 
 # This takes around 20 GB zipped, 150 GB not zipped
 # TODO: compress cache
