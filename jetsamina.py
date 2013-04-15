@@ -3,7 +3,7 @@
 from spiderman.helpers import *
 import json
 from tracer import run_tracer, is_landpoint, get_closest_index, is_lacking_data
-from cache import get_cached_results, NotCached, cache_results
+from cache import get_cached_results, NotCached, cache_results, NotWritten
 
 @get('/')
 def under_construction(): return haml()
@@ -42,7 +42,10 @@ def doit():
             results = get_cached_results(closest_index)
         except NotCached:
             results = run_tracer(closest_index)
-            cache_results(closest_index, results)
+            try:
+                cache_results(closest_index, results)
+            except NotWritten:
+                print "Not saving data"
 
         web.header("Content-Type", "application/x-javascript")
 

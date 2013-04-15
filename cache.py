@@ -16,6 +16,8 @@ open_func = open
 
 class NotCached(Exception):
     pass
+class NotWritten(Exception):
+    pass
 
 def get_filename(closest_index):
     return CACHE_ROOT + '/closest_index' + str(closest_index).zfill(5)
@@ -29,8 +31,11 @@ def get_cached_results(closest_index):
         raise NotCached()
 
 def cache_results(closest_index, results):
-    pickle.dump(results, open_func(get_filename(closest_index), "wb"))
-    subprocess.call(['bash','./delete_stale_saved_reqs.sh', CACHE_ROOT])
+    try:
+        pickle.dump(results, open_func(get_filename(closest_index), "wb"))
+        subprocess.call(['bash','./delete_stale_saved_reqs.sh', CACHE_ROOT])
+    except:
+        raise NotWritten()
 
 # This takes around 20 GB zipped, 150 GB not zipped
 # TODO: compress cache
