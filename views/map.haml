@@ -72,9 +72,14 @@
         mapOptions);
 
     $(document).ajaxStart(function(){
-      $.blockUI({ message: '<div class="loading"><img src="/static/busy.gif" /> Loading tracer map...</div>' });
+      $('div.map_notification_container').block({
+        message: '<div style="font-size:18px"><img src="/static/busy.gif" /> Now computing tracer... <p> See tabs on top of screen for more information.</div>',
+        css:{padding: '30px', width: '400px'}
+      });
     });
-    $(document).ajaxStop($.unblockUI);
+    $(document).ajaxStop(function(){
+      $('div.map_notification_container').unblock();
+    });
 
     var heatMapData = [];
     var heatmap = new google.maps.visualization.HeatmapLayer({
@@ -162,7 +167,7 @@
     });
   });
 
-#map_notification_container
+<div class="map_notification_container">
   #notification
     #notification_text
       Welcome, click on a point on the ocean
@@ -179,7 +184,7 @@
       <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=xa-515a706a565cca8a"></script>
       <!-- AddThis Button END -->
   #map_canvas
-
+</div>
 #bottombar
 #bottombarcclogo
    <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>
