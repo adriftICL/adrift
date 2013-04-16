@@ -4,6 +4,21 @@ from spiderman.helpers import *
 import json
 from tracer import run_tracer, is_landpoint, get_closest_index, is_lacking_data
 from cache import get_cached_results, NotCached, cache_results, NotWritten
+from logging import getLogger, INFO, Formatter
+from logging.handlers import TimedRotatingFileHandler
+
+# set up logging. for more information, see
+# http://docs.python.org/2/howto/logging.html#logging-basic-tutorial
+
+logger = getLogger(__name__)
+logger.propagate = False
+
+handler = TimedRotatingFileHandler("adrift.log", when="D", interval=1)
+formatter = Formatter("%(asctime)s,%(message)s", datefmt='%m/%d/%Y %I:%M:%S %p')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+logger.setLevel(INFO)
 
 # dedicated experiments
 
@@ -44,6 +59,8 @@ def doit():
     except AttributeError:
         # if no attributes are given, return nothing.
         return ""
+
+    logger.info(str(web.ctx.ip) + "," + str(given_lat) + "," + str(given_lng))
 
     closest_index = get_closest_index(given_lat, given_lng)
 
