@@ -23,10 +23,10 @@ logger.setLevel(INFO)
 # dedicated experiments
 
 @get('/fukushima')
-def map(): return haml(lat=37.8, lng=141.0, centre=141.0)
+def map(): return haml(lat=37.8, lng=141.0, centre=141.0, icon_filename="MarkerTsunami.png")
 
 @get('/sydney')
-def map(): return haml(lat=-33.8, lng=151.2, centre=151.2)
+def map(): return haml(lat=-33.8, lng=151.2, centre=151.2, icon_filename="MarkerDuckie.png")
 
 # other pages
 
@@ -41,9 +41,9 @@ def map():
             centre = i.centre
         except AttributeError:
             centre = 30
-        return haml(lat=i.lat, lng=i.lng, centre=centre)
+        return haml(lat=i.lat, lng=i.lng, centre=centre, icon_filename="MarkerDuckie.png")
     except AttributeError:
-        return haml()
+        return haml(icon_filename="MarkerDuckie.png")
 
 @get('/favicon.ico')
 def favicon(): raise web.redirect("/static/favicon.ico")
