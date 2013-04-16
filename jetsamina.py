@@ -5,6 +5,16 @@ import json
 from tracer import run_tracer, is_landpoint, get_closest_index, is_lacking_data
 from cache import get_cached_results, NotCached, cache_results, NotWritten
 
+# dedicated experiments
+
+@get('/fukushima')
+def map(): return haml(lat=37.8, lng=141.0, centre=141.0)
+
+@get('/sydney')
+def map(): return haml(lat=-33.8, lng=151.2, centre=151.2)
+
+# other pages
+
 @get('/')
 def under_construction(): return haml()
 
@@ -12,12 +22,18 @@ def under_construction(): return haml()
 def map():
     i = web.input()
     try:
-        return haml(lat=i.lat, lng=i.lng, centre=i.centre)
+        try:
+            centre = i.centre
+        except AttributeError:
+            centre = 30
+        return haml(lat=i.lat, lng=i.lng, centre=centre)
     except AttributeError:
         return haml()
 
 @get('/favicon.ico')
 def favicon(): raise web.redirect("/static/favicon.ico")
+
+# api
 
 @get('/run')
 def doit():
