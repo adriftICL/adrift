@@ -13,7 +13,7 @@ from logging.handlers import TimedRotatingFileHandler
 logger = getLogger(__name__)
 logger.propagate = False
 
-handler = TimedRotatingFileHandler("adrift.log", when="D", interval=1)
+handler = TimedRotatingFileHandler("log/adrift.log", when="D", interval=1)
 formatter = Formatter("%(asctime)s,%(message)s", datefmt='%m/%d/%Y %I:%M:%S %p')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
