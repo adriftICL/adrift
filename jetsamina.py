@@ -26,8 +26,8 @@ def doit():
         given_lat = float(i.lat)
         given_lng = float(i.lng)
     except AttributeError:
-        given_lat = -1.1
-        given_lng = 117.8
+        # if no attributes are given, return nothing.
+        return ""
 
     closest_index = get_closest_index(given_lat, given_lng)
 
