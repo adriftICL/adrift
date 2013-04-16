@@ -23,7 +23,7 @@ logger.setLevel(INFO)
 # dedicated experiments
 
 @get('/fukushima')
-def map(): return haml(lat=37.8, lng=141.0, centre=141.0, icon_filename="MarkerTsunami.png")
+def map(): return haml(lat=37.8, lng=142, centre=141.0, icon_filename="MarkerTsunami.png")
 
 @get('/sydney')
 def map(): return haml(lat=-33.8, lng=151.2, centre=151.2, icon_filename="MarkerDuckie.png")
