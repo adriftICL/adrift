@@ -31,6 +31,16 @@ p {
     margin-top:1em;
 }
 
+a {
+    color: #043566;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgba(255, 50, 50, 1);
+}
+    
 ul.navigation {
     text-align: center;
     font-weight: bold;
