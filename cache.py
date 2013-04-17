@@ -35,7 +35,7 @@ def get_cached_results(closest_index):
 
 def cache_results(closest_index, results):
     try:
-        with contextib.closing( open_func(filename, "wb")) as handle:
+        with contextlib.closing( open_func(get_filename(closest_index), "wb")) as handle:
           pickle.dump(results, handle)
     except:
         raise NotWritten()
