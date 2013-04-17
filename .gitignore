@@ -6,3 +6,6 @@ dev_server.py
 *.py[cod]
 *.swp
 log/*
+cached_requests
+.DS_Store
+*/.DS_Store
