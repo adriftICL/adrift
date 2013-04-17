@@ -15,7 +15,7 @@
 :javascript
   var global_count = 0;
   function notification(message, css_class) {
-    var local_count = ++global_count;
+    var local_count = ++global_count;    
     $elm = $("#notification");
     $elm.attr('class','').addClass(css_class);
     $elm = $("#notification_text");
@@ -73,7 +73,7 @@
 
     $(document).ajaxStart(function(){
       $('div.map_notification_container').block({
-        message: '<div style="font-size:18px"><img src="/static/busy.gif" /> Now computing tracer... <p> See tabs on top of screen for more information.</div>',
+        message: '<div style="font-size:18px"><img src="/static/busy.gif" /> Now computing tracer...</div>',
         css:{padding: '30px', width: '400px'}
       });
     });

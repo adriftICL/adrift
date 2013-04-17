@@ -55,25 +55,27 @@ ul.navigation li a:hover {
 
 #notification {
     position: absolute;
-    height: 32px;
-    width: 515px;
+    height: 45px;
+    width: 600px;
     z-index: 10;
     background-color: rgba(100, 100, 100, 0.8);
     float:left;
 }
 #notification_text {
     position: absolute;
-    width: 360px;
+    width: 445px;
     color: white;
     font-weight: bold;
-    text-align:right;
+    text-align:left;
     padding-right: 1em;
-    padding-top: 0.5em;
+    padding-top: 0.7em;
     padding-bottom: 0.5em;
+    padding-left:10px;
+    font-size: 19px;
 }
 
 #notification.error {
-    background-color: rgba(255, 100, 100, 0.8);
+    background-color: rgba(255, 50, 50, 0.8);
 }
 #notification.success {
     background-color: rgba(50, 200, 50, 0.8);
@@ -84,8 +86,8 @@ ul.navigation li a:hover {
     height: 23px;
     float:left;
     z-index: 10;
-    left:370px;
-    padding-top: 0.5em;
+    left:455px;
+    padding-top: 15px;
     padding-bottom: 0.5em;
 }
 
