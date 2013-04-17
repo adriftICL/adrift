@@ -29,7 +29,7 @@ def map(): return haml(lat=37.8, lng=142, centre=141.0, icon_filename="MarkerTsu
 def map(): return haml(lat=28, lng=-89.4, centre=-70.0, icon_filename="MarkerOilRig.png")
 
 @get('/rubberduckiespill')
-def map(): return haml(lat=48, lng=180, centre=-165, icon_filename="MarkerDuckie.png")
+def map(): return haml(lat=44.7, lng=178.1, centre=-165, icon_filename="MarkerDuckie.png")
 
 @get('/sydney')
 def map(): return haml(lat=-33.8, lng=151.2, centre=151.2, icon_filename="MarkerDuckie.png")
