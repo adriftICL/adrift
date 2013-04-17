@@ -4,6 +4,7 @@ from tracer import run_tracer, is_landpoint, is_lacking_data
 import cPickle as pickle
 from os import utime
 import subprocess
+import contextlib
 from random import shuffle
 from sys import argv
 from bz2 import BZ2File
@@ -27,13 +28,15 @@ def get_cached_results(closest_index):
     try:
         filename = get_filename(closest_index)
         utime(filename, None)
-        return pickle.load(open_func(filename, "rb"))
+        with contextlib.closing( open_func(filename, "rb")) as handle:
+          return pickle.load(handle)
     except OSError:
         raise NotCached()
 
 def cache_results(closest_index, results):
     try:
-        pickle.dump(results, open_func(get_filename(closest_index), "wb"))
+        with contextib.closing( open_func(filename, "wb")) as handle:
+          pickle.dump(results, handle)
     except:
         raise NotWritten()
     subprocess.call(['bash','./delete_stale_saved_reqs.sh', CACHE_ROOT, NUMTOSAVE])
