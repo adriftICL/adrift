@@ -105,10 +105,10 @@ ul.navigation li a:hover {
 
 .team_member img {
     float: right;
-    margin: 0 0 30px 30px;
+    margin: 0 0 10px 30px;
 }
 
 .team_member {
-    margin: 30px 0;
+    margin: 5px 0;
     clear: both;
 }
