@@ -67,14 +67,19 @@ ul.navigation li a:hover {
 #notification {
     position: absolute;
     height: 45px;
-    width: 600px;
+    width: 520px;
     z-index: 10;
     background-color: rgba(100, 100, 100, 0.8);
     float:left;
 }
+#notification.error {
+    background-color: rgba(255, 50, 50, 0.8);
+    left:0px;
+}
+
 #notification_text {
     position: absolute;
-    width: 445px;
+    width: 365px;
     color: white;
     font-weight: bold;
     text-align:left;
@@ -83,20 +88,18 @@ ul.navigation li a:hover {
     font-size: 19px;
     line-height: 45px;
 }
+#notification_text.error {
+    left:300px;
+    width: 565px;
+}
 
-#notification.error {
-    background-color: rgba(255, 50, 50, 0.8);
-}
-#notification.success {
-    background-color: rgba(50, 200, 50, 0.8);
-}
 #notification_likesbar{
     position: absolute;
     width: 149px;
     height: 23px;
     float:left;
     z-index: 10;
-    left:455px;
+    left:375px;
     padding-top: 15px;
     padding-bottom: 0.5em;
 }

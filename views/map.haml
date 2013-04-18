@@ -19,7 +19,10 @@
     $elm = $("#notification");
     $elm.attr('class','').addClass(css_class);
     $elm = $("#notification_text");
+    $elm.attr('class','').addClass(css_class);
     $elm.text(message);
+    $elm = $("#notification_likesbar");
+    $elm.attr('class','').addClass(css_class);
   }
   $(document).ready(function(){
     // $("#map_canvas").css("width", "1024px");
