@@ -14,7 +14,7 @@ logger = getLogger(__name__)
 logger.propagate = False
 
 handler = TimedRotatingFileHandler("log/adrift.log", when="D", interval=1)
-formatter = Formatter("%(asctime)s,%(message)s", datefmt='%m/%d/%Y %I:%M:%S %p')
+formatter = Formatter("%(asctime)s,%(message)s", datefmt='%m/%d/%Y %H:%M:%S')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
@@ -23,21 +23,33 @@ logger.setLevel(INFO)
 # dedicated experiments
 
 @get('/fukushima')
-def map(): return haml(lat=37.8, lng=142, centre=141.0, icon_filename="MarkerTsunami.png")
+def map():
+    logger.info(str(web.ctx.ip) + " fukushima")
+    return haml(lat=37.8, lng=142, centre=141.0, icon_filename="MarkerTsunami.png")
 
 @get('/deepwaterhorizon')
-def map(): return haml(lat=28, lng=-89.4, centre=-70.0, icon_filename="MarkerOilRig.png")
+def map():
+    logger.info(str(web.ctx.ip) + " deepwaterhorizon")
+    return haml(lat=28, lng=-89.4, centre=-70.0, icon_filename="MarkerOilRig.png")
 
 @get('/rubberduckiespill')
-def map(): return haml(lat=48, lng=180, centre=-165, icon_filename="MarkerDuckie.png")
+def map():
+    logger.info(str(web.ctx.ip) + " rubberduckiespill")
+    return haml(lat=44.7, lng=178.1, centre=-165, icon_filename="MarkerDuckie.png")
 
-@get('/sydney')
-def map(): return haml(lat=-33.8, lng=151.2, centre=151.2, icon_filename="MarkerDuckie.png")
+@get('/renaspill')
+def map():
+    logger.info(str(web.ctx.ip) + " renaspill")
+    return haml(lat=-37.5, lng=176.7, centre=-140, icon_filename="MarkerShip.png")
 
 # other pages
 
 @get('/')
 def under_construction(): return haml()
+# comment out for release (?)
+# def map():
+#     logger.info(str(web.ctx.ip) + " root")
+#     return haml(icon_filename="MarkerDuckie.png")
 
 @get('/map')
 def map():
@@ -66,7 +78,7 @@ def doit():
         # if no attributes are given, return nothing.
         return ""
 
-    logger.info(str(web.ctx.ip) + "," + str(given_lat) + "," + str(given_lng))
+    logger.info(str(web.ctx.ip) + " map," + str(given_lat) + "," + str(given_lng))
 
     closest_index = get_closest_index(given_lat, given_lng)
 
@@ -93,15 +105,19 @@ def doit():
     return ret
 
 @get('/what')
-def what(): pass
+def what():
+    logger.info(str(web.ctx.ip) + " what")
 
 @get('/how')
-def how(): pass
+def how():
+    logger.info(str(web.ctx.ip) + " how")
 
 @get('/background')
-def background(): pass
+def background():
+    logger.info(str(web.ctx.ip) + " background")
 
 @get('/team')
-def team(): pass
+def team():
+    logger.info(str(web.ctx.ip) + " team")
 
 run()

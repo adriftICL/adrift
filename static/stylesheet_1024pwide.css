@@ -9,7 +9,14 @@
 }
 
 #notification {
-    left:424px;
+    left:504px;
+}
+
+#notification.error {
+    width: 1024px;
+}
+#notification_likesbar.error {
+    left:879px;
 }
 
 #bottombar {
