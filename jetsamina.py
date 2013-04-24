@@ -45,11 +45,8 @@ def map():
 # other pages
 
 @get('/')
-def under_construction(): return haml()
-# comment out for release (?)
-# def map():
-#     logger.info(str(web.ctx.ip) + " root")
-#     return haml(icon_filename="MarkerDuckie.png")
+    logger.info(str(web.ctx.ip) + " root")
+    return haml(icon_filename="MarkerDuckie.png")
 
 @get('/map')
 def map():
