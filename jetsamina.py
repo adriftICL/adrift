@@ -45,6 +45,7 @@ def map():
 # other pages
 
 @get('/')
+def map():
     logger.info(str(web.ctx.ip) + " root")
     return haml(icon_filename="MarkerDuckie.png")
 
