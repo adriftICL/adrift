@@ -33,13 +33,10 @@
     if(window.initial_centre) {
       centre_lon = window.initial_centre;
     } else {
-      function getcurrentLon(position){
-        centre_lon = Math.round(position.coords.longitude);
+      $.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) {
+        centre_lon = Math.round(data.longitude);
         map.panTo(new google.maps.LatLng(8, centre_lon));
-      }
-      if (navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(getcurrentLon);
-      }
+      });
     }
 
     var mapOptions = {
