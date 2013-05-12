@@ -114,6 +114,10 @@ def how():
 def background():
     logger.info(str(web.ctx.ip) + " background")
 
+@get('/faq')
+def faq():
+    logger.info(str(web.ctx.ip) + " faq")
+
 @get('/team')
 def team():
     logger.info(str(web.ctx.ip) + " team")
