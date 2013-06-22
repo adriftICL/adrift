@@ -40,7 +40,7 @@ def get_closest_index(given_lat, given_lng):
 
 def run_tracer(closest_index):
     maxyears = 10
-    minplotval = 1e-4
+    minplotval = 2.5e-4
 
     v = zeros((1, P[0].shape[0]))
 

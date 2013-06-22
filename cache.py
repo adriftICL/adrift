@@ -11,7 +11,7 @@ from bz2 import BZ2File
 
 ## Will raise NotCached if not readable/writable (I think..)
 CACHE_ROOT = "cached_requests"
-NUMTOSAVE = "15001"
+NUMTOSAVE = "40001"
 
 # open_func = BZ2File
 open_func = open
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         if not (is_landpoint(closest_index) or is_lacking_data(closest_index)):
             entries.append(closest_index)
     shuffle(entries)
-    entries = entries[:15000] # only 15k entries...
+    entries = entries[:40000] # only 40k entries...
     for closest_index in entries:
         print "  |--> processing closest index #" + str(closest_index)
         cache_results(closest_index, run_tracer(closest_index))
