@@ -104,7 +104,6 @@
     function drawHeatMapData(j, expected_run_counter) {
       if (run_counter != expected_run_counter) return;
       if (j == 0) {
-        heatmap.setMap(null);
         for(var i = 0; i < heatMapData[j].length; i++) {
           var x = heatMapData[j][i].location;
           heatMapData[j][i].location = new google.maps.LatLng(x.lat, x.lng);
@@ -157,8 +156,11 @@
           heatmap.setMap(null);
           notification("You clicked on land, please click on the ocean", "error");
         } else {
-          heatMapData = data;
-          drawHeatMapData(0, run_counter);
+          setTimeout(function(){
+            heatmap.setMap(null);
+            heatMapData = data;
+            drawHeatMapData(0, run_counter);
+          },secperframe)
         }
       });
     }
