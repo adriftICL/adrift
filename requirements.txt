@@ -1,4 +1,6 @@
-spiderman
+PyHAML
+mako
+web.py
 numpy
 scipy
 flup
