@@ -147,7 +147,7 @@ class Team:
         return render_haml('team.haml')
 
 def notfound():
-    return web.notfound(render_haml('404.haml'))
+    return web.notfound(render_haml('map.haml', icon_filename="MarkerDuckie.png"))
 
 if __name__ == "__main__":
     from sys import argv
