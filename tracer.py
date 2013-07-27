@@ -4,29 +4,43 @@ import scipy.io
 from scipy import *
 
 try:
-      data = scipy.io.loadmat('data/tracerappdata.mat')
+      dataGlobal = scipy.io.loadmat('data/tracerappdataGlobal.mat')
+      dataAustralia = scipy.io.loadmat('data/tracerappdataAustralia.mat')
 except IOError as e:
       print("({})".format(e))
       print
-      print "Error: You need to get the tracerappdata.mat file first. It then goes in ./data/"
+      print "Error: You need to get the tracerappdata*.mat files first. It then goes in ./data/"
       print "       Contact Erik van Sebille (mailto: e.vansebille@unsw.edu.au) for this."
       print
       exit()
 
-P = data['P'][0]
-coastp = data['coastp']
-popdens = data['popdens']
-lon = data['lon'][0]
-landpoints = data['landpoints'][0]
-lat = data['lat'][0]
+PGlobal = dataGlobal['P'][0]
+lonGlobal = dataGlobal['lon'][0]
+landpointsGlobal = dataGlobal['landpoints'][0]
+latGlobal = dataGlobal['lat'][0]
 
-def is_landpoint(closest_index):
-    return landpoints[closest_index] == +1
+PAustralia = dataAustralia['P'][0]
+lonAustralia = dataAustralia['lon'][0]
+landpointsAustralia = dataAustralia['landpoints'][0]
+latAustralia = dataAustralia['lat'][0]
+nxAustralia = dataAustralia['nx'][0]
+nyAustralia = dataAustralia['ny'][0]
+lonAustralia = lonAustralia[0:nxAustralia[0]]
+latAustralia = latAustralia[0:nyAustralia[0]]
 
-def is_lacking_data(closest_index):
-    return landpoints[closest_index] == -1
+def is_landpoint(closest_index,type):
+    if type=='Global':
+        return landpointsGlobal[closest_index] == +1
+    if type=='Australia':
+        return landpointsAustralia[closest_index] == +1
 
-def get_closest_index(given_lat, given_lng):
+def is_lacking_data(closest_index,type):
+    if type=='Global':
+        return landpointsGlobal[closest_index] == -1
+    if type=='Australia':
+        return landpointsAustralia[closest_index] == -1
+
+def get_closest_index(given_lat, given_lng,type):
     def find(array, value, mod):
         best = 9999 + abs(value)
         best_i = -1
@@ -36,11 +50,24 @@ def get_closest_index(given_lat, given_lng):
                     best = abs(array[i]-value+delta)
                     best_i = i
         return best_i
-    return find(lat, given_lat, 0) * len(lon) + find(lon, given_lng, 360)
+    if type=='Global':
+        return find(latGlobal, given_lat, 0) * len(lonGlobal) + find(lonGlobal, given_lng, 360)
+    if type=='Australia':
+        return find(latAustralia, given_lat, 0) * len(lonAustralia) + find(lonAustralia, given_lng, 360)
 
-def run_tracer(closest_index):
-    maxyears = 10
-    minplotval = 2.5e-4
+def run_tracer(closest_index,type):
+    if type=='Global':
+        P=PGlobal
+        lat=latGlobal
+        lon=lonGlobal
+        maxyears=10
+        minplotval=2.5e-4
+    if type=='Australia':
+        P=PAustralia
+        lat=latAustralia
+        lon=lonAustralia
+        maxyears=1
+        minplotval=1e-4,
 
     v = zeros((1, P[0].shape[0]))
 

@@ -105,6 +105,43 @@ ul.navigation li a:hover {
     padding-top: 6px;
     padding-bottom: 0.5em;
 }
+#return_bar {
+    position: absolute;
+    height: 25px;
+    width: 250px;
+    z-index: 10;
+    background-color: rgba(100, 100, 100, 0.8);
+    text-align:left;
+    padding-right: 1em;
+    padding-left:10px;
+    font-size: 14px;
+    line-height: 25px;
+    font-weight: normal;
+}
+a.return_bar {
+    color: white;
+    text-decoration: none;
+}
+a.return_bar:hover {
+    color: rgba(255, 50, 50, 1);
+}
+
+#australia_message {
+    position: absolute;
+    height: 45px;
+    width: 995px;
+    z-index: 10;
+    top:574px;
+    background-color: rgba(255, 50, 50, 0.8);
+    float:right;
+    color: white;
+    font-weight: bold;
+    text-align:center;
+    padding-right: 1em;
+    padding-left:10px;
+    font-size: 18px;
+    line-height: 45px;
+}
 
 #bottombarcclogo{
     width:100px;

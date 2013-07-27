@@ -21,6 +21,8 @@ urls = ('/fukushima', 'Fukushima',
         '/favicon.ico', 'Favicon',
         '/map', 'Map',
         '/run', 'RunTracer',
+        '/australia', 'Australia',
+        '/runAus','RunTracerAus',
         '/what', 'What',
         '/how', 'How',
         '/background', 'Background',
@@ -97,21 +99,21 @@ class RunTracer:
 
         logger.info(str(web.ctx.ip) + " map," + str(given_lat) + "," + str(given_lng))
 
-        closest_index = get_closest_index(given_lat, given_lng)
+        closest_index = get_closest_index(given_lat, given_lng,'Global')
 
         ret = ""
 
-        if is_lacking_data(closest_index):
+        if is_lacking_data(closest_index,'Global'):
             ret = json.dumps("Sorry, we have no data for that ocean area")
-        elif is_landpoint(closest_index):
+        elif is_landpoint(closest_index,'Global'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
             try:
-                results = get_cached_results(closest_index)
+                results = get_cached_results(closest_index,'Global')
             except NotCached:
-                results = run_tracer(closest_index)
+                results = run_tracer(closest_index,'Global')
                 try:
-                    cache_results(closest_index, results)
+                    cache_results(closest_index, results,'Global')
                 except NotWritten:
                     print "Not saving data"
 
@@ -145,6 +147,43 @@ class Team:
     def GET(self):
         logger.info(str(web.ctx.ip) + " team")
         return render_haml('team.haml')
+
+class Australia:
+    def GET(self):
+        i = web.input()
+        try:
+            return render_haml('australia.haml', lat=i.lat, lng=i.lng, icon_filename="MarkerDuckie.png")
+        except AttributeError:
+            return render_haml('australia.haml', icon_filename="MarkerDuckie.png")
+class RunTracerAus:
+    def GET(self):
+        i = web.input()
+        try:
+            given_lat = float(i.lat)
+            given_lng = float(i.lng)
+        except AttributeError:
+            # if no attributes are given, return nothing.
+            return ""
+        logger.info(str(web.ctx.ip) + " australia," + str(given_lat) + "," + str(given_lng))
+        closest_index = get_closest_index(given_lat, given_lng,'Australia')
+        ret = ""
+        if is_lacking_data(closest_index,'Australia'):
+            ret = json.dumps("Sorry, we have no data for that ocean area")
+        elif is_landpoint(closest_index,'Australia'):
+            ret = json.dumps("You clicked on land, please click on the ocean")
+        else:
+            try:
+                results = get_cached_results(closest_index,'Australia')
+            except NotCached:
+                results = run_tracer(closest_index,'Australia')
+                try:
+                    cache_results(closest_index, results,'Australia')
+                except NotWritten:
+                    print "Not saving data"
+
+            web.header("Content-Type", "application/x-javascript")
+            ret = json.dumps(results)
+        return ret
 
 def notfound():
     return web.notfound(render_haml('map.haml', icon_filename="MarkerDuckie.png"))
