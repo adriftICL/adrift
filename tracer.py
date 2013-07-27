@@ -66,7 +66,7 @@ def run_tracer(closest_index,type):
         P=PAustralia
         lat=latAustralia
         lon=lonAustralia
-        maxyears=1
+        maxyears=3
         minplotval=1e-4,
 
     v = zeros((1, P[0].shape[0]))
