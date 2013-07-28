@@ -7,5 +7,6 @@ dev_server.py
 *.swp
 log/*
 cached_requests
+cached_requestsAus
 .DS_Store
 */.DS_Store
