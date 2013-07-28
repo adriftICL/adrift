@@ -3,9 +3,10 @@
 import scipy.io
 from scipy import *
 
+data={}
 try:
-      dataGlobal = scipy.io.loadmat('data/tracerappdataGlobal.mat')
-      dataAustralia = scipy.io.loadmat('data/tracerappdataAustralia.mat')
+      data['Global'] = scipy.io.loadmat('data/tracerappdataGlobal.mat')
+      data['Australia'] = scipy.io.loadmat('data/tracerappdataAustralia.mat')
 except IOError as e:
       print("({})".format(e))
       print
@@ -14,31 +15,20 @@ except IOError as e:
       print
       exit()
 
-PGlobal = dataGlobal['P'][0]
-lonGlobal = dataGlobal['lon'][0]
-landpointsGlobal = dataGlobal['landpoints'][0]
-latGlobal = dataGlobal['lat'][0]
-
-PAustralia = dataAustralia['P'][0]
-lonAustralia = dataAustralia['lon'][0]
-landpointsAustralia = dataAustralia['landpoints'][0]
-latAustralia = dataAustralia['lat'][0]
-nxAustralia = dataAustralia['nx'][0]
-nyAustralia = dataAustralia['ny'][0]
-lonAustralia = lonAustralia[0:nxAustralia[0]]
-latAustralia = latAustralia[0:nyAustralia[0]]
+lon = {}
+lat = {}
+lon['Global']=data['Global']['lon'][0]
+lat['Global']=data['Global']['lat'][0]
+nx = data['Australia']['nx'][0]
+ny = data['Australia']['ny'][0]
+lon['Australia']=data['Australia']['lon'][0][0:nx[0]]
+lat['Australia']=data['Australia']['lat'][0][0:ny[0]]
 
 def is_landpoint(closest_index,type):
-    if type=='Global':
-        return landpointsGlobal[closest_index] == +1
-    if type=='Australia':
-        return landpointsAustralia[closest_index] == +1
+    return data[type]['landpoints'][0][closest_index] == +1
 
 def is_lacking_data(closest_index,type):
-    if type=='Global':
-        return landpointsGlobal[closest_index] == -1
-    if type=='Australia':
-        return landpointsAustralia[closest_index] == -1
+    return data[type]['landpoints'][0][closest_index] == -1
 
 def get_closest_index(given_lat, given_lng,type):
     def find(array, value, mod):
@@ -50,26 +40,17 @@ def get_closest_index(given_lat, given_lng,type):
                     best = abs(array[i]-value+delta)
                     best_i = i
         return best_i
-    if type=='Global':
-        return find(latGlobal, given_lat, 0) * len(lonGlobal) + find(lonGlobal, given_lng, 360)
-    if type=='Australia':
-        return find(latAustralia, given_lat, 0) * len(lonAustralia) + find(lonAustralia, given_lng, 360)
+    return find(lat[type], given_lat, 0) * len(lon[type]) + find(lon[type], given_lng, 360)
 
 def run_tracer(closest_index,type):
     if type=='Global':
-        P=PGlobal
-        lat=latGlobal
-        lon=lonGlobal
         maxyears=10
         minplotval=2.5e-4
     if type=='Australia':
-        P=PAustralia
-        lat=latAustralia
-        lon=lonAustralia
         maxyears=3
         minplotval=1e-4,
 
-    v = zeros((1, P[0].shape[0]))
+    v = zeros((1, data[type]['P'][0][0].shape[0]))
 
     v[0][closest_index] = 1
 
@@ -78,8 +59,8 @@ def run_tracer(closest_index,type):
     def extract_important_points(v):
         heatMapData = []
         index = 0
-        for i in lat:
-            for j in lon:
+        for i in lat[type]:
+            for j in lon[type]:
                 if v[0][index] > minplotval:
                     vval = int(min(v[0][index]*10000, 100))
                     heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': vval})
@@ -87,7 +68,7 @@ def run_tracer(closest_index,type):
         return heatMapData
 
     for y in xrange(maxyears):
-          for bm in P:
+          for bm in data[type]['P'][0]:
               v = v * bm
               results.append(extract_important_points(v))
 
