@@ -24,10 +24,17 @@ urls = ('/fukushima', 'Fukushima',
         '/australia', 'Australia',
         '/runAus','RunTracerAus',
         '/what', 'What',
+        '/what_haml', 'What_haml',
         '/how', 'How',
+        '/how_haml', 'How_haml',
         '/background', 'Background',
+        '/background_haml', 'Background_haml',
         '/faq', 'FAQ',
-        '/team', 'Team')
+        '/faq_haml', 'FAQ_haml',
+        '/media', 'Media',
+        '/media_haml', 'Media_haml',
+        '/team', 'Team',
+        '/team_haml', 'Team_haml')
 
 # set up logging. for more information, see
 # http://docs.python.org/2/howto/logging.html#logging-basic-tutorial
@@ -47,29 +54,29 @@ logger.setLevel(INFO)
 class Fukushima:
     def GET(self):
         logger.info(str(web.ctx.ip) + " fukushima")
-        return render_haml('map.haml', lat=37.8, lng=142, centre=141.0, icon_filename="MarkerTsunami.png")
+        return render_haml('map.haml', lat=37.8, lng=142, centre=141.0, icon_filename="MarkerTsunami.png", open_page="")
 
 class DeepWaterHorizon:
     def GET(self):
         logger.info(str(web.ctx.ip) + " deepwaterhorizon")
-        return render_haml('map.haml', lat=28, lng=-89.4, centre=-70.0, icon_filename="MarkerOilRig.png")
+        return render_haml('map.haml', lat=28, lng=-89.4, centre=-70.0, icon_filename="MarkerOilRig.png", open_page="")
 
 class RubberDuckieSpill:
     def GET(self):
         logger.info(str(web.ctx.ip) + " rubberduckiespill")
-        return render_haml('map.haml', lat=44.7, lng=178.1, centre=-165, icon_filename="MarkerDuckie.png")
+        return render_haml('map.haml', lat=44.7, lng=178.1, centre=-165, icon_filename="MarkerDuckie.png", open_page="")
 
 class RenaSpill:
     def GET(self):
         logger.info(str(web.ctx.ip) + " renaspill")
-        return render_haml('map.haml', lat=-37.5, lng=176.7, centre=-140, icon_filename="MarkerShip.png")
+        return render_haml('map.haml', lat=-37.5, lng=176.7, centre=-140, icon_filename="MarkerShip.png", open_page="")
 
 # other pages
 
 class Index:
     def GET(self):
         logger.info(str(web.ctx.ip) + " root")
-        return render_haml('map.haml', icon_filename="MarkerDuckie.png")
+        return render_haml('map.haml', icon_filename="MarkerDuckie.png", open_page="")
 
 class Map:
     def GET(self):
@@ -79,9 +86,9 @@ class Map:
                 centre = i.centre
             except AttributeError:
                 centre = 30
-            return render_haml('map.haml', lat=i.lat, lng=i.lng, centre=centre, icon_filename="MarkerDuckie.png")
+            return render_haml('map.haml', lat=i.lat, lng=i.lng, centre=centre, icon_filename="MarkerDuckie.png", open_page="")
         except AttributeError:
-            return render_haml('map.haml', icon_filename="MarkerDuckie.png")
+            return render_haml('map.haml', icon_filename="MarkerDuckie.png", open_page="")
 
 class Favicon:
     def GET(self):
@@ -126,35 +133,58 @@ class RunTracer:
 class What:
     def GET(self):
         logger.info(str(web.ctx.ip) + " what")
+        return render_haml('map.haml', icon_filename="MarkerDuckie.png", open_page="what_haml")
+class What_haml:
+    def GET(self):
         return render_haml('what.haml')
 
 class How:
     def GET(self):
         logger.info(str(web.ctx.ip) + " how")
+        return render_haml('map.haml', icon_filename="MarkerDuckie.png", open_page="how_haml")
+class How_haml:
+    def GET(self):
         return render_haml('how.haml')
 
 class Background:
     def GET(self):
         logger.info(str(web.ctx.ip) + " background")
+        return render_haml('map.haml', icon_filename="MarkerDuckie.png", open_page="background_haml")
+class Background_haml:
+    def GET(self):
         return render_haml('background.haml')
 
 class FAQ:
     def GET(self):
         logger.info(str(web.ctx.ip) + " faq")
+        return render_haml('map.haml', icon_filename="MarkerDuckie.png", open_page="faq_haml")
+class FAQ_haml:
+    def GET(self):
         return render_haml('faq.haml')
 
 class Team:
     def GET(self):
         logger.info(str(web.ctx.ip) + " team")
+        return render_haml('map.haml', icon_filename="MarkerDuckie.png", open_page="team_haml")
+class Team_haml:
+    def GET(self):
         return render_haml('team.haml')
+
+class Media:
+    def GET(self):
+        logger.info(str(web.ctx.ip) + " media")
+        return render_haml('map.haml', icon_filename="MarkerDuckie.png", open_page="media_haml")
+class Media_haml:
+    def GET(self):
+        return render_haml('media.haml')
 
 class Australia:
     def GET(self):
         i = web.input()
         try:
-            return render_haml('australia.haml', lat=i.lat, lng=i.lng, icon_filename="MarkerDuckie.png")
+            return render_haml('australia.haml', lat=i.lat, lng=i.lng, icon_filename="MarkerDuckie.png", open_page="")
         except AttributeError:
-            return render_haml('australia.haml', icon_filename="MarkerDuckie.png")
+            return render_haml('australia.haml', icon_filename="MarkerDuckie.png", open_page="")
 class RunTracerAus:
     def GET(self):
         i = web.input()

@@ -184,6 +184,9 @@
       }
     });
   });
+  if ('${open_page}' !== "") {
+    $(document).ready(function(){$(".colorbox").colorbox({open:true,href:"${open_page}",width:"850px", top:top_px+"px", maxHeight:"510px", opacity:0.50});});
+  }
 
 <div class="map_notification_container">
   #notification
