@@ -1,6 +1,7 @@
 env
 data
 build
+config.py
 
 dev_server.py
 *.py[cod]

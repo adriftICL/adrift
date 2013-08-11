@@ -2,19 +2,27 @@
 
 from tracer import run_tracer, is_landpoint, is_lacking_data
 import cPickle as pickle
-from os import utime
-import subprocess
-import contextlib
+import config
 from random import shuffle
-from sys import argv
-from bz2 import BZ2File
 
-## Will raise NotCached if not readable/writable (I think..)
-CACHE_ROOTGLOBAL = "cached_requests"
-CACHE_ROOTAUS = "cached_requestsAus"
+import boto.s3.connection
+from boto.s3.key import Key
+connection = boto.s3.connection.S3Connection(
+          aws_access_key_id=config.aws_access_key_id,
+          aws_secret_access_key=config.aws_secret_access_key,
+          port=8888,
+          host='swift.rc.nectar.org.au',
+          is_secure=True,
+          validate_certs=False,
+          calling_format=boto.s3.connection.OrdinaryCallingFormat()
+        )
+#buckets = connection.get_all_buckets()
+#botokey['Australia'] = Key(buckets[0])
+bucket = [connection.get_bucket('global'),connection.get_bucket('australia')]
+botokey={}
+botokey['Global']=Key(bucket[0])
+botokey['Australia']=Key(bucket[1])
 
-# open_func = BZ2File
-open_func = open
 
 class NotCached(Exception):
     pass
@@ -22,24 +30,19 @@ class NotWritten(Exception):
     pass
 
 def get_filename(closest_index,type):
-    if type=='Global':
-        return CACHE_ROOTGLOBAL + '/closest_index' + str(closest_index).zfill(5)
-    if type=='Australia':
-        return CACHE_ROOTAUS + '/closest_index' + str(closest_index).zfill(5)
+    return type + 'Closest_index' + str(closest_index).zfill(5)
 
 def get_cached_results(closest_index,type):
-    try:
-        filename = get_filename(closest_index,type)
-        utime(filename, None)
-        with contextlib.closing( open_func(filename, "rb")) as handle:
-          return pickle.load(handle)
-    except OSError:
+    botokey[type].key = get_filename(closest_index,type)
+    if botokey[type].exists():
+        return pickle.loads(botokey[type].get_contents_as_string())
+    else:
         raise NotCached()
 
 def cache_results(closest_index, results,type):
     try:
-        with contextlib.closing( open_func(get_filename(closest_index,type), "wb")) as handle:
-          pickle.dump(results, handle)
+        botokey[type].key = get_filename(closest_index,type)
+        return botokey[type].set_contents_from_string(pickle.dumps(results,pickle.HIGHEST_PROTOCOL))
     except:
         raise NotWritten()
 

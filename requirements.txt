@@ -1,4 +1,5 @@
 PyHAML
+boto
 mako
 web.py
 numpy
