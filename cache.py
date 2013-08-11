@@ -53,4 +53,4 @@ if __name__ == "__main__":
             entries.append(closest_index)
     for closest_index in entries:
         print "  |--> processing closest index #" + str(closest_index)
-        cache_results(closest_index, run_tracer(closest_index),type)
+        cache_results(closest_index, run_tracer(closest_index,type),type)
