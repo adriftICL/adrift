@@ -78,7 +78,7 @@
 
     $(document).ajaxStart(function(){
       $('div.map_notification_container').block({
-        message: '<div style="font-size:18px"><img src="/static/busy.gif" /> Now computing tracer...</div>',
+        message: '<div style="font-size:18px"><img src="/static/busy.gif" /> Now computing garbage...</div>',
         css:{padding: '30px', width: '400px'}
       });
     });
@@ -129,7 +129,7 @@
       setTimeout(function(){
         var years = Math.floor((j+1)/6);
         var months = (j+1)%6*2;
-        notification("Tracer after " + years + " years and " + months + " months");
+        notification("Garbage after " + years + " years and " + months + " months");
       },0);
       if (j + 1 < heatMapData.length) {
         setTimeout(function() {
