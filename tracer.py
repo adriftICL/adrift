@@ -47,7 +47,7 @@ def run_tracer(closest_index,type):
         maxyears=10
         minplotval=2.5e-4
     if type=='Australia':
-        maxyears=3
+        maxyears=5
         minplotval=1e-4,
 
     v = zeros((1, data[type]['P'][0][0].shape[0]))
