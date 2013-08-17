@@ -75,6 +75,30 @@
     };
     var map = new google.maps.Map(document.getElementById('map_canvas'),
         mapOptions);
+    var AustraliaBoxCoords = [
+      new google.maps.LatLng(-6, 100),
+      new google.maps.LatLng(-46, 100),
+      new google.maps.LatLng(-46, -170),
+      new google.maps.LatLng(-6, -170),
+      new google.maps.LatLng(-6, 100)
+    ];
+    var AustraliaBox = new google.maps.Polyline({
+      path: AustraliaBoxCoords,
+      strokeColor: "#043566",
+      strokeOpacity: 0.2,
+      strokeWeight: 1
+    });
+    AustraliaBox.setMap(map);
+
+    var Ausmarker = new google.maps.Marker({
+      url: 'australia',
+      icon: 'static/zoomin.png',
+      map: map
+    });
+    google.maps.event.addListener(Ausmarker, 'click', function() {
+      window.location.href = Ausmarker.url;
+    });
+    Ausmarker.setPosition(new google.maps.LatLng(-16, -175));
 
     $(document).ajaxStart(function(){
       $('div.map_notification_container').block({
