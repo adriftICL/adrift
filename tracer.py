@@ -63,7 +63,7 @@ def run_tracer(closest_index,type):
             for j in lon[type]:
                 if v[0][index] > minplotval:
                     vval = int(min(v[0][index]*10000, 100))
-                    heatMapData.append({'location': {'lat':int(i),'lng':int(j)}, 'weight': vval})
+                    heatMapData.append({'location': {'lat':int(i*10)/10.,'lng':int(j*10)/10.}, 'weight': vval})
                 index += 1
         return heatMapData
 
