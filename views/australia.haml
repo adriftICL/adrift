@@ -75,7 +75,7 @@
 
     $(document).ajaxStart(function(){
       $('div.map_notification_container').block({
-        message: '<div style="font-size:18px"><img src="/static/busy.gif" /> Now computing garbage...</div>',
+        message: '<div style="font-size:18px"><img src="/static/busy.gif" /> Now computing spread of marine plastics...</div>',
         css:{padding: '30px', width: '400px'}
       });
     });
@@ -126,7 +126,7 @@
       setTimeout(function(){
         var years = Math.floor((j+1)/12);
         var months = (j+1)%12;
-        notification("Garbage after " + years + " years and " + months + " months");
+        notification("Marine plastics after " + years + " years and " + months + " months");
       },0);
       if (j + 1 < heatMapData.length) {
         setTimeout(function() {
