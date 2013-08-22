@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 cd $(dirname "${BASH_SOURCE[0]}")
 if ! [ -e env ]
@@ -23,4 +23,5 @@ else
     echo -e "There were errors, please ensure libatlas or blas + lapack are installed."
     echo -e "On arch linux, this is \033[34;1msudo pacman -S blas lapack\033[0m"
     echo -e "On ubuntu, this is \033[34;1msudo apt-get install libatlas-dev liblapack-dev gfortran\033[0m"
+    echo -e "On fedora, this is \033[34;1msudo yum install atlas-devel gcc-fortran lapack-devel\033[0m"
 fi
