@@ -11,20 +11,20 @@
 
 case "$1" in
   start)
-	spawn-fcgi -d /home/adrift/adrift -f /home/adrift/adrift/jetsamina.py -a 127.0.0.1 -p 9002
-	;;
+    spawn-fcgi -d /home/adrift/adrift -f /home/adrift/adrift/server.py -a 127.0.0.1 -p 9002
+    ;;
   restart|reload|force-reload)
-	kill `pgrep -f "python /home/adrift/adrift/jetsamina.py"`
-	sleep 0.5
-	spawn-fcgi -d /home/adrift/adrift -f /home/adrift/adrift/jetsamina.py -a 127.0.0.1 -p 9002
-	;;
+    kill `pgrep -f "python /home/adrift/adrift/server.py"`
+    sleep 0.5
+    spawn-fcgi -d /home/adrift/adrift -f /home/adrift/adrift/server.py -a 127.0.0.1 -p 9002
+    ;;
   stop)
-	kill `pgrep -f "python /home/adrift/adrift/jetsamina.py"`
-	;;
+    kill `pgrep -f "python /home/adrift/adrift/server.py"`
+    ;;
   *)
-	echo "Usage: $0 start|restart|stop" >&2
-	exit 3
-	;;
+    echo "Usage: $0 start|restart|stop" >&2
+    exit 3
+    ;;
 esac
 
 :

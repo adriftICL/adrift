@@ -220,8 +220,10 @@ def notfound():
 
 if __name__ == "__main__":
     from sys import argv
-    if not argv[0].endswith("dev_server.py"):
+    if not (len(argv) >= 2 and argv[1].startswith("dev")):
         web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
+    else:
+        argv.pop(1)
     app = web.application(urls,globals())
     app.notfound = notfound
     app.run()
