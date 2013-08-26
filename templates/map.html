@@ -1,0 +1,339 @@
+$def with (lat=None, lng=None, centre=None, icon_filename='MarkerDuckie.png', open_page=None)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adrift: tracking the global ocean circulation</title>
+    <script src="//code.jquery.com/jquery-latest.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+    <script src="/static/jquery.blockUI.js"></script>
+    <script src="/static/jquery.history.js"></script>
+    <script src="/static/jquery.colorbox-min.js"></script>
+    <script src="/static/cssua.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
+
+    <link href="/static/ui.css" rel="stylesheet" media="screen"/>
+    <link href="/static/colorbox.css" rel="stylesheet" media="screen"/>
+    <link href="/static/stylesheet.css" rel="stylesheet" media="screen"/>
+    <script>
+        if (cssua.ua.mobile) {
+            document.write("<link href=\"/static/stylesheet_960pwide.css\" rel=\"stylesheet\" media=\"screen\"/>")
+        } else {
+            document.write("<link href=\"/static/stylesheet_1024pwide.css\" rel=\"stylesheet\" media=\"screen\"/>")
+        }
+    </script>
+    <meta property="og:title" content="Adrift.org.au"/>
+    <meta property="og:image" content="http://adrift.org.au/static/fblogo.jpg"/>
+    <meta property="og:description" content="Want to know where your message in a bottle will turn up or track down the path of local floating pollution? Use Adrift.org.au to forecast where rubber duckies or floating debris in the ocean is likely to end up in 10 years. So, take a leap into the virtual ocean today and see where it takes you."/>
+    <meta property="fb:admins" content="1087703262" />
+    <meta name="google-site-verification" content="MSgbQgLLWmbQniHSSRJhbmt7Z3VYbRbBVF7gJ3Fsda8" />
+    <meta name="Description" content="Want to know where your message in a bottle will turn up or track down the path of local floating pollution? Use Adrift.org.au to forecast where rubber duckies or floating debris in the ocean is likely to end up in 10 years. So, take a leap into the virtual ocean today and see where it takes you."/>
+
+</head>
+<body>
+    <script type="text/javascript">
+      var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-38940204-1']); _gaq.push(['_trackPageview']);
+      (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+    </script>
+    <script>
+        var top_px = 126;
+        if (cssua.ua.mobile) {
+            top_px = 100;
+        }
+        $$(document).ready(function(){
+            $$(".colorbox").click(function(a){
+                a = a.currentTarget;
+                $$.colorbox({
+                    width:"850px", top:top_px+"px", maxHeight:"510px", opacity:0.50,
+                    html: $$($$(a).attr("href")).html()
+                });
+                return false;
+            });
+        });
+    </script>
+
+    <div id="page_container">
+        <div style="position: relative">
+            <script>
+                if (cssua.ua.mobile) {
+                    document.write("<img class=\"header\" src=\"/static/adrift_logo_960pwide.jpg\">")
+                    document.write("<div style=\"position:absolute;top:39px;left:155px;\">")
+                } else {
+                    document.write("<img class=\"header\" src=\"/static/adrift_logo_1024pwide.jpg\">")
+                    document.write("<div style=\"position:absolute;top:65px;left:219px;\">")
+                }
+            </script>
+            <ul class="navigation">
+                <li class="navigation"><a class="navigation colorbox" href="#what">What this site does</a></li>
+                <li class="navigation"><a class="navigation colorbox" href="#how">How do we know?</a></li>
+                <li class="navigation"><a class="navigation colorbox" href="#background">Duckies and Other Plastic</a></li>
+                <li class="navigation"><a class="navigation colorbox" href="#faq">FAQ</a></li>
+                <li class="navigation"><a class="navigation colorbox" href="#team">The team</a></li>
+            </ul>
+        </div>
+
+<div id="control_panel"><div id="controls"></div></div>
+
+$if lat:
+    <script>
+        window.initial_tracer = new google.maps.LatLng(${float(lat)}, ${float(lng)});
+        window.initial_centre = ${float(centre)};
+    </script>
+$else:
+    <script>
+        window.initial_tracer = null;
+        window.initial_centre = null;
+    </script>
+
+<script>
+    window.icon_filename = '${icon_filename}';
+$if open_page:
+    window.open_page = '${open_page}';
+</script>
+
+<script src="/static/map.js"></script>
+
+<div class="map_notification_container">
+    <div id="notification">
+        <div id="notification_text">
+            Welcome, click on a point on the ocean
+        </div>
+        <div id="notification_likesbar">
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+                <a class="addthis_button_facebook"></a>
+                <a class="addthis_button_twitter"></a>
+            </div>
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+            <!-- AddThis Button END -->
+        </div>
+    </div>
+    <div id="map_canvas">
+    </div>
+</div>
+<div id="bottombar"></div>
+<div id="bottombarcclogo">
+    <a rel="license"
+        href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US"><img
+        alt="Creative Commons License" style="border-width:0"
+        src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a>
+</div>
+<div id="bottombardisclaimertext">
+    <a href="http://adrift.org.au">Adrift.org.au</a> is intended as an
+    educational site. It should not be used for any policy decisions and comes
+    without any warranty. Any inquiries should be directed to <a
+        href="http://www.erik.vansebille.com">Dr Erik van Sebille</a> at the <a
+        href="http://www.unsw.edu.au">University of New South Wales</a>.
+
+    Support for this site is provided by the <a
+        href="http://www.climatescience.org.au/">ARC Centre of Excellence for
+        Climate System Science</a> and the <a
+        href="http://www.nectar.org.au/research-cloud">NeCTAR Research
+        Cloud</a>.
+</div>
+
+<div id="bottombarcolorbar">
+    <img width="400px" src="/static/colorbar.jpg"/>
+</div>
+
+
+<div class="textbox hidden" id="what">
+
+  <h2> Adrift away...</h2>
+  
+  <p>
+      If you ever found a wonderful piece of flotsam washed up on the beach or are one of the very <a href="http://news.discovery.com/human/life/message-in-a-bottle-found-76-years-later-130121.htm"> few lucky people who have found a message in a bottle</a>, this webpage is for you. While we can&#39;t yet (wait for future updates) track backwards to tell you where the flotsam may have come from, we can certainly help you find out where your bottle might travel if it is tossed in the ocean.
+  </p>
+  
+  <p>
+      Adrift is a website, which was inspired by the delightful book <a href="http://www.donovanhohn.com/Home.html">Moby Duck</a> and research into ocean circulation by <a href="http://erik.vansebille.com/science">Dr Erik Van Sebille</a>. Here you can explore how all kinds of objects drift through the ocean &#45; from rubber duckies to <a href="http://dumpark.com/seas-of-plastic-infographic/">plastic pollution</a> &#45; and where each object might end up if it is washed out to sea from your beach. 
+  </p>
+  
+  <p>
+      The website uses a scientific method that is based on observed tracks revealed by buoys in the <a href="http://www.aoml.noaa.gov/phod/dac/index.php"> Global Drifter Program</a> and other scientific research in this field. On this website you can see where ocean&#45;going debris travelled after the <a href="fukushima">Fukushima</a> disaster or the <a href="rubberduckiespill">path rubber ducks may have taken</a> after the famous <a href="http://en.wikipedia.org/wiki/Friendly_Floatees">Friendly Floaties</a> spill revealed in Moby Duck. 
+  </p>
+  
+  <p>
+      <b>Happy Exploring, it is time to drift away!</b>
+  </p>
+</div>
+
+<div class="textbox hidden" id="how">
+
+  <h2>How do we know?</h2>
+
+  <p>
+  The scientific methods used to calculate the paths of flotsam through our oceans for 10 years after release are quite complicated. It is perhaps best summarised in the video below
+
+  </p><p>
+
+  <center>
+  <iframe width="750" height="422" src="http://www.youtube.com/embed/M4UK9Yt6A-s" frameborder="0" allowfullscreen></iframe>
+  </center>
+
+  </p><p>
+
+  Our oceans make up 70 per cent of the Earth&#39;s surface and are in constant motion. Driven by the sun and the wind our oceans develop mighty currents and eddies, some of which can take centuries to loop through all of our planet&#39;s ocean basins. 
+
+  </p><p>
+
+  These currents also move through three dimensions. Many rise from the deep ocean near coastlines while other currents descend to the deepest parts of the ocean. These vertically descending currents are often, but not always, in the middle of the ocean in regions known as the five great gyres. 
+
+  </p><p>
+
+  However, almost all plastic materials and lighter than water objects (such as those messages in a bottles) stay on the surface. 
+
+  </p><p>
+
+  Since the late 1970s, ocean scientists have tracked drifting buoys but it wasn&#39;t until 1982 the World Climate Research Programme put forward the idea of a standardised global array of drifting buoys. These buoys float with the currents just like plastics except &#45; like Twitter from the sea &#45; they send a short message to scientists every six hours about where they are and the conditions in that location. 
+
+  </p><p>
+
+  With this information, we have been able to create a statistical model of the surface pathways of our oceans. The Adrift website uses this model and generates an animation of the likely path and destination of flotsam over a ten year period into the future. 
+
+  </p><p>
+
+  For the full details go to <a href="http://www.erik.vansebille.com/science/">Erik Van Sebille&#39;s webpage</a> or the paper <a href="http://erik.vansebille.com/science/vansebille2012c.html">Origin, dynamics and evolution of ocean garbage patches from observed surface drifters</a>. If you have any further questions you can  <a href="http://erik.vansebille.com/science/contact.html">contact Erik van Sebille</a>
+
+  </p>
+</div>
+
+<div class="textbox hidden" id="background">
+
+  <h2>Duckies and Other Plastic</h2>
+
+  <p>
+  
+  We show you a cute rubber duckie on the map, but the experiment you are doing when you click on the map is actually very sad. You are investigating <a href="http://dumpark.com/seas-of-plastic-infographic/">how plastics move in the ocean</a>.
+
+  </p><p>
+
+  The plastic litter is one of the <a href="http://www.abc.net.au/btn/story/s3591476.htm">biggest problems in our ocean</a>. It can <a href="http://www.environment.gov.au/biodiversity/threatened/publications/marine-debris-cr-consulting.html">entangle marine animals</a>, or they can <a href="http://www.whoi.edu/science/B/people/kamaral/plasticsarticle.html">mistake it for food and eat it</a>. If that happens, the plastic gets into the food-chain, and in particular the <a href="http://www.wired.com/wiredscience/2010/03/ocean-bpa/">chemicals in the plastics</a> can be very harmful.
+
+  </p><p>
+
+  Fortunately, there are many groups of people that want to do something about this problem. They for instance clean up beaches, or try to reduce the amount of plastics we use in our daily live.
+
+  </p><p>
+
+  So, if you want to help out yourself, why not contact one of the organisations below?
+
+  </p><p>
+
+  <a href="http://5gyres.org/">5 Gyres</a>
+
+  </p><p>
+
+  <a href="http://www.tangaroablue.org/">Tangaroa Blue</a>
+
+  </p><p>
+
+  <a href="http://www.surfrider.org/">Surfrider Foundation</a>
+
+  </p><p>
+
+  <a href="http://www.plasticoceans.net/">Plastic Oceans</a>
+
+    </p>
+</div>
+
+<div class="textbox hidden" id="faq">
+
+    <h2> Frequently Asked Questions</h2>
+
+    <p>
+
+    <i><b>Q:</b> Why does the site say &#34;Sorry, we have no data for that ocean area&#34;?</i>
+    </p><p>
+    <b>A:</b> The website is built using data from observations only. And like any observations, these are not perfect.
+    We just do not have data from every area in the ocean. This can be seen in the map below, which shows in red the areas 
+    where there are not enough surface drifting buoys for our analysis.
+    </p><p>
+    <img src="/static/coverage.jpg">  
+    </p><p> 
+    Most areas without sufficient coverage are very near the coastlines. But there are also extensive regions in the Arctic, 
+    around Antarctica, in the Indonesian Archipelago, the North Sea and some other marginal seas. The reasons for this poor 
+    coverage vary from sea ice to piracy, as can be read in this <a href="http://journals.ametsoc.org/doi/abs/10.1175/JTECH-D-11-00100.1">excellent article</a> (paywalled).
+
+    </p><p>
+    <i><b>Q:</b> Why does my plastic litter stay in the Mediterranean Sea?</i>
+    </p><p>
+    <b>A:</b> Again, this is a coverage issue, see also the map above. In the whole 30 years of the drifter project, there has never been a drifting buoy
+    that crossed the Gibraltar Strait. In our transition matrix, the Mediterranean Ocean is therefore completely disconnected from
+    the rest of the global ocean.
+
+    </p><p>
+    <i><b>Q:</b> What exactly does the scale mean?</i>
+    </p><p>
+    <b>A:</b> The scale on the bottom right runs from 0&#37; to 1&#37;. This may sound like a small number, but that is just because the plastic 
+    very quickly spreads over a large area. We have max-ed out areas where the plastic concentration is higher than 1&#37;, in order to focus on 
+    the spread of the plastic after a few years.
+
+    </p><p>
+    <i><b>Q:</b> Why can I see only plastic litter for the coming 10 years?</i>
+    </p><p>
+    <b>A:</b> The 10 years maximum is a trade-off between more information and faster response times. In principle, we can advect
+    the plastic much longer than 10 years, but it will then take much longer before you see the result. If you really want to see
+    plastic evolution on longer time scales, <a href="team">contact us directly</a>.
+
+    </p><p>
+    <i><b>Q:</b> Can I export the raw data from the experiment? / Can I have multiple release points?</i>
+    </p><p>
+    <b>A:</b> If you want something more &#39;fancy&#39; than what the site can provide, either 
+    <a href="http://www.erik.vansebille.com/science/vansebille2012c.html">download the transit matrix</a> and start analysing 
+    it yourself, or <a href="team">contact us</a>. We&#39;re happy to help out!
+
+    </p>
+</div>
+
+<div class="textbox hidden" id="team">
+
+    <h2>Team members</h2>
+
+    <div class="team_member">
+        <img src="static/erik.jpg"/>
+        <b>Dr Erik van Sebille</b> is a physical oceanographer at the University of
+        New South Wales, who studies the large-scale circulation of the ocean. He
+        is particularly interested in the connection between ocean basins and the
+        processes that determine how much water &#39;leaks&#39; from one ocean basin 
+        into another. These connections are important for global climate and for the
+        pathways of both marine organisms and debris. For more information, see <a
+            href="http://www.erik.vansebille.com"> www.erik.vansebille.com</a>.
+    </div>
+
+    <div class="team_member">
+        <img src="static/jack.jpg"/>
+        <b>Jack Murray</b> is a Computer Science student at the University of New 
+        South Wales and a contract software developer.
+    </div>
+
+    <div class="team_member">
+        <img src="static/david.jpg"/>
+        <b>David Fuchs</b> is a solutions architect with more than thirteen
+        years of experience in software ranging from voice over IP to
+        applications of machine learning techniques to large data sets. David
+        brings combined experience in both engineering and science and is
+        currently interested in software applications to large amount of data
+        in general and climate data in particular.
+    </div>
+</div>
+
+<div class="textbox hidden" id="media">
+    <h2>Media</h2>
+
+    </p><p>
+
+    Below is a list of coverage of Adrift.org.au in the Australian media
+
+    </p><p>
+
+    <a href="http://www.rrr.org.au/program/radio-marinara/">Radio Marinara</a>, on Melbourne's Triple R radio station and hosted by <a href="http://www.rrr.org.au/presenter/anthony-boxshall/">Anthony Boxhall</a>, covered Adrift.org.au on their August 4 show. Listen to it <a href="http://www.erik.vansebille.com/science/Radio-Marinara-20130804.mp3">here</a>.
+
+    </p><p>
+
+    <a href="http://www.abc.net.au/radionational/programs/lifematters/"> Life Matters</a> on ABC Radio National covered Adrift.org.au on their June 24 show. Listen to it <a href="http://www.abc.net.au/radionational/programs/lifematters/the-not-so-fantastic-plastic/4774526">here</a>.
+</div>
+
+
+    </div>
+</body>
+</html>

@@ -20,7 +20,7 @@ h1 {
     text-shadow: -1px 2px #cdf; /* 235; */
 }
 
-#textbox {
+.textbox {
     padding:30px;
     padding-top:10px;
     padding-bottom:10px;
@@ -163,4 +163,13 @@ a.return_bar:hover {
 .team_member {
     margin: 5px 0;
     clear: both;
+}
+
+.hidden {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
 }

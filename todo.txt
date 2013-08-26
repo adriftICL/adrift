@@ -1,0 +1,2 @@
+delete unnecessary files
+refactor map.js and australia.js into same js file to avoid code duplication

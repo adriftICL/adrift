@@ -7,6 +7,7 @@ from random import shuffle
 
 import boto.s3.connection
 from boto.s3.key import Key
+
 connection = boto.s3.connection.S3Connection(
           aws_access_key_id=config.aws_access_key_id,
           aws_secret_access_key=config.aws_secret_access_key,
@@ -24,19 +25,17 @@ botokey['Global']=Key(bucket[0])
 botokey['Australia']=Key(bucket[1])
 
 
-class NotCached(Exception):
-    pass
-class NotWritten(Exception):
-    pass
+class NotCached(Exception): pass
+class NotWritten(Exception): pass
 
 def get_filename(closest_index,type):
     return type + 'Closest_index' + str(closest_index).zfill(5)
 
 def get_cached_results(closest_index,type):
-    botokey[type].key = get_filename(closest_index,type)
-    if botokey[type].exists():
+    try:
+        botokey[type].key = get_filename(closest_index,type)
         return pickle.loads(botokey[type].get_contents_as_string())
-    else:
+    except:
         raise NotCached()
 
 def cache_results(closest_index, results,type):
