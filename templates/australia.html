@@ -39,7 +39,18 @@ $def with (lat=None, lng=None, icon_filename='MarkerDuckie.png', open_page=None)
             if (cssua.ua.mobile) {
                 top_px = 100;
             }
-            $$(document).ready(function(){$$(".colorbox").colorbox({width:"850px", top:top_px+"px", maxHeight:"510px", opacity:0.50});});
+            $$(document).ready(function(){
+                $$(".colorbox").click(function(a){
+                    a = a.currentTarget;
+                    $$.colorbox({
+                        width:"850px", top:top_px+"px", maxHeight:"510px", opacity:0.50,
+                        html: $$($$(a).attr("href")).html()
+                    });
+                    // # TODO: if you wanna do links to this stuff, we'll have to change this to return true
+                    // and write some javascript to pull the page name out of the # part if it is present in the URL
+                    return false;
+                });
+            });
         </script>
 
         <div id="page_container">
@@ -54,11 +65,12 @@ $def with (lat=None, lng=None, icon_filename='MarkerDuckie.png', open_page=None)
                     }
                 </script>
                 <ul class="navigation">
-                    <li class="navigation"><a class="navigation colorbox" href="what_haml">What this site does</a></li>
-                    <li class="navigation"><a class="navigation colorbox" href="how_haml">How do we know?</a></li>
-                    <li class="navigation"><a class="navigation colorbox" href="background_haml">Duckies and Other Plastic</a></li>
-                    <li class="navigation"><a class="navigation colorbox" href="faq_haml">FAQ</a></li>
-                    <li class="navigation"><a class="navigation colorbox" href="team_haml">The team</a></li>
+                    <li class="navigation"><a class="navigation colorbox" href="#what">What this site does</a></li>
+                    <li class="navigation"><a class="navigation colorbox" href="#how">How do we know?</a></li>
+                    <li class="navigation"><a class="navigation colorbox" href="#background">Duckies and Other Plastic</a></li>
+                    <li class="navigation"><a class="navigation colorbox" href="#faq">FAQ</a></li>
+                    <li class="navigation"><a class="navigation colorbox" href="#media">Media</a></li>
+                    <li class="navigation"><a class="navigation colorbox" href="#team">Team</a></li>
                 </ul>
             </div>
 
@@ -314,19 +326,24 @@ $if open_page:
 <div class="textbox hidden" id="media">
     <h2>Media</h2>
 
-    </p><p>
+    <p>
 
     Below is a list of coverage of Adrift.org.au in the Australian media
 
     </p><p>
 
+    Australian SBS radio did a feature on the radioactive contaminants from the <a href="fukushima">Fukushima disaster</a> on their 22 August 2013 show. Listen to it <a href="http://www.sbs.com.au/podcasts/naca/radionews/episode/284509/How-dangerous-is-water-from-Fukushima">here</a>.
+
+    </p><p>
     <a href="http://www.rrr.org.au/program/radio-marinara/">Radio Marinara</a>, on Melbourne's Triple R radio station and hosted by <a href="http://www.rrr.org.au/presenter/anthony-boxshall/">Anthony Boxhall</a>, covered Adrift.org.au on their August 4 show. Listen to it <a href="http://www.erik.vansebille.com/science/Radio-Marinara-20130804.mp3">here</a>.
 
     </p><p>
 
     <a href="http://www.abc.net.au/radionational/programs/lifematters/"> Life Matters</a> on ABC Radio National covered Adrift.org.au on their June 24 show. Listen to it <a href="http://www.abc.net.au/radionational/programs/lifematters/the-not-so-fantastic-plastic/4774526">here</a>.
-</div>
 
+    </p>
+
+</div>
 
 
         </div>
