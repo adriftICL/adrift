@@ -24,7 +24,7 @@ urls = ('/fukushima', 'Fukushima',
         '/media', 'Media',
         '/team', 'Team')
 
-render = web.template.render('templates')
+render = web.template.render('templates', base='map_layout')
 
 # set up logging. for more information, see
 # http://docs.python.org/2/howto/logging.html#logging-basic-tutorial
@@ -44,22 +44,22 @@ logger.setLevel(INFO)
 class Fukushima:
     def GET(self):
         logger.info(str(web.ctx.ip) + " fukushima")
-        return render.map(lat=37.8, lng=142, centre=141.0, icon_filename="MarkerTsunami.png")
+        return render.map(lat=37.8, lng=142, center=141.0, icon_filename="MarkerTsunami.png")
 
 class DeepWaterHorizon:
     def GET(self):
         logger.info(str(web.ctx.ip) + " deepwaterhorizon")
-        return render.map(lat=28, lng=-89.4, centre=-70.0, icon_filename="MarkerOilRig.png")
+        return render.map(lat=28, lng=-89.4, center=-70.0, icon_filename="MarkerOilRig.png")
 
 class RubberDuckieSpill:
     def GET(self):
         logger.info(str(web.ctx.ip) + " rubberduckiespill")
-        return render.map(lat=44.7, lng=178.1, centre=-165)
+        return render.map(lat=44.7, lng=178.1, center=-165)
 
 class RenaSpill:
     def GET(self):
         logger.info(str(web.ctx.ip) + " renaspill")
-        return render.map(lat=-37.5, lng=176.7, centre=-140, icon_filename="MarkerShip.png")
+        return render.map(lat=-37.5, lng=176.7, center=-140, icon_filename="MarkerShip.png")
 
 # other pages
 
@@ -73,10 +73,10 @@ class Map:
         i = web.input()
         try:
             try:
-                centre = i.centre
+                center = i.center
             except AttributeError:
-                centre = 30
-            return render.map(lat=i.lat, lng=i.lng, centre=centre)
+                center = 30
+            return render.map(lat=i.lat, lng=i.lng, center=center)
         except AttributeError:
             return render.map()
 
@@ -188,7 +188,7 @@ class RunTracerAus:
         return ret
 
 def notfound():
-    return web.notfound(render.notfound(icon_filename="MarkerDuckie.png"))
+    return web.notfound(render.map())
 
 
 if __name__ == "__main__":

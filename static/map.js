@@ -7,20 +7,19 @@ function notification(message, css_class) {
     $elm = $("#notification_likesbar");
     $elm.attr('class','').addClass(css_class);
 }
-
 $(document).ready(function(){
     // $("#map_canvas").css("width", "1024px");
     var width = $("#map_canvas").width();
     $("#map_canvas").css("height", "512px");
 
-    var centre_lon = 30;
-    var centre_lat = 8;
-    if(window.initial_centre) {
-        centre_lon = window.initial_centre;
+    var center_lon = 30;
+    var center_lat = 8;
+    if(window.initial_center) {
+        center_lon = window.initial_center;
     } else {
         $.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) {
-            centre_lon = Math.round(data.longitude);
-            map.panTo(new google.maps.LatLng(centre_lat, centre_lon));
+            center_lon = Math.round(data.longitude);
+            map.panTo(new google.maps.LatLng(center_lat, center_lon));
         });
     }
 
@@ -36,7 +35,7 @@ $(document).ready(function(){
         scrollwheel: false,
         disableDoubleClickZoom: true,
         disableDefaultUI: true,
-        center: new google.maps.LatLng(centre_lat, centre_lon),
+        center: new google.maps.LatLng(center_lat, center_lon),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         styles: [
                 {
@@ -59,30 +58,6 @@ $(document).ready(function(){
     };
     var map = new google.maps.Map(document.getElementById('map_canvas'),
             mapOptions);
-    var AustraliaBoxCoords = [
-        new google.maps.LatLng(-6, 100),
-        new google.maps.LatLng(-46, 100),
-        new google.maps.LatLng(-46, -170),
-        new google.maps.LatLng(-6, -170),
-        new google.maps.LatLng(-6, 100)
-    ];
-    var AustraliaBox = new google.maps.Polyline({
-        path: AustraliaBoxCoords,
-        strokeColor: "#043566",
-        strokeOpacity: 0.2,
-        strokeWeight: 1
-    });
-    AustraliaBox.setMap(map);
-
-    var Ausmarker = new google.maps.Marker({
-        url: 'australia',
-        icon: 'static/zoomin.png',
-        map: map
-    });
-    google.maps.event.addListener(Ausmarker, 'click', function() {
-        window.location.href = Ausmarker.url;
-    });
-    Ausmarker.setPosition(new google.maps.LatLng(-16, -175));
 
     $(document).ajaxStart(function(){
         $('div.map_notification_container').block({
@@ -153,7 +128,7 @@ $(document).ready(function(){
         last_lat = lat;
         last_lng = lng;
         if (latLng != window.initial_tracer) {
-            History.pushState({}, document.title, "map?lat="+lat+"&lng="+lng+"&centre="+centre_lon);
+            History.pushState({}, document.title, "map?lat="+lat+"&lng="+lng+"&center="+center_lon);
         }
         run_counter++;
         marker.setPosition(latLng);
@@ -183,15 +158,12 @@ $(document).ready(function(){
     });
     google.maps.event.addListener(map, 'center_changed', function() {
         var newCenter = map.getCenter();
-        centre_lon = Math.round(10 * ((newCenter.lng()%360 + 540)%360 - 180)) / 10;
+        center_lon = Math.round(10 * ((newCenter.lng()%360 + 540)%360 - 180)) / 10;
         if (last_lat) {
-            History.pushState({}, document.title, "map?lat="+last_lat+"&lng="+last_lng+"&centre="+centre_lon);
+            History.pushState({}, document.title, "map?lat="+last_lat+"&lng="+last_lng+"&center="+center_lon);
         }
-        if (Math.abs(newCenter.lat()-centre_lat) > 1e-4) {
-            map.panTo(new google.maps.LatLng(centre_lat, newCenter.lng()));
+        if (Math.abs(newCenter.lat()-center_lat) > 1e-4) {
+            map.panTo(new google.maps.LatLng(center_lat, newCenter.lng()));
         }
     });
 });
-if (window.open_page) {
-    $(document).ready(function(){$(".colorbox").colorbox({open:true,href:window.open_page,width:"850px", top:top_px+"px", maxHeight:"510px", opacity:0.50});});
-}
