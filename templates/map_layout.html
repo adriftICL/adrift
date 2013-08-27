@@ -13,7 +13,7 @@ $def with (map_content)
 
     <link href="/static/ui.css" rel="stylesheet" media="screen"/>
     <link href="/static/colorbox.css" rel="stylesheet" media="screen"/>
-    <link href="/static/stylesheet.css" rel="stylesheet" media="screen"/>
+    <link href="/static/stylesheet1.css" rel="stylesheet" media="screen"/>
     <script>
         if (cssua.ua.mobile) {
             document.write("<link href=\"/static/stylesheet_960pwide.css\" rel=\"stylesheet\" media=\"screen\"/>")
@@ -43,7 +43,7 @@ var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-38940204-1']); _gaq.push(['
         var show_page = function(selector) {
             $$.colorbox({
                 width:"850px", top:top_px+"px", maxHeight:"510px", opacity:0.50,
-                html: $$(selector).html()
+                html: "<div class='textbox'>" + $$(selector).html() + "</div>"
             });
         };
         $$(".colorbox").click(function(a){
