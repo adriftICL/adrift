@@ -19,7 +19,7 @@ $if open_page:
     $$(document).ready(function(){
         $$("#map_canvas").css("height", "512px"); // TODO: this should not be done with javascript...
         var adrift = new AdriftMap(document.getElementById("map_canvas"),{
-            center: new google.maps.LatLng(30, ${float(center)})
+            center: new google.maps.LatLng(8, ${float(center)})
         });
     });
 </script>
