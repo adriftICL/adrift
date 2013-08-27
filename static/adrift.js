@@ -9,7 +9,8 @@ function notification(message, css_class) {
 }
 
 // Takes all the options of a regular google map.
-function AdriftMap(element, options={}) {
+function AdriftMap(element, options) {
+    if (!options) options = {};
 
     // Object functions:
     this.center_changed = $.proxy(this._center_changed, this);
