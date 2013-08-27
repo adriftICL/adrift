@@ -40,16 +40,21 @@ var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-38940204-1']); _gaq.push(['
         top_px = 100;
     }
     $$(document).ready(function(){
-        $$(".colorbox").click(function(a){
-            a = a.currentTarget;
+        var show_page = function(selector) {
             $$.colorbox({
                 width:"850px", top:top_px+"px", maxHeight:"510px", opacity:0.50,
-                html: $$($$(a).attr("href")).html()
+                html: $$(selector).html()
             });
-            // # TODO: if you wanna do links to this stuff, we'll have to change this to return true
-            // and write some javascript to pull the page name out of the # part if it is present in the URL
-            return false;
+        };
+        $$(".colorbox").click(function(a){
+            a = a.currentTarget;
+            show_page($$(a).attr("href"));
         });
+        var id = location.hash.substr(1);
+        // Double checking these values here due to potential XSS
+        if ($$.inArray(id, ["what", "how", "background", "faq", "media", "team"]) != -1) {
+            show_page("#" +id);
+        }
     });
 </script>
 
