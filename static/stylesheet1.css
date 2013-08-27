@@ -165,7 +165,7 @@ a.return_bar:hover {
     clear: both;
 }
 
-.hidden {
+.hidden, .hidden iframe {
     position: fixed;
     left: 0;
     top: 0;
