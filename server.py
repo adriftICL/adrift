@@ -15,6 +15,8 @@ urls = ('/fukushima', 'Fukushima',
         '/favicon.ico', 'Favicon',
         '/map', 'Map',
         '/run', 'RunTracer',
+        '/backward', 'Backward',
+        '/runBwd', 'RunTracerBwd',
         '/australia', 'Australia',
         '/runAus','RunTracerAus',
         '/what', 'What',
@@ -191,6 +193,42 @@ class RunTracerAus:
 
             web.header("Content-Type", "application/x-javascript")
             ret = json.dumps(results)
+        return ret
+
+class Backward:
+    def GET(self):
+        i = web.input()
+        try:
+            return render.backward(lat=i.lat, lng=i.lng)
+        except AttributeError:
+            return render.backward()
+class RunTracerBwd:
+    def GET(self):
+        i = web.input()
+        try:
+            given_lat = float(i.lat)
+            given_lng = float(i.lng)
+        except AttributeError:
+            # if no attributes are given, return nothing.
+            return ""
+        logger.info(str(web.ctx.ip) + " backward," + str(given_lat) + "," + str(given_lng))
+        closest_index = get_closest_index(given_lat, given_lng,'GlobalBwd')
+        ret = ""
+        if is_lacking_data(closest_index,'GlobalBwd'):
+            ret = json.dumps("Sorry, we have no data for that ocean area")
+        elif is_landpoint(closest_index,'GlobalBwd'):
+            ret = json.dumps("You clicked on land, please click on the ocean")
+        else:
+            try:
+                results = get_cached_results(closest_index,'GlobalBwd')
+            except NotCached:
+                results = run_tracer(closest_index,'GlobalBwd')
+                try:
+                    cache_results(closest_index, results,'GlobalBwd')
+                except NotWritten:
+                    print "Not saving data"
+            ret = json.dumps(results)
+        web.header("Content-Type", "application/x-javascript")
         return ret
 
 def notfound():

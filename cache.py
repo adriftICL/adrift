@@ -17,12 +17,11 @@ connection = boto.s3.connection.S3Connection(
           validate_certs=False,
           calling_format=boto.s3.connection.OrdinaryCallingFormat()
         )
-#buckets = connection.get_all_buckets()
-#botokey['Australia'] = Key(buckets[0])
-bucket = [connection.get_bucket('global'),connection.get_bucket('australia')]
+bucket = [connection.get_bucket('global'),connection.get_bucket('globalbwd'),connection.get_bucket('australia')]
 botokey={}
 botokey['Global']=Key(bucket[0])
-botokey['Australia']=Key(bucket[1])
+botokey['GlobalBwd']=Key(bucket[1])
+botokey['Australia']=Key(bucket[2])
 
 
 class NotCached(Exception): pass

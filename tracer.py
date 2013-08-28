@@ -6,6 +6,7 @@ from scipy import *
 data={}
 try:
       data['Global'] = scipy.io.loadmat('data/tracerappdataGlobal.mat')
+      data['GlobalBwd'] = scipy.io.loadmat('data/tracerappdataGlobalBwd.mat')
       data['Australia'] = scipy.io.loadmat('data/tracerappdataAustralia.mat')
 except IOError as e:
       print("({})".format(e))
@@ -19,6 +20,8 @@ lon = {}
 lat = {}
 lon['Global']=data['Global']['lon'][0]
 lat['Global']=data['Global']['lat'][0]
+lon['GlobalBwd']=data['GlobalBwd']['lon'][0]
+lat['GlobalBwd']=data['GlobalBwd']['lat'][0]
 nx = data['Australia']['nx'][0]
 ny = data['Australia']['ny'][0]
 lon['Australia']=data['Australia']['lon'][0][0:nx[0]]
@@ -44,6 +47,9 @@ def get_closest_index(given_lat, given_lng,type):
 
 def run_tracer(closest_index,type):
     if type=='Global':
+        maxyears=10
+        minplotval=2.5e-4
+    if type=='GlobalBwd':
         maxyears=10
         minplotval=2.5e-4
     if type=='Australia':
