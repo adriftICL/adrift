@@ -22,7 +22,8 @@ urls = ('/fukushima', 'Fukushima',
         '/background', 'Background',
         '/faq', 'FAQ',
         '/media', 'Media',
-        '/team', 'Team')
+        '/team', 'Team',
+        '/regions', 'Regions')
 
 render = web.template.render('templates', base='map_layout')
 
@@ -149,6 +150,11 @@ class Media:
     def GET(self):
         logger.info(str(web.ctx.ip) + " media")
         return render.map(open_page="media")
+
+class Regions:
+    def GET(self):
+        logger.info(str(web.ctx.ip) + " regions")
+        return render.map(open_page="regions")
 
 class Australia:
     def GET(self):

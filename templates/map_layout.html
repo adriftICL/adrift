@@ -55,7 +55,7 @@ $def with (map_content)
         });
         var id = location.hash.substr(1);
         // Double checking these values here due to potential XSS
-        if ($$.inArray(id, ["what", "how", "background", "faq", "media", "team"]) != -1) {
+        if ($$.inArray(id, ["what", "how", "background", "faq", "media", "team", "regions"]) != -1) {
             show_page("#" +id);
         }
     });
@@ -223,6 +223,13 @@ $:map_content
         <img src="static/david.jpg"/>
         <b>David Fuchs</b> is a solutions architect with more than thirteen years of experience in software ranging from voice over IP to applications of machine learning techniques to large data sets. David brings combined experience in both engineering and science and is currently interested in software applications to large amount of data in general and climate data in particular.
     </div>
+</div>
+
+<div class="textbox hidden" id="regions">
+    <h2>Regional experiments</h2>
+    <p>
+    <a href="australia"><img src="static/australiazoom.png" width="300px"></a>
+    </p>
 </div>
 
 <div class="textbox hidden" id="media">
