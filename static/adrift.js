@@ -91,7 +91,7 @@ function AdriftMap(element, options) {
     // TODO: move window.initial_tracer into an option.
     google.maps.event.addListenerOnce(this.map, 'bounds_changed', $.proxy(function(){
         if (window.initial_tracer) {
-            this.run(window.initial_tracer);
+            this.run(window.initial_tracer, true);
         }
     }, this));
     google.maps.event.addListener(this.map, 'center_changed', this.center_changed);
@@ -111,13 +111,16 @@ AdriftMap.prototype._url_params = function() {
     return "?lat="+oneDecimalPlace(this.tracer.lat())+"&lng="+oneDecimalPlace(this.tracer.lng())+"&center="+oneDecimalPlace(this.map.getCenter().lng());
 };
 
-AdriftMap.prototype._run = function(latLng) {
+AdriftMap.prototype._run = function(latLng, dont_update_history) {
 
     this.tracer = latLng;
     var lat = Math.round(10 * this.tracer.lat()) / 10;
     var lng = Math.round(10 * this.tracer.lng()) / 10;
 
-    this.update_history();
+    // check if this is the first run and if we're  because 
+    if (!dont_update_history) {
+        this.update_history();
+    }
 
     this.run_id++;
     this.marker.setPosition(latLng);
