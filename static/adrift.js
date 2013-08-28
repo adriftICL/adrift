@@ -54,7 +54,7 @@ function AdriftMap(element, options) {
             ],
 
         // non google map options:
-        icon: "static/MarkerDuckie.png",
+        icon: "/static/MarkerDuckie.png",
         historyPageName: '/map',
         jsonEndpoint: '/run',
         radius: 10,

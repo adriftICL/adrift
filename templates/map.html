@@ -1,4 +1,4 @@
-$def with (lat=None, lng=None, center=30, icon_filename='MarkerDuckie.png', open_page=None)
+$def with (lat=None, lng=None, center=30, icon_filename='/static/MarkerDuckie.png')
 
 $if lat:
     <script>
@@ -10,16 +10,11 @@ $else:
     </script>
 
 <script>
-    window.icon_filename = '${icon_filename}';
-$if open_page:
-    window.open_page = '${open_page}';
-</script>
-
-<script>
     $$(document).ready(function(){
         $$("#map_canvas").css("height", "512px"); // TODO: this should not be done with javascript...
         var adrift = new AdriftMap(document.getElementById("map_canvas"),{
-            center: new google.maps.LatLng(8, ${float(center)})
+            center: new google.maps.LatLng(8, ${float(center)}),
+            icon: "$icon_filename",
         });
     });
 </script>

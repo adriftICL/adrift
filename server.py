@@ -44,12 +44,12 @@ logger.setLevel(INFO)
 class Fukushima:
     def GET(self):
         logger.info(str(web.ctx.ip) + " fukushima")
-        return render.map(lat=37.8, lng=142, center=141.0, icon_filename="MarkerTsunami.png")
+        return render.map(lat=37.8, lng=142, center=141.0, icon_filename="/static/MarkerTsunami.png")
 
 class DeepWaterHorizon:
     def GET(self):
         logger.info(str(web.ctx.ip) + " deepwaterhorizon")
-        return render.map(lat=28, lng=-89.4, center=-70.0, icon_filename="MarkerOilRig.png")
+        return render.map(lat=28, lng=-89.4, center=-70.0, icon_filename="/static/MarkerOilRig.png")
 
 class RubberDuckieSpill:
     def GET(self):
@@ -59,7 +59,7 @@ class RubberDuckieSpill:
 class RenaSpill:
     def GET(self):
         logger.info(str(web.ctx.ip) + " renaspill")
-        return render.map(lat=-37.5, lng=176.7, center=-140, icon_filename="MarkerShip.png")
+        return render.map(lat=-37.5, lng=176.7, center=-140, icon_filename="/static/MarkerShip.png")
 
 # other pages
 
