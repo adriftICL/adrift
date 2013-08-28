@@ -105,10 +105,10 @@ ul.navigation li a:hover {
     padding-top: 6px;
     padding-bottom: 0.5em;
 }
-#return_bar {
+#zoombar {
     position: absolute;
     height: 25px;
-    width: 250px;
+    width: 140px;
     z-index: 10;
     background-color: rgba(100, 100, 100, 0.8);
     text-align:left;
@@ -118,11 +118,11 @@ ul.navigation li a:hover {
     line-height: 25px;
     font-weight: normal;
 }
-a.return_bar {
+a.zoombar {
     color: white;
     text-decoration: none;
 }
-a.return_bar:hover {
+a.zoombar:hover {
     color: rgba(255, 50, 50, 1);
 }
 

@@ -30,7 +30,7 @@ $else:
     });
 
     $$(document).ready(function(){
-        $$(".return_bar").click(function() {
+        $$(".zoombar").click(function() {
             if (!adrift) return true;
             window.location.href = "/map" + adrift.url_params();
             return false;
@@ -53,8 +53,8 @@ $else:
             <!-- AddThis Button END -->
         </div>
     </div>
-    <div id="return_bar">
-        <a class="return_bar" href="map"><img src="static/zoomout.png" height="15px"> Click here to view global ocean</a>
+    <div id="zoombar">
+        <a class="zoombar" href="map"><img src="static/zoomout.png" height="15px"> Global ocean</a>
     </div>
     <div id="map_canvas">
     </div>
