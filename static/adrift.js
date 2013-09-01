@@ -6,6 +6,10 @@ function notification(message, css_class) {
     $elm.text(message);
     $elm = $("#notification_likesbar");
     $elm.attr('class','').addClass(css_class);
+    $elm = $("#bwdfwdbar");
+    $elm.attr('class','').addClass(css_class);
+    $elm = $("#zoombar");
+    $elm.attr('class','').addClass(css_class);
 }
 
 // Takes all the options of a regular google map.

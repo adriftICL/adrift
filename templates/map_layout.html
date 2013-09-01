@@ -13,12 +13,12 @@ $def with (map_content)
 
     <link href="/static/ui.css" rel="stylesheet" media="screen"/>
     <link href="/static/colorbox.css" rel="stylesheet" media="screen"/>
-    <link href="/static/stylesheet1.css" rel="stylesheet" media="screen"/>
+    <link href="/static/stylesheet2˜.css" rel="stylesheet" media="screen"/>
     <script>
         if (cssua.ua.mobile) {
-            document.write("<link href=\"/static/stylesheet_960pwide.css\" rel=\"stylesheet\" media=\"screen\"/>")
+            document.write("<link href=\"/static/stylesheet2_960pwide.css\" rel=\"stylesheet\" media=\"screen\"/>")
         } else {
-            document.write("<link href=\"/static/stylesheet_1024pwide.css\" rel=\"stylesheet\" media=\"screen\"/>")
+            document.write("<link href=\"/static/stylesheet2_1024pwide.css\" rel=\"stylesheet\" media=\"screen\"/>")
         }
     </script>
     <meta property="og:title" content="Adrift.org.au"/>
@@ -55,7 +55,7 @@ $def with (map_content)
         });
         var id = location.hash.substr(1);
         // Double checking these values here due to potential XSS
-        if ($$.inArray(id, ["what", "how", "background", "faq", "media", "team", "regions"]) != -1) {
+        if ($$.inArray(id, ["what", "how", "background", "faq", "media", "bwdfwd", "team", "regions"]) != -1) {
             show_page("#" +id);
         }
     });
@@ -231,7 +231,46 @@ $:map_content
 <div class="textbox hidden" id="regions">
     <h2>Regional experiments</h2>
     <p>
-    <a href="australia"><img src="static/australiazoom.png" width="300px"></a>
+    <div style="height:300px">
+        <a href="australia">
+        <div style="position:absolute;height:300px">
+            <img src="static/regions/australiazoom.png" width="350px">
+            <div class="regiontext">
+                Australia
+            </div>
+        </div>
+        </a>
+        <div style="position:absolute;height:300px;left:425px;">
+            <img src="static/regions/newregions.png" width="350px">
+            <div class="regiontext">
+                More regions soon
+            </div>
+        </div>
+    </div>
+    </p>
+</div>
+
+<div class="textbox hidden" id="bwdfwd">
+    <h2>Choose the direction of your experiment</h2>
+    <p>
+    <div style="height:250px">
+        <a href="backward">
+        <div style="position:absolute;height:300px">
+            <img src="static/fwdbwd/bwdbutton_large.png" width="350px">
+            <div class="regiontext">
+                Backwards in time
+            </div>
+        </div>
+        </a>
+        <a href="map">
+        <div style="position:absolute;height:300px;left:425px;">
+            <img src="static/fwdbwd/fwdbutton_large.png" width="350px">
+            <div class="regiontext">
+                Forward in time
+            </div>
+        </div>
+        </a>
+    </div>
     </p>
 </div>
 

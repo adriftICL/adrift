@@ -9,7 +9,7 @@
 }
 
 #notification {
-    left:420px;
+    left:440px;
 }
 #notification.error {
     width: 960px;
@@ -17,7 +17,6 @@
 #notification_likesbar.error {
     left:815px;
 }
-
 
 #bottombar {
     padding-top: 0.5em;

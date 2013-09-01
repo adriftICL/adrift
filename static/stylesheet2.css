@@ -32,7 +32,9 @@ h1 {
 p {
     margin-top:1em;
 }
-
+a, img { /*for Internet Explorer*/
+    border:none;
+}
 a {
     color: #043566;
     font-weight: bold;
@@ -42,7 +44,7 @@ a {
 a:hover {
     color: rgba(255, 50, 50, 1);
 }
-    
+
 ul.navigation {
     text-align: center;
     font-weight: bold;
@@ -69,7 +71,7 @@ ul.navigation li a:hover {
 #notification {
     position: absolute;
     height: 45px;
-    width: 540px;
+    width: 520px;
     z-index: 10;
     background-color: rgba(100, 100, 100, 0.8);
     float:left;
@@ -81,7 +83,7 @@ ul.navigation li a:hover {
 
 #notification_text {
     position: absolute;
-    width: 405px;
+    width: 415px;
     color: white;
     font-weight: bold;
     text-align:left;
@@ -101,7 +103,7 @@ ul.navigation li a:hover {
     height: 23px;
     float:left;
     z-index: 10;
-    left:460px;
+    left:440px;
     padding-top: 6px;
     padding-bottom: 0.5em;
 }
@@ -110,6 +112,7 @@ ul.navigation li a:hover {
     height: 25px;
     width: 140px;
     z-index: 10;
+    left:0px;
     background-color: rgba(100, 100, 100, 0.8);
     text-align:left;
     padding-right: 1em;
@@ -118,12 +121,42 @@ ul.navigation li a:hover {
     line-height: 25px;
     font-weight: normal;
 }
+#zoombar.error {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
 a.zoombar {
     color: white;
     text-decoration: none;
 }
 a.zoombar:hover {
     color: rgba(255, 50, 50, 1);
+}
+#bwdfwdbar {
+    position: absolute;
+    height: 25px;
+    width: 235px;
+    z-index: 10;
+    left: 170px;
+    background-color: rgba(100, 100, 100, 0.8);
+    text-align:left;
+    padding-right: 1em;
+    padding-left:10px;
+    font-size: 14px;
+    line-height: 25px;
+    font-weight: normal;
+}
+#bwdfwdbar.error {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
 }
 
 #australia_message {
@@ -140,6 +173,23 @@ a.zoombar:hover {
     padding-right: 1em;
     padding-left:10px;
     font-size: 18px;
+    line-height: 45px;
+}
+
+.regiontext{
+    position:absolute;
+    top:179px;
+    height: 45px;
+    width: 321px;
+    z-index: 10;
+    background-color: rgba(100, 100, 100, 0.8);
+    float:left;
+    color: white;
+    font-weight: bold;
+    text-align:left;
+    padding-right: 1em;
+    padding-left:10px;
+    font-size: 19px;
     line-height: 45px;
 }
 
