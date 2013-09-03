@@ -16,6 +16,9 @@ $else:
             center: new google.maps.LatLng(8, ${float(center)}),
             icon: "$icon_filename",
         });
+        $$.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) {
+            adrift.map.panTo(new google.maps.LatLng(8, data.longitude));
+        });
     });
 </script>
 
