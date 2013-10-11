@@ -45,6 +45,17 @@ function AdriftMap(element, options) {
                         { "visibility": "off" }
                     ]
                 },{
+                    "featureType": "road",
+                    "stylers": [
+                        { "visibility": "off" }
+                    ]
+                },{
+                    "featureType": "poi.park",
+                    "elementType": "geometry",
+                    "stylers": [
+                        { "visibility": "off" }
+                    ]
+                },{
                     "featureType": "landscape",
                     "stylers": [
                         { "color": "#ffffff" }
