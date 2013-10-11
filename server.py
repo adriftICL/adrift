@@ -19,6 +19,8 @@ urls = ('/fukushima', 'Fukushima',
         '/runBwd', 'RunTracerBwd',
         '/australia', 'Australia',
         '/runAus','RunTracerAus',
+        '/mediterranean', 'Mediterranean',
+        '/runMed','RunTracerMed',
         '/what', 'What',
         '/how', 'How',
         '/background', 'Background',
@@ -194,6 +196,44 @@ class RunTracerAus:
                 results = run_tracer(closest_index,'Australia')
                 try:
                     cache_results(closest_index, results,'Australia')
+                except NotWritten:
+                    print "Not saving data"
+
+            web.header("Content-Type", "application/x-javascript")
+            ret = json.dumps(results)
+        return ret
+
+class Mediterranean:
+    def GET(self):
+        i = web.input()
+        try:
+            return render.mediterranean(lat=i.lat, lng=i.lng)
+        except AttributeError:
+            return render.mediterranean()
+class RunTracerMed:
+    def GET(self):
+        i = web.input()
+        try:
+            given_lat = float(i.lat)
+            given_lng = float(i.lng)
+        except AttributeError:
+            # if no attributes are given, return nothing.
+            return ""
+        logger.info(str(web.ctx.ip) + " mediterranean," + str(given_lat) + "," + str(given_lng))
+        closest_index = get_closest_index(given_lat, given_lng,'Mediterranean')
+        ret = ""
+        if is_lacking_data(closest_index,'Mediterranean'):
+            ret = json.dumps("Sorry, we have no data for that ocean area")
+        elif is_landpoint(closest_index,'Australia'):
+            ret = json.dumps("You clicked on land, please click on the ocean")
+        else:
+            try:
+                results = get_cached_results(closest_index,'Mediterranean')
+                print "using cached data"
+            except NotCached:
+                results = run_tracer(closest_index,'Mediterranean')
+                try:
+                    cache_results(closest_index, results,'Mediterranean')
                 except NotWritten:
                     print "Not saving data"
 
