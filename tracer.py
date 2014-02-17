@@ -2,6 +2,7 @@
 
 import scipy.io
 from scipy import *
+import time
 
 data={}
 try:
@@ -39,17 +40,12 @@ def is_lacking_data(closest_index,type):
     return data[type]['landpoints'][0][closest_index] == -1
 
 def get_closest_index(given_lat, given_lng,type):
-    def find(array, value, mod):
-        best = 9999 + abs(value)
-        best_i = -1
-        for i in xrange(len(array)):
-            for delta in [-mod,0,+mod]:
-                if abs(array[i]-value+delta) < best:
-                    best = abs(array[i]-value+delta)
-                    best_i = i
-        return best_i
-    return find(lat[type], given_lat, 0) * len(lon[type]) + find(lon[type], given_lng, 360)
+    def findindex(array, value):
+        diffs=abs(array-value) % 360
+        return diffs.argmin()
+    return findindex(lat[type], given_lat) * len(lon[type]) + findindex(lon[type], given_lng)
 
+# this function is not to be used anymore!!
 def run_tracer(closest_index,type):
     if type=='Global':
         maxyears=10
