@@ -50,8 +50,13 @@ function AdriftMap(element, options) {
                         { "visibility": "off" }
                     ]
                 },{
-                    "featureType": "poi.park",
-                    "elementType": "geometry",
+                    "featureType": "poi",
+                    "stylers": [
+                        { "visibility": "off" }
+                    ]
+                },{
+                    "featureType": "landscape",
+                    "elementType": "labels",
                     "stylers": [
                         { "visibility": "off" }
                     ]
