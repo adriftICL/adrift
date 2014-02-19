@@ -223,3 +223,27 @@ a.zoombar:hover {
     height: 0;
     visibility: hidden;
 }
+
+.circle{
+    display:block;
+    width:100px;
+    height:100px;
+    border-radius:50px;
+    font-size:20px;
+    color:#fff;
+    line-height:100px;
+    text-align:center;
+    text-decoration:none;
+    background:#FF0;
+    opacity:0.2;
+}
+.menu:hover{
+    color:#ccc;
+    text-decoration:none;
+    background:#333
+}
+
+.engagefwdbwd{
+    color:#FFF;
+    font-size:20px;
+}
