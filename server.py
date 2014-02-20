@@ -34,11 +34,13 @@ urls = ('/fukushima', 'Fukushima',
         '/engage4','Engage4',
         '/engage5','Engage5',
         '/engage6','Engage6',
+        '/engageadrift','Engageadrift',
         '/regions', 'Regions',
         '/bwdfwd','BwdFwd')
 
 render = web.template.render('templates', base='map_layout')
 serveengage = web.template.render('templates', base='engage_layout')
+servemap750 = web.template.render('templates', base='map750_layout')
 
 # set up logging. for more information, see
 # http://docs.python.org/2/howto/logging.html#logging-basic-tutorial
@@ -192,6 +194,10 @@ class Engage6:
     def GET(self):
         logger.info(str(web.ctx.ip) + " engage6")
         return serveengage.engage6()
+class Engageadrift:
+    def GET(self):
+        logger.info(str(web.ctx.ip) + " engageadrift")
+        return servemap750.map750()
 
 class Regions:
     def GET(self):

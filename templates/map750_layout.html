@@ -1,0 +1,63 @@
+$def with (map_content)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adrift: tracking the global ocean circulation</title>
+    <script src="//code.jquery.com/jquery-latest.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+    <script src="/static/jquery.blockUI.js"></script>
+    <script src="/static/jquery.history.js"></script>
+    <script src="/static/jquery.colorbox-min.js"></script>
+    <script src="/static/cssua.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
+
+    <link href="/static/ui.css" rel="stylesheet" media="screen"/>
+    <link href="/static/colorbox.css" rel="stylesheet" media="screen"/>
+    <link href="/static/stylesheet2.css" rel="stylesheet" media="screen"/>
+    <link href="/static/stylesheet2_750pwide.css" rel="stylesheet" media="screen"/>
+    <meta property="og:title" content="Adrift.org.au"/>
+    <meta property="og:image" content="http://adrift.org.au/static/fblogo.jpg"/>
+    <meta property="og:description" content="Want to know where your message in a bottle will turn up or track down the path of local floating pollution? Use Adrift.org.au to forecast where rubber duckies or floating debris in the ocean is likely to end up in 10 years. So, take a leap into the virtual ocean today and see where it takes you."/>
+    <meta property="fb:admins" content="1087703262" />
+    <meta name="google-site-verification" content="MSgbQgLLWmbQniHSSRJhbmt7Z3VYbRbBVF7gJ3Fsda8" />
+    <meta name="Description" content="Want to know where your message in a bottle will turn up or track down the path of local floating pollution? Use Adrift.org.au to forecast where rubber duckies or floating debris in the ocean is likely to end up in 10 years. So, take a leap into the virtual ocean today and see where it takes you."/>
+
+</head>
+<body>
+<div id="fb-root"></div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script type="text/javascript">
+    var host = location.host;
+    if (host.indexOf("8080") == -1) {
+        var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-38940204-1']); _gaq.push(['_trackPageview']);
+        (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+    }
+</script>
+
+<script src="/static/adrift.js"></script>
+<script>
+    $$(document).ready(function(){
+        $$(document).ajaxStart(function(){
+            $$('div.map_notification_container').block({
+                message: '<div style="font-size:18px"><img src="/static/busy.gif" /> Now computing spread of marine plastics...</div>',
+                css:{padding: '30px', width: '400px'}
+            });
+        });
+        $$(document).ajaxStop(function(){
+            $$('div.map_notification_container').unblock();
+        });
+    });
+</script>
+
+$:map_content
+
+</div>
+</body>
+</html>
