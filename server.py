@@ -21,6 +21,8 @@ urls = ('/fukushima', 'Fukushima',
         '/runAus','RunTracerAus',
         '/mediterranean', 'Mediterranean',
         '/runMed','RunTracerMed',
+        '/klokhuis','Klokhuis',
+        '/runKlok','RunTracerKlok',
         '/what', 'What',
         '/how', 'How',
         '/background', 'Background',
@@ -41,6 +43,7 @@ urls = ('/fukushima', 'Fukushima',
 render = web.template.render('templates', base='map_layout')
 serveengage = web.template.render('templates', base='engage_layout')
 servemap750 = web.template.render('templates', base='map750_layout')
+render675 = web.template.render('templates', base='map675_layout')
 
 # set up logging. for more information, see
 # http://docs.python.org/2/howto/logging.html#logging-basic-tutorial
@@ -198,6 +201,46 @@ class Engageadrift:
     def GET(self):
         logger.info(str(web.ctx.ip) + " engageadrift")
         return servemap750.map750()
+
+class Klokhuis:
+    def GET(self):
+        logger.info(str(web.ctx.ip) + " klokhuis")
+        return render675.map675()
+class RunTracerKlok:
+    def GET(self):
+        i = web.input()
+        try:
+            given_lat = float(i.lat)
+            given_lng = float(i.lng)
+        except AttributeError:
+            # if no attributes are given, return nothing.
+            return ""
+
+        logger.info(str(web.ctx.ip) + " klokhuis," + str(given_lat) + "," + str(given_lng))
+
+        closest_index = get_closest_index(given_lat, given_lng,'Global')
+
+        ret = ""
+
+        if is_lacking_data(closest_index,'Global'):
+            ret = json.dumps("Sorry, we hebben geen data voor die locatie")
+        elif is_landpoint(closest_index,'Global'):
+            ret = json.dumps("Sorry, je klikte niet op de oceaan")
+        else:
+            try:
+                results = get_cached_results(closest_index,'Global')
+            except NotCached:
+                results = run_tracer(closest_index,'Global')
+                try:
+                    cache_results(closest_index, results,'Global')
+                except NotWritten:
+                    print "Not saving data"
+
+            ret = json.dumps(results)
+
+        web.header("Content-Type", "application/x-javascript")
+
+        return ret
 
 class Regions:
     def GET(self):
