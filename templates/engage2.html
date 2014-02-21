@@ -1,13 +1,26 @@
+<!-- Speech bubble-->
+<div class="duckiebubble" style="position:absolute;left:320px;top:160px;width:200px;">
+<script>
+    var text = 'Now let\'s have a look and see what that plastic does in the ocean';
+    $$.each(text.split(''), function(i, letter){
+        setTimeout(function(){
+            $$('#container').html($$('#container').html() + letter);
+        }, 50*i);
+    });
+</script>
+<div id="container"></div>
+</div>
+
 <!-- Circle Biodegrade or Breakdown - microplastic-->
 <div style="position:absolute;left:260px;top:320px">
 <a href="#microplastic" class="circle colorbox"></a>
 </div>
 <div class="textbox hidden" id="microplastic">
-  <h2> Biodegrade or Breakdown</h2>
+  <h2>The long life of plastic</h2>
   <p>
   For humans, plastic is cheap and convenient. For marine animals, plastic is a floating minefield. In fact, plastic pollution is one of the most serious threats to the health of our oceans. Plastic is lightweight and indestructible which is the reason it is such a popular material but also makes it extremely hard to get rid of. Plastic never disappears. When plastic breaks down, or degrades, it is just reducing the size until it becomes so small you cannot see it with the naked eye. This is known as microplastic. 
   <p>
-  <img width="500" height="300" src="static/scenes/photo-323.jpg"/>
+  <img width="460" height="300" src="static/scenes/photo-323.jpg"/>
 </div>
 
 <!-- Circle Long life of plastic - microplastic-->
@@ -15,23 +28,20 @@
 <a href="#cokebottle" class="circle colorbox"></a>
 </div>
 <div class="textbox hidden" id="cokebottle">
-<h2> The long life of plastic</h2>
+<h2>There&#39;s no &#39;away&#39; with plastic</h2>
   <p>
 More and more plastic is being produced everyday, which means more and more waste. Most of the plastic that is made today is used as disposable packaging, like plastic containers, cups, bags and bottles. The problem is that a lot of this plastic does not get recycled, and ends up in landfills or on the street. From here, the plastic can easily make the journey from land to sea. 80% of the plastic in our oceans comes from the land. 
 <p>
 It is estimated that over three million new pieces of plastic find their way into the oceans everyday! 
   <p>
-<iframe width="750" height="422" src="//www.youtube.com/embed/qfDKEzPxhzQ" frameborder="0" allowfullscreen></iframe>
-</div>
- 
-  <p>
+<iframe width="460" height="259" src="//www.youtube.com/embed/qfDKEzPxhzQ" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <!-- Circle Building blocks-->
 <div style="position:absolute;left:550px;top:305px">
-<a href="#container" class="circle colorbox"></a>
+<a href="#buildingblock" class="circle colorbox"></a>
 </div>
-<div class="textbox hidden" id="container">
+<div class="textbox hidden" id="buildingblock">
   <h2> The building blocks of plastic</h2>
   <p>
 Some plastics in the ocean are already microscopic. Nurdles, plastic pellets and microbeads are all used to make larger plastic objects, and can be smaller than peas! These plastic building blocks make their way into the ocean, in factory waste or containers that have fallen off ships transporting plastic around the world. 
@@ -45,10 +55,9 @@ Some plastics in the ocean are already microscopic. Nurdles, plastic pellets and
 <a href="#tyre" class="circle colorbox"></a>
 </div>
 <div class="textbox hidden" id="tyre">
-  <h2> Sink or swim? What does plastic in the ocean do</h2>
+  <h2> Does plastic sink or swim?</h2>
   <p>
   Different types of plastic end up in different parts of the ocean. Most plastic is lighter than water and floats near the surface. This plastic gets carried around the world's oceans in currents. The plastic that stays near the surface gets battered and weakened by the waves and sun, which cause it to break down into smaller pieces. Other plastics and debris sink to the ocean floor. Much less is known about the life of these plastics, due to the difficulty in reaching the deep dark ocean floor.
-
 </div>
 
 <!-- Image and control buttons -->

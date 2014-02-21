@@ -247,3 +247,9 @@ a.zoombar:hover {
     color:#FFF;
     font-size:20px;
 }
+
+.duckiebubble {
+    font-family: courier,sans-serif;
+    font-size: 18px;
+    line-height: 140%;
+}

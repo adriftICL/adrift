@@ -1,3 +1,15 @@
+ <!-- Speech bubble-->
+<div class="duckiebubble" style="position:absolute;left:320px;top:160px;width:200px;">
+<script>
+    var text = 'So why are marine plastics a problem?';
+    $$.each(text.split(''), function(i, letter){
+        setTimeout(function(){
+            $$('#container').html($$('#container').html() + letter);
+        }, 50*i);
+    });
+</script>
+<div id="container"></div>
+</div>
 
 <!-- Circle hitchhikers-->
 <div style="position:absolute;left:760px;top:320px">
@@ -57,9 +69,9 @@ In Australia, many flesh-footed shearwater birds are dying. Plastic pollution pl
 <a href="#bioaccumulation" class="circle colorbox"></a>
 </div>
 <div class="textbox hidden" id="bioaccumulation">
-  <h2> Bioaccumulation </h2>
+  <h2> How plastic acts as a chemical sponge </h2>
   <p>
-JEN MAKING VIDEO TO PUT HERE
+<iframe width="460" height="259" src="//www.youtube.com/embed/7QzkYTnql5I" frameborder="0" allowfullscreen></iframe>
 <p>
 </div>
 
@@ -68,9 +80,9 @@ JEN MAKING VIDEO TO PUT HERE
 <a href="#biomag" class="circle colorbox"></a>
 </div>
 <div class="textbox hidden" id="biomag">
-  <h2> Biomagnification </h2>
+  <h2> Plastic in the marine foodchain </h2>
   <p>
-JEN MAKING VIDEO TO PUT HERE
+<iframe width="460" height="259" src="//www.youtube.com/embed/7vlD7JMqWOc" frameborder="0" allowfullscreen></iframe>
 <p>
 </div>
 

@@ -1,22 +1,36 @@
-<!-- Circle cleanup-->
-<div style="position:absolute;left:450px;top:550px">
-<a href="#cleanup" class="circle colorbox"></a>
-</div>
-<div class="textbox hidden" id="cleanup">
-  <h2> Cleaning up the ocean</h2>
-  <p>
-You may be asking yourself by now, if all the plastic in the ocean ends up in the gyres, or garbage patches, then why can't someone just go out there and pick it all up? A young engineer Boyan Slat had a similar idea, and has been developing a new technology, a giant ocean vacuum, to suck all the plastic out of these garbage patches. While this all sounds very sophisticated, wouldn't it be better if we could stop the plastic problem before it reaches our oceans?
-<p>
+<!-- Speech bubble-->
+<div class="duckiebubble" style="position:absolute;left:320px;top:160px;width:200px;">
+<script>
+    var text = 'So how can we solve this plastic problem?';
+    $$.each(text.split(''), function(i, letter){
+        setTimeout(function(){
+            $$('#container').html($$('#container').html() + letter);
+        }, 50*i);
+    });
+</script>
+<div id="container"></div>
 </div>
 
 <!-- Circle invisible-->
-<div style="position:absolute;left:860px;top:670px">
+<div style="position:absolute;left:450px;top:550px">
 <a href="#invisible" class="circle colorbox"></a>
 </div>
 <div class="textbox hidden" id="invisible">
   <h2> Why can't I see any plastic on my beach?</h2>
   <p>
   The plastic that is commonly found in the ocean is microplastic. Plastic that started its life as a plastic bottle, rubber ducky or toothbrush, but has broken down into microscopic pieces. This is why sometimes you might not notice the plastic that is taking over our oceans when you are at the beach or swimming in the waves. 
+
+<p>
+</div>
+
+<!-- Circle cleanup-->
+<div style="position:absolute;left:860px;top:670px">
+<a href="#cleanup" class="circle colorbox"></a>
+</div>
+<div class="textbox hidden" id="cleanup">
+  <h2> Why can't we just clean it up? </h2>
+  <p>
+You may be asking yourself by now, if all the plastic in the ocean ends up in the gyres, or garbage patches, then why can't someone just go out there and pick it all up? Well, it's not a plastic island, it's a plastic soup which is much harder to gather up. A young engineer Boyan Slat had an idea about this and has been developing a new technology, a giant ocean vacuum, to suck all the plastic out of these garbage patches. While this all sounds very sophisticated, wouldn't it be better if we could stop the plastic problem before it reaches our oceans?
 <p>
 </div>
 

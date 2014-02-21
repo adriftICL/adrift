@@ -1,4 +1,16 @@
-  
+ <!-- Speech bubble-->
+<div class="duckiebubble" style="position:absolute;left:320px;top:160px;width:200px;">
+<script>
+    var text = 'So where does the plastic end up?';
+    $$.each(text.split(''), function(i, letter){
+        setTimeout(function(){
+            $$('#container').html($$('#container').html() + letter);
+        }, 50*i);
+    });
+</script>
+<div id="container"></div>
+</div>
+
 <!-- Circle whereplastic-->
 <div style="position:absolute;left:280px;top:650px">
 <a href="#whereplastic" class="circle colorbox"></a>
@@ -28,6 +40,8 @@ The circular motion of the gyre draws the debris into the centre where it become
 </div>
 <div class="textbox hidden" id="wherepersonal">
   <h2> Text on <a href="map">adrift</a> here</h2>
+  <p>
+  Adrift is a website designed to help you explore how objects, like plastic, drift through the ocean. The website uses real data from the <a href="http://www.aoml.noaa.gov/phod/dac/index.php">Global Drifter Program</a>  to show how interconnected our oceans are. Start exploring and see just how far your plastic can travel! 
   <p>
   <iframe src="engageadrift" seamless="true" width="750px" height="512px"></iframe> 
   <p>
