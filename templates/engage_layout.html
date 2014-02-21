@@ -13,15 +13,13 @@ $def with (map_content)
 
     <link href="/static/ui.css" rel="stylesheet" media="screen"/>
     <link href="/static/colorbox.css" rel="stylesheet" media="screen"/>
-    <link href="/static/stylesheet2.css" rel="stylesheet" media="screen"/>
-    <link href="/static/stylesheet2_960pwide.css" rel="stylesheet" media="screen"/>
+    <link href="/static/stylesheetengage.css" rel="stylesheet" media="screen"/>
     <meta property="og:title" content="Adrift Engage"/>
     <meta property="og:image" content="http://adrift.org.au/static/fblogo.jpg"/>
     <meta property="og:description" content="Want to know where your message in a bottle will turn up or track down the path of local floating pollution? Use Adrift.org.au to forecast where rubber duckies or floating debris in the ocean is likely to end up in 10 years. So, take a leap into the virtual ocean today and see where it takes you."/>
     <meta property="fb:admins" content="1087703262" />
     <meta name="google-site-verification" content="MSgbQgLLWmbQniHSSRJhbmt7Z3VYbRbBVF7gJ3Fsda8" />
     <meta name="Description" content="Want to know where your message in a bottle will turn up or track down the path of local floating pollution? Use Adrift.org.au to forecast where rubber duckies or floating debris in the ocean is likely to end up in 10 years. So, take a leap into the virtual ocean today and see where it takes you."/>
-
 </head>
 <body>
 <div id="fb-root"></div>
@@ -42,21 +40,10 @@ $def with (map_content)
 </script>
 <script>
     $$(document).ready(function(){
-        var show_page = function(selector) {
-            $$.colorbox({
-                width:"550px", top:"20px", maxHeight:"800px", opacity:0.50,
-                html: "<div class='textbox'>" + $$(selector).html() + "</div>"
-            });
-        };
-        $$(".colorbox").click(function(a){
-            a = a.currentTarget;
-            show_page($$(a).attr("href"));
-        });
-        var id = location.hash.substr(1);
-        // Double checking these values here due to potential XSS
+        $$(".colorbox750").colorbox({inline:true, innerWidth:"810px", opacity:0.50});
+        $$(".colorbox").colorbox({inline:true, innerWidth:"520px", opacity:0.50,maxHeight:"95%"});
     });
 </script>
-
 
 <div id="page_container">
     <div style="position: relative">
