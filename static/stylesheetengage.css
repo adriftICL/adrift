@@ -29,6 +29,17 @@ h1 {
     font-size: 17px;
     line-height: 140%;
 }
+
+.textboxstarts {
+    padding:30px;
+    padding-top:10px;
+    padding-bottom:10px;
+    background:#fff;
+    text-align:left;
+    font-size: 17px;
+    line-height: 140%;
+}
+
 p {
     margin-top:1em;
 }
@@ -113,7 +124,7 @@ ul.navigation li a:hover {
 }
 
 .duckiebubble {
-    font-family: courier,sans-serif;
+    font-family: serif;
     font-size: 18px;
     line-height: 140%;
 }
