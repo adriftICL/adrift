@@ -54,9 +54,6 @@ $def with (map_content)
         });
         var id = location.hash.substr(1);
         // Double checking these values here due to potential XSS
-        if ($$.inArray(id, ["what", "how", "background", "faq", "media", "bwdfwd", "team", "regions"]) != -1) {
-            show_page("#" +id);
-        }
     });
 </script>
 
