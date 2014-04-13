@@ -10,6 +10,8 @@ function notification(message, css_class) {
     $elm.attr('class','').addClass(css_class);
     $elm = $("#zoombar");
     $elm.attr('class','').addClass(css_class);
+    $elm = $("#downloadbar");
+    $elm.attr('class','').addClass(css_class);
 }
 
 // Takes all the options of a regular google map.
@@ -148,17 +150,47 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
         if (data.substring) {
             this.heatmap.setMap(null);
             notification(data, "error");
-        } else if (data[0].length == 0) {
-            // TODO: should this ever get called?
-            this.heatmap.setMap(null);
-            notification("You clicked on land, please click on the ocean", "error");
         } else {
             this.heatmap.setMap(null);
-            this.heatMapData = data;
-            this.draw_heat_map_data(0, this.run_id);
-        }
-    };
+            var linkfile="https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+data+".csv";
 
+            $.ajaxSetup({async:false});
+            var result
+            $.get(linkfile, function(filecontent) {
+               result = filecontent
+            });
+            $.ajaxSetup({async:true});
+
+            var data_arr=new Array();
+            var lines = result.split("\n");
+            var timestep_old=-1;
+            var tel = 0;
+            for (var i=0;i<lines.length;i++){
+                var line = lines[i];
+                var parts = line.split(',');
+                if (!isNaN(parts[0]) && parts[0]!='') {
+                    var timestep = parts[0]*6+parts[1]/2;
+                    if (timestep != timestep_old) {
+                        tel = 0;
+                        data_arr[timestep]=new Array();
+                    }  else {
+                        tel += 1;
+                    };
+                    var weight = Math.floor(parts[4]*10000);
+                    if (weight > 100) {
+                      weight = 100;
+                    };
+                    data_arr[timestep][tel]=new Array();
+                    data_arr[timestep][tel][0]=parts[2];
+                    data_arr[timestep][tel][1]=parts[3];
+                    data_arr[timestep][tel][2]=weight;
+                    timestep_old =timestep;
+                } //if
+            } // for
+            this.heatMapData = data_arr;
+            this.draw_heat_map_data(0, this.run_id);
+        } //else
+    }; //var callback = function(data)
     // This endpoint also needs to be refactored out.
     $.getJSON(this.options['jsonEndpoint'] + "?lat="+lat+"&lng="+lng, $.proxy(callback, this));
 };
@@ -177,8 +209,8 @@ AdriftMap.prototype._draw_heat_map_data = function(j, expected_run_id) {
     if (this.run_id != expected_run_id) return;
     if (j == 0) {
         for(var i = 0; i < this.heatMapData[j].length; i++) {
-            var x = this.heatMapData[j][i].location;
-            this.heatMapData[j][i].location = new google.maps.LatLng(x.lat, x.lng);
+            var x = this.heatMapData[j][i];
+            this.heatMapData[j][i].location = new google.maps.LatLng(x[0], x[1]);
         }
         this.pointArray = new google.maps.MVCArray(this.heatMapData[j]);
         this.heatmap = new google.maps.visualization.HeatmapLayer({
@@ -191,9 +223,9 @@ AdriftMap.prototype._draw_heat_map_data = function(j, expected_run_id) {
     } else {
         this.pointArray.clear();
         for(var i = 0; i < this.heatMapData[j].length; i++) {
-            var x = this.heatMapData[j][i].location;
-            y = new google.maps.LatLng(x.lat, x.lng)
-            y.weight = this.heatMapData[j][i].weight; // what's this weight stuff? and why isn't it converted above?
+            var x = this.heatMapData[j][i];
+            y = new google.maps.LatLng(x[0], x[1])
+            y.weight = this.heatMapData[j][i][2]; // what's this weight stuff? and why isn't it converted above?
             this.pointArray.push(y);
         }
     }
