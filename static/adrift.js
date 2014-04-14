@@ -13,6 +13,10 @@ function notification(message, css_class) {
     $elm = $("#downloadbar");
     $elm.attr('class','').addClass(css_class);
 }
+function createdownloadlink(message) {
+    $elm = $("#downloadbar_text");
+    $elm.html(message);
+}
 
 // Takes all the options of a regular google map.
 function AdriftMap(element, options) {
@@ -186,6 +190,7 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
         } else {
             this.heatmap.setMap(null);
             var linkfile="https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+padToFive(data)+".csv";
+            createdownloadlink('<a href="'+linkfile+'">Click here for csv file</a>')
             $.get(linkfile, $.proxy(parsedata, this));
         }
     };

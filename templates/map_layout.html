@@ -31,7 +31,6 @@ $def with (map_content)
 </head>
 <body>
 <div id="fb-root"></div>
-<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -64,7 +63,7 @@ $def with (map_content)
         });
         var id = location.hash.substr(1);
         // Double checking these values here due to potential XSS
-        if ($$.inArray(id, ["what", "how", "background", "faq", "media", "bwdfwd", "team", "regions"]) != -1) {
+        if ($$.inArray(id, ["what", "how", "background", "faq", "media", "bwdfwd", "team", "regions", "download"]) != -1) {
             show_page("#" +id);
         }
     });
@@ -76,11 +75,11 @@ $def with (map_content)
             if (cssua.ua.mobile) {
                 document.write("<img class=\"header\" src=\"/static/adrift_logo_960pwide.jpg\">")
                 document.write("<a href=\"http://www.climatescience.org.au\" style=\"display:block;position:absolute;width:260px;height:40px;top:0px;left:700px;\"></a>")
-                document.write("<div style=\"position:absolute;top:39px;left:155px;\">")
+                document.write("<div style=\"position:absolute;top:39px;left:120px;\">")
             } else {
                 document.write("<img class=\"header\" src=\"/static/adrift_logo_1024pwide.jpg\">")
                 document.write("<a href=\"http://www.climatescience.org.au\" style=\"display:block;position:absolute;width:224px;height:50px;top:0px;left:800px;\"></a>")
-                document.write("<div style=\"position:absolute;top:65px;left:219px;\">")
+                document.write("<div style=\"position:absolute;top:65px;left:180px;\">")
             }
         </script>
         <ul class="navigation">
@@ -89,6 +88,7 @@ $def with (map_content)
             <li class="navigation"><a class="navigation colorbox" href="#background">Duckies and Other Plastic</a></li>
             <li class="navigation"><a class="navigation colorbox" href="#faq">FAQ</a></li>
             <li class="navigation"><a class="navigation colorbox" href="#team">Team</a></li>
+            <li class="navigation"><a class="navigation colorbox" href="#download">Download</a></li>
         </ul>
     </div>
 
@@ -302,6 +302,21 @@ $:map_content
     <a href="http://www.rrr.org.au/program/radio-marinara/">Radio Marinara</a>, on Melbourne's Triple R radio station and hosted by <a href="http://www.rrr.org.au/presenter/anthony-boxshall/">Anthony Boxhall</a>, covered Adrift.org.au on their August 4 show. Listen to it <a href="http://www.erik.vansebille.com/science/Radio-Marinara-20130804.mp3">here</a>.
     </p><p>
     <a href="http://www.abc.net.au/radionational/programs/lifematters/"> Life Matters</a> on ABC Radio National covered Adrift.org.au on their June 24 show. Listen to it <a href="http://www.abc.net.au/radionational/programs/lifematters/the-not-so-fantastic-plastic/4774526">here</a>.
+    </p>
+</div>
+
+<div class="textbox hidden" id="download">
+    <h2>Download the data</h2>
+    <p>
+    You can download the data of the experiment on the screen via the link below.
+    <div id="downloadbar_text">
+        <i>First click on a point on the map</i>
+    </div>
+    The data is a comma-separated file that should load into Excel. It has five columns: the year, the month, the latitude, the longitude and the weight. Each row in the file corresponds to one grid point on the map, and rows with the same year and month data are shown as one snapshot in the animation. The sum of weights for a given year and month is always 1, except for that grid cells where the weight is smaller than 0.00025 are not listed.
+    </p><p>
+    You are welcome and free to use the data in the file above for your scientific work. I just ask that you cite <a href="http://iopscience.iop.org/1748-9326/7/4/044040/">this scientific article</a> in any publications that use the data. Both the data and the paper are licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike license</a>.
+    </p><p>
+    If you have any questions on how to use the data, please <a href="http://erik.vansebille.com/science/">contact me</a>.
     </p>
 </div>
 
