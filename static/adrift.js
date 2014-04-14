@@ -92,7 +92,7 @@ function AdriftMap(element, options) {
     this.map = new google.maps.Map(element, this.options);
 
     // Create the heat map objects.
-    this.heatMapData = [];
+    this.heatMapData = new Array();
     this.heatmap = new google.maps.visualization.HeatmapLayer({
         data: this.heatMapData,
         radius: 1
@@ -146,51 +146,49 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
 
     this.run_id++;
     this.marker.setPosition(latLng);
+
+    var parsedata = function(filecontent) {
+        var lines = filecontent.split("\n");
+        var timestep_old=-1;
+        var tel = 0;
+        for (var i=0;i<lines.length;i++){
+            var line = lines[i];
+            var parts = line.split(',');
+            if (!isNaN(parts[0]) && parts[0]!='') {
+                var timestep = parts[0]*6+parts[1]/2;
+                if (timestep != timestep_old) {
+                    tel = 0;
+                    this.heatMapData[timestep]=new Array();
+                }  else {
+                    tel += 1;
+                };
+                var weight = Math.floor(parts[4]*10000);
+                if (weight > 100) {
+                    weight = 100;
+                };
+                this.heatMapData[timestep][tel]=new Array();
+                this.heatMapData[timestep][tel][0]=parts[2];
+                this.heatMapData[timestep][tel][1]=parts[3];
+                this.heatMapData[timestep][tel][2]=weight;
+                timestep_old =timestep;
+            }
+        }
+        this.draw_heat_map_data(0, this.run_id);
+    }
+    function padToFive(number) {
+        if (number<=99999) { number = ("0000"+number).slice(-5); }
+        return number;
+    }
     var callback = function(data) {
         if (data.substring) {
             this.heatmap.setMap(null);
             notification(data, "error");
         } else {
             this.heatmap.setMap(null);
-            var linkfile="https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+data+".csv";
-
-            $.ajaxSetup({async:false});
-            var result
-            $.get(linkfile, function(filecontent) {
-               result = filecontent
-            });
-            $.ajaxSetup({async:true});
-
-            var data_arr=new Array();
-            var lines = result.split("\n");
-            var timestep_old=-1;
-            var tel = 0;
-            for (var i=0;i<lines.length;i++){
-                var line = lines[i];
-                var parts = line.split(',');
-                if (!isNaN(parts[0]) && parts[0]!='') {
-                    var timestep = parts[0]*6+parts[1]/2;
-                    if (timestep != timestep_old) {
-                        tel = 0;
-                        data_arr[timestep]=new Array();
-                    }  else {
-                        tel += 1;
-                    };
-                    var weight = Math.floor(parts[4]*10000);
-                    if (weight > 100) {
-                      weight = 100;
-                    };
-                    data_arr[timestep][tel]=new Array();
-                    data_arr[timestep][tel][0]=parts[2];
-                    data_arr[timestep][tel][1]=parts[3];
-                    data_arr[timestep][tel][2]=weight;
-                    timestep_old =timestep;
-                } //if
-            } // for
-            this.heatMapData = data_arr;
-            this.draw_heat_map_data(0, this.run_id);
-        } //else
-    }; //var callback = function(data)
+            var linkfile="https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+padToFive(data)+".csv";
+            $.get(linkfile, $.proxy(parsedata, this));
+        }
+    };
     // This endpoint also needs to be refactored out.
     $.getJSON(this.options['jsonEndpoint'] + "?lat="+lat+"&lng="+lng, $.proxy(callback, this));
 };
