@@ -124,16 +124,7 @@ class RunTracer:
         elif is_landpoint(closest_index,'Global'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            try:
-                results = get_cached_results(closest_index,'Global')
-            except NotCached:
-                results = run_tracer(closest_index,'Global')
-                try:
-                    cache_results(closest_index, results,'Global')
-                except NotWritten:
-                    print "Not saving data"
-
-            ret = json.dumps(results)
+            ret = json.dumps(closest_index)
 
         web.header("Content-Type", "application/x-javascript")
 
