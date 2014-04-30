@@ -159,7 +159,11 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
             var line = lines[i];
             var parts = line.split(',');
             if (!isNaN(parts[0]) && parts[0]!='') {
-                var timestep = parts[0]*6+parts[1]/2;
+                if (this.options['monthsPerFrame']==2) {
+                    var timestep = parts[0]*6+parts[1]/2;
+                } else {
+                    var timestep = parseInt(parts[0])*12+parseInt(parts[1]);
+                }
                 if (timestep != timestep_old) {
                     tel = 0;
                     this.heatMapData[timestep]=new Array();
@@ -179,19 +183,14 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
         }
         this.draw_heat_map_data(0, this.run_id);
     }
-    function padToFive(number) {
-        if (number<=99999) { number = ("0000"+number).slice(-5); }
-        return number;
-    }
     var callback = function(data) {
-        if (data.substring) {
+        if (data.substring(0,5) != "https") {
             this.heatmap.setMap(null);
             notification(data, "error");
         } else {
             this.heatmap.setMap(null);
-            var linkfile="https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+padToFive(data)+".csv";
-            createdownloadlink('<a href="'+linkfile+'">Click here for csv file</a>')
-            $.get(linkfile, $.proxy(parsedata, this));
+            createdownloadlink('<a href="'+data+'">Click here for csv file</a>')
+            $.get(data, $.proxy(parsedata, this));
         }
     };
     // This endpoint also needs to be refactored out.
@@ -232,7 +231,7 @@ AdriftMap.prototype._draw_heat_map_data = function(j, expected_run_id) {
             this.pointArray.push(y);
         }
     }
-    var months = (j+1)*this.options['monthsPerFrame'];
+    var months = (j)*this.options['monthsPerFrame'];
     var years = Math.floor(months/12);
     months %= 12;
 

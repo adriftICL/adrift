@@ -90,7 +90,7 @@ function AdriftMap(element, options) {
     this.map = new google.maps.Map(element, this.options);
 
     // Create the heat map objects.
-    this.heatMapData = [];
+    this.heatMapData = new Array();
     this.heatmap = new google.maps.visualization.HeatmapLayer({
         data: this.heatMapData,
         radius: 1
@@ -145,21 +145,44 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
 
     this.run_id++;
     this.marker.setPosition(latLng);
+
+    var parsedata = function(filecontent) {
+        var lines = filecontent.split("\n");
+        var timestep_old=-1;
+        var tel = 0;
+        for (var i=0;i<lines.length;i++){
+            var line = lines[i];
+            var parts = line.split(',');
+            if (!isNaN(parts[0]) && parts[0]!='') {
+                var timestep = parts[0]*6+parts[1]/2;
+                if (timestep != timestep_old) {
+                    tel = 0;
+                    this.heatMapData[timestep]=new Array();
+                }  else {
+                    tel += 1;
+                };
+                var weight = Math.floor(parts[4]*10000);
+                if (weight > 100) {
+                    weight = 100;
+                };
+                this.heatMapData[timestep][tel]=new Array();
+                this.heatMapData[timestep][tel][0]=parts[2];
+                this.heatMapData[timestep][tel][1]=parts[3];
+                this.heatMapData[timestep][tel][2]=weight;
+                timestep_old =timestep;
+            }
+        }
+        this.draw_heat_map_data(0, this.run_id);
+    }
     var callback = function(data) {
-        if (data.substring) {
+        if (data.substring(0,5) != "https") {
             this.heatmap.setMap(null);
             notification(data, "error");
-        } else if (data[0].length == 0) {
-            // TODO: should this ever get called?
-            this.heatmap.setMap(null);
-            notification("Je hebt op land geklikt. Klik op de oceaan", "error");
         } else {
             this.heatmap.setMap(null);
-            this.heatMapData = data;
-            this.draw_heat_map_data(0, this.run_id);
+            $.get(data, $.proxy(parsedata, this));
         }
     };
-
     // This endpoint also needs to be refactored out.
     $.getJSON(this.options['jsonEndpoint'] + "?lat="+lat+"&lng="+lng, $.proxy(callback, this));
 };
@@ -178,8 +201,8 @@ AdriftMap.prototype._draw_heat_map_data = function(j, expected_run_id) {
     if (this.run_id != expected_run_id) return;
     if (j == 0) {
         for(var i = 0; i < this.heatMapData[j].length; i++) {
-            var x = this.heatMapData[j][i].location;
-            this.heatMapData[j][i].location = new google.maps.LatLng(x.lat, x.lng);
+            var x = this.heatMapData[j][i];
+            this.heatMapData[j][i].location = new google.maps.LatLng(x[0], x[1]);
         }
         this.pointArray = new google.maps.MVCArray(this.heatMapData[j]);
         this.heatmap = new google.maps.visualization.HeatmapLayer({
@@ -192,9 +215,9 @@ AdriftMap.prototype._draw_heat_map_data = function(j, expected_run_id) {
     } else {
         this.pointArray.clear();
         for(var i = 0; i < this.heatMapData[j].length; i++) {
-            var x = this.heatMapData[j][i].location;
-            y = new google.maps.LatLng(x.lat, x.lng)
-            y.weight = this.heatMapData[j][i].weight; // what's this weight stuff? and why isn't it converted above?
+            var x = this.heatMapData[j][i];
+            y = new google.maps.LatLng(x[0], x[1])
+            y.weight = this.heatMapData[j][i][2]; // what's this weight stuff? and why isn't it converted above?
             this.pointArray.push(y);
         }
     }

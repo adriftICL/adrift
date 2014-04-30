@@ -124,9 +124,8 @@ class RunTracer:
         elif is_landpoint(closest_index,'Global'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            ret = json.dumps(closest_index)
-
-        web.header("Content-Type", "application/x-javascript")
+            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+str(closest_index).zfill(5)+".csv";
+            ret = json.dumps(linkfile)
 
         return ret
 
@@ -218,18 +217,8 @@ class RunTracerKlok:
         elif is_landpoint(closest_index,'Global'):
             ret = json.dumps("Sorry, je klikte niet op de oceaan")
         else:
-            try:
-                results = get_cached_results(closest_index,'Global')
-            except NotCached:
-                results = run_tracer(closest_index,'Global')
-                try:
-                    cache_results(closest_index, results,'Global')
-                except NotWritten:
-                    print "Not saving data"
-
-            ret = json.dumps(results)
-
-        web.header("Content-Type", "application/x-javascript")
+            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+str(closest_index).zfill(5)+".csv";
+            ret = json.dumps(linkfile)
 
         return ret
 
@@ -267,17 +256,9 @@ class RunTracerAus:
         elif is_landpoint(closest_index,'Australia'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            try:
-                results = get_cached_results(closest_index,'Australia')
-            except NotCached:
-                results = run_tracer(closest_index,'Australia')
-                try:
-                    cache_results(closest_index, results,'Australia')
-                except NotWritten:
-                    print "Not saving data"
+            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/australiaCsv/Australia_index"+str(closest_index).zfill(5)+".csv";
+            ret = json.dumps(linkfile)
 
-            web.header("Content-Type", "application/x-javascript")
-            ret = json.dumps(results)
         return ret
 
 class Mediterranean:
@@ -304,18 +285,9 @@ class RunTracerMed:
         elif is_landpoint(closest_index,'Australia'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            try:
-                results = get_cached_results(closest_index,'Mediterranean')
-                print "using cached data"
-            except NotCached:
-                results = run_tracer(closest_index,'Mediterranean')
-                try:
-                    cache_results(closest_index, results,'Mediterranean')
-                except NotWritten:
-                    print "Not saving data"
+            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/MediterraneanCsv/Mediterranean_index"+str(closest_index).zfill(5)+".csv";
+            ret = json.dumps(linkfile)
 
-            web.header("Content-Type", "application/x-javascript")
-            ret = json.dumps(results)
         return ret
 
 class Backward:
@@ -342,16 +314,9 @@ class RunTracerBwd:
         elif is_landpoint(closest_index,'GlobalBwd'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            try:
-                results = get_cached_results(closest_index,'GlobalBwd')
-            except NotCached:
-                results = run_tracer(closest_index,'GlobalBwd')
-                try:
-                    cache_results(closest_index, results,'GlobalBwd')
-                except NotWritten:
-                    print "Not saving data"
-            ret = json.dumps(results)
-        web.header("Content-Type", "application/x-javascript")
+            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalbwdCsv/Global_index"+str(closest_index).zfill(5)+".csv";
+            ret = json.dumps(linkfile)
+
         return ret
 
 def notfound():
