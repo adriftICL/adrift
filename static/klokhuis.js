@@ -221,7 +221,7 @@ AdriftMap.prototype._draw_heat_map_data = function(j, expected_run_id) {
             this.pointArray.push(y);
         }
     }
-    var months = (j+1)*this.options['monthsPerFrame'];
+    var months = (j)*this.options['monthsPerFrame'];
     var years = Math.floor(months/12);
     months %= 12;
 
