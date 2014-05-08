@@ -29,19 +29,11 @@ urls = ('/fukushima', 'Fukushima',
         '/faq', 'FAQ',
         '/media', 'Media',
         '/team', 'Team',
-        '/engage','Engage',
-        '/engage1','Engage1',
-        '/engage2','Engage2',
-        '/engage3','Engage3',
-        '/engage4','Engage4',
-        '/engage5','Engage5',
-        '/engage6','Engage6',
-        '/engageadrift','Engageadrift',
+        '/plastinography','Plastinography',
         '/regions', 'Regions',
         '/bwdfwd','BwdFwd')
 
 render = web.template.render('templates', base='map_layout')
-serveengage = web.template.render('templates', base='engage_layout')
 servemap750 = web.template.render('templates', base='map750_layout')
 render675 = web.template.render('templates', base='map675_layout')
 
@@ -159,37 +151,9 @@ class Media:
         logger.info(str(web.ctx.ip) + " media")
         return render.map(open_page="media")
 
-class Engage:
+class Plastinography:
     def GET(self):
-        logger.info(str(web.ctx.ip) + " engage")
-        return serveengage.engage1()
-class Engage1:
-    def GET(self):
-        logger.info(str(web.ctx.ip) + " engage1")
-        return serveengage.engage1()
-class Engage2:
-    def GET(self):
-        logger.info(str(web.ctx.ip) + " engage2")
-        return serveengage.engage2()
-class Engage3:
-    def GET(self):
-        logger.info(str(web.ctx.ip) + " engage3")
-        return serveengage.engage3()
-class Engage4:
-    def GET(self):
-        logger.info(str(web.ctx.ip) + " engage4")
-        return serveengage.engage4()
-class Engage5:
-    def GET(self):
-        logger.info(str(web.ctx.ip) + " engage5")
-        return serveengage.engage5()
-class Engage6:
-    def GET(self):
-        logger.info(str(web.ctx.ip) + " engage6")
-        return serveengage.engage6()
-class Engageadrift:
-    def GET(self):
-        logger.info(str(web.ctx.ip) + " engageadrift")
+        logger.info(str(web.ctx.ip) + " plastinography")
         return servemap750.map750()
 
 class Klokhuis:
