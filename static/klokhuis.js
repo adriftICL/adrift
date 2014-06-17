@@ -180,7 +180,8 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
             notification(data, "error");
         } else {
             this.heatmap.setMap(null);
-            $.get(data, $.proxy(parsedata, this));
+            $.get(data, $.proxy(parsedata, this))
+            .fail(function(){alert( "Kon helaas de data niet ophalen. Mogelijk is er een probleem met de firewall. Op dit moment kan de route van je plastic niet worden getoond." );});
         }
     };
     // This endpoint also needs to be refactored out.

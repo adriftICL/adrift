@@ -190,7 +190,8 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
         } else {
             this.heatmap.setMap(null);
             createdownloadlink('<a href="'+data+'">Click here for csv file</a>')
-            $.get(data, $.proxy(parsedata, this));
+            $.get(data, $.proxy(parsedata, this))
+            .fail(function(){alert( "Could not retrieve data. There may be an issue with your firewall. Unfortunately, we can't show you where your plastic travels at this moment." );});
         }
     };
     // This endpoint also needs to be refactored out.
