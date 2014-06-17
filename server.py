@@ -116,7 +116,7 @@ class RunTracer:
         elif is_landpoint(closest_index,'Global'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+str(closest_index).zfill(5)+".csv";
+            linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+str(closest_index).zfill(5)+".csv";
             ret = json.dumps(linkfile)
 
         return ret
@@ -181,7 +181,7 @@ class RunTracerKlok:
         elif is_landpoint(closest_index,'Global'):
             ret = json.dumps("Sorry, je klikte niet op de oceaan")
         else:
-            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+str(closest_index).zfill(5)+".csv";
+            linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+str(closest_index).zfill(5)+".csv";
             ret = json.dumps(linkfile)
 
         return ret
@@ -220,7 +220,7 @@ class RunTracerAus:
         elif is_landpoint(closest_index,'Australia'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/australiaCsv/Australia_index"+str(closest_index).zfill(5)+".csv";
+            linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/australiaCsv/Australia_index"+str(closest_index).zfill(5)+".csv";
             ret = json.dumps(linkfile)
 
         return ret
@@ -249,7 +249,7 @@ class RunTracerMed:
         elif is_landpoint(closest_index,'Australia'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/MediterraneanCsv/Mediterranean_index"+str(closest_index).zfill(5)+".csv";
+            linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/MediterraneanCsv/Mediterranean_index"+str(closest_index).zfill(5)+".csv";
             ret = json.dumps(linkfile)
 
         return ret
@@ -282,7 +282,7 @@ class RunTracerBwd:
         elif is_landpoint(closest_index,'GlobalBwd'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            linkfile = "https://swift.rc.nectar.org.au:8888/v1/AUTH_24efaa1ca77941c18519133744a83574/globalbwdCsv/Global_index"+str(closest_index).zfill(5)+".csv";
+            linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/globalbwdCsv/Global_index"+str(closest_index).zfill(5)+".csv";
             ret = json.dumps(linkfile)
 
         return ret
