@@ -258,7 +258,11 @@ class Backward:
     def GET(self):
         i = web.input()
         try:
-            return render.backward(lat=i.lat, lng=i.lng)
+            try:
+                center = i.center
+            except AttributeError:
+                center = 30
+            return render.backward(lat=i.lat, lng=i.lng, center=center)
         except AttributeError:
             return render.backward()
 class RunTracerBwd:

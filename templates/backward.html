@@ -3,10 +3,12 @@ $def with (lat=None, lng=None, center=30, icon_filename='/static/MarkerDuckie.pn
 $if lat:
     <script>
         window.initial_tracer = new google.maps.LatLng(${float(lat)}, ${float(lng)});
+        var withinitcond = false;
     </script>
 $else:
     <script>
         window.initial_tracer = null;
+        var withinitcond = true;
     </script>
 
 <script>
@@ -18,6 +20,12 @@ $else:
             historyPageName: '/backward', // TODO: better history endpoint.
             jsonEndpoint: '/runBwd', // TODO: better json.
         });
+        if (withinitcond) {
+            $$.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) {
+                adrift.map.panTo(new google.maps.LatLng(8, data.longitude));
+            });
+        }
+
     });
 </script>
 
