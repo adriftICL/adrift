@@ -13,9 +13,12 @@ function notification(message, css_class) {
     $elm = $("#downloadbar");
     $elm.attr('class','').addClass(css_class);
 }
-function createdownloadlink(message) {
+function createdownloadlink(message1,message2) {
     $elm = $("#downloadbar_text");
-    $elm.html(message);
+    $elm.html(message1);
+    $elm = $("#starlatlon");
+    $elm.removeClass('hidden');
+    $elm.html(message2);
 }
 
 // Takes all the options of a regular google map.
@@ -189,7 +192,9 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
             notification(data, "error");
         } else {
             this.heatmap.setMap(null);
-            createdownloadlink('<a href="'+data+'">Click here for csv file</a>')
+            $("#input_lat").val(lat);
+            $("#input_lng").val(lng);
+            createdownloadlink('<a href="'+data+'">Click here for csv file</a>','This experiment starts at latitude = '+lat+' and longitude = '+lng+'. To change, update the input fields below the map and hit the "Rerun experiment" button.<p>')
             $.get(data, $.proxy(parsedata, this))
             .fail(function(){alert( "Could not retrieve data. There may be an issue with your firewall. Unfortunately, we can't show you where your plastic travels at this moment." );});
         }
