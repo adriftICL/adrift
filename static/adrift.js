@@ -86,6 +86,7 @@ function AdriftMap(element, options) {
         icon: "/static/MarkerDuckie.png",
         historyPageName: '/map',
         jsonEndpoint: '/run',
+        startmon: 'Jan',
         radius: 10,
         monthsPerFrame: 2,
     };
@@ -137,7 +138,7 @@ AdriftMap.prototype._update_history = function() {
 };
 
 AdriftMap.prototype._url_params = function() {
-    return "?lat="+oneDecimalPlace(this.tracer.lat())+"&lng="+oneDecimalPlace(this.tracer.lng())+"&center="+oneDecimalPlace(this.map.getCenter().lng());
+    return "?lat="+oneDecimalPlace(this.tracer.lat())+"&lng="+oneDecimalPlace(this.tracer.lng())+"&center="+oneDecimalPlace(this.map.getCenter().lng())+"&startmon="+this.options['startmon'];
 };
 
 AdriftMap.prototype._run = function(latLng, dont_update_history) {
@@ -147,9 +148,9 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
     var lng = Math.round(10 * this.tracer.lng()) / 10;
 
     // check if this is the first run and if we're  because 
-    if (!dont_update_history) {
+//    if (!dont_update_history) { //always want to update history because of changes to startmon - EvS
         this.update_history();
-    }
+//    }
 
     this.run_id++;
     this.marker.setPosition(latLng);
@@ -194,13 +195,21 @@ AdriftMap.prototype._run = function(latLng, dont_update_history) {
             this.heatmap.setMap(null);
             $("#input_lat").val(lat);
             $("#input_lng").val(lng);
-            createdownloadlink('<a href="'+data+'">Click here for csv file</a>','This experiment starts at latitude = '+lat+' and longitude = '+lng+'. To change, update the input fields below the map and hit the "Rerun experiment" button.<p>')
+            var monthstext = {
+                Jan: 'January and February',
+                Mar: 'March and April',
+                May: 'May and June',
+                Jul: 'July and August',
+                Sep: 'September and October',
+                Nov: 'November and December'
+            };
+            createdownloadlink('<a href="'+data+'">Click here for csv file</a>','This experiment starts at latitude = <b>'+lat+'</b>, longitude = <b>'+lng+'</b> and starts in the two-month period <b>'+monthstext[this.options['startmon']]+'</b>. To change, alter the values in the address bar. <i>Note that currently startmonth can only be changed in the global forward experiment.</i><p>');
             $.get(data, $.proxy(parsedata, this))
             .fail(function(){alert( "Could not retrieve data. There may be an issue with your firewall. Unfortunately, we can't show you where your plastic travels at this moment." );});
         }
     };
     // This endpoint also needs to be refactored out.
-    $.getJSON(this.options['jsonEndpoint'] + "?lat="+lat+"&lng="+lng, $.proxy(callback, this));
+    $.getJSON(this.options['jsonEndpoint'] + "?lat="+lat+"&lng="+lng+"&startmon="+this.options['startmon'], $.proxy(callback, this));
 };
 
 AdriftMap.prototype._center_changed = function() {

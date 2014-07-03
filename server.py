@@ -6,6 +6,8 @@ from tracer import run_tracer, is_landpoint, get_closest_index, is_lacking_data
 from cache import get_cached_results, NotCached, cache_results, NotWritten
 from logging import getLogger, INFO, Formatter
 from logging.handlers import TimedRotatingFileHandler
+from time import strptime
+import math
 
 urls = ('/fukushima', 'Fukushima',
         '/deepwaterhorizon', 'DeepWaterHorizon',
@@ -87,7 +89,15 @@ class Map:
                 center = i.center
             except AttributeError:
                 center = 30
-            return render.map(lat=i.lat, lng=i.lng, center=center)
+            try:
+                monthDict={'Jan':'Jan', 'Feb':'Jan', 'Mar':'Mar', 'Apr':'Mar', 'May':'May', 'Jun':'May', 'Jul':'Jul', 'Aug':'Jul', 'Sep':'Sep', 'Oct':'Sep', 'Nov':'Nov', 'Dec':'Nov'}
+                try:
+                    startmon = monthDict[str(i.startmon)]
+                except KeyError:
+                    startmon = 'Jan'
+            except AttributeError:
+                startmon = 'Jan'
+            return render.map(lat=i.lat, lng=i.lng, center=center, startmon=startmon)
         except AttributeError:
             return render.map()
 
@@ -116,7 +126,7 @@ class RunTracer:
         elif is_landpoint(closest_index,'Global'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
-            linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsv/Global_index"+str(closest_index).zfill(5)+".csv";
+            linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/globalCsvMonthly/Global_index"+str(closest_index).zfill(5)+"_startsin"+i.startmon+".csv";
             ret = json.dumps(linkfile)
 
         return ret

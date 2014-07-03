@@ -1,4 +1,4 @@
-$def with (lat=None, lng=None, center=30, icon_filename='/static/MarkerDuckie.png')
+$def with (lat=None, lng=None, center=30, startmon='Jan', icon_filename='/static/MarkerDuckie.png')
 
 $if lat:
     <script>
@@ -17,6 +17,7 @@ $else:
         var adrift = new AdriftMap(document.getElementById("map_canvas"),{
             center: new google.maps.LatLng(8, ${float(center)}),
             icon: "$icon_filename",
+            startmon : "$startmon",
         });
         if (withinitcond) {
             $$.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) {
