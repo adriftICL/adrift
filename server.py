@@ -92,7 +92,9 @@ class Map:
             try:
                 monthDict={'Jan':'Jan', 'Feb':'Jan', 'Mar':'Mar', 'Apr':'Mar', 'May':'May', 'Jun':'May', 'Jul':'Jul', 'Aug':'Jul', 'Sep':'Sep', 'Oct':'Sep', 'Nov':'Nov', 'Dec':'Nov'}
                 try:
-                    startmon = monthDict[str(i.startmon)]
+                    startmon = str(i.startmon)
+                    startmon = startmon[:1].upper() + startmon[1:].lower()
+                    startmon = monthDict[startmon]
                 except KeyError:
                     startmon = 'Jan'
             except AttributeError:
