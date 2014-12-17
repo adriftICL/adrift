@@ -3,7 +3,7 @@
 import web
 import json
 from tracer import run_tracer, is_landpoint, get_closest_index, is_lacking_data
-from cache import get_cached_results, NotCached, cache_results, NotWritten
+# from cache import get_cached_results, NotCached, cache_results, NotWritten
 from logging import getLogger, INFO, Formatter
 from logging.handlers import TimedRotatingFileHandler
 from time import strptime
