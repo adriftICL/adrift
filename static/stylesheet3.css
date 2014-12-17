@@ -186,9 +186,9 @@ a.zoombar:hover {
 
 .regiontext{
     position:absolute;
-    top:179px;
+    top:120px;
     height: 45px;
-    width: 321px;
+    width: 196px;
     z-index: 10;
     background-color: rgba(100, 100, 100, 0.8);
     float:left;

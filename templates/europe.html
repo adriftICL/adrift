@@ -1,0 +1,61 @@
+$def with (lat=None, lng=None, icon_filename='/static/MarkerDuckie.png')
+
+$if lat:
+    <script>
+        window.initial_tracer = new google.maps.LatLng(${float(lat)}, ${float(lng)});
+    </script>
+$else:
+    <script>
+        window.initial_tracer = null;
+    </script>
+
+<script>
+    var adrift = null;
+    $$(document).ready(function(){
+        $$("#map_canvas").css("height", "512px"); // TODO: this should not be done with javascript...
+        adrift = new AdriftMap(document.getElementById("map_canvas"), {
+            center: new google.maps.LatLng(55, -15),
+            icon: "$icon_filename",
+            zoom: 4,
+            maxZoom: 4,
+            draggable: false,
+            panControl: false,
+            // TODO: heat map radius option.
+            // TODO: data frame timescale resolution option (years/months per frame)
+            historyPageName: '/europe', // TODO: better history endpoint.
+            jsonEndpoint: '/runEurope', // TODO: better json.
+            radius: 20,
+            monthsPerFrame: 1,
+        });
+    });
+
+    $$(document).ready(function(){
+        $$(".zoombar").click(function() {
+            if (!adrift) return true;
+            window.location.href = "/map" + adrift.url_params();
+            return false;
+        });
+    });
+</script>
+
+<div class="map_notification_container">
+    <div id="notification">
+        <div id="notification_text">
+            Welcome, click on a point on the ocean
+        </div>
+        <div id="notification_likesbar">
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+                <a class="addthis_button_facebook"></a>
+                <a class="addthis_button_twitter"></a>
+            </div>
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+            <!-- AddThis Button END -->
+        </div>
+    </div>
+    <div id="zoombar">
+        <a class="zoombar" href="map"><img src="static/zoomout.png" height="15px"> Global ocean</a>
+    </div>
+    <div id="map_canvas">
+    </div>
+</div>

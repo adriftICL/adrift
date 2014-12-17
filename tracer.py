@@ -10,6 +10,7 @@ try:
       data['GlobalBwd'] = scipy.io.loadmat('data/tracerappdataGlobalBwd.mat')
       data['Australia'] = scipy.io.loadmat('data/tracerappdataAustralia.mat')
       data['Mediterranean'] = scipy.io.loadmat('data/tracerappdataMediterranean.mat')
+      data['Europe'] = scipy.io.loadmat('data/tracerappdataEurope.mat')
 except IOError as e:
       print("({})".format(e))
       print
@@ -32,6 +33,10 @@ nx = data['Mediterranean']['nx'][0]
 ny = data['Mediterranean']['ny'][0]
 lon['Mediterranean']=data['Mediterranean']['lon'][0][0:nx[0]]
 lat['Mediterranean']=data['Mediterranean']['lat'][0][0:ny[0]]
+nx = data['Europe']['nx'][0]
+ny = data['Europe']['ny'][0]
+lon['Europe']=data['Europe']['lon'][0][0:nx[0]]
+lat['Europe']=data['Europe']['lat'][0][0:ny[0]]
 
 def is_landpoint(closest_index,type):
     return data[type]['landpoints'][0][closest_index] == +1
@@ -58,6 +63,9 @@ def run_tracer(closest_index,type):
         minplotval=1e-4,
     if type=='Mediterranean':
         maxyears=3
+        minplotval=1e-4,
+    if type=='Europe':
+        maxyears=5
         minplotval=1e-4,
 
     v = zeros((1, data[type]['P'][0][0].shape[0]))

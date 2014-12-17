@@ -23,6 +23,8 @@ urls = ('/fukushima', 'Fukushima',
         '/runAus','RunTracerAus',
         '/mediterranean', 'Mediterranean',
         '/runMed','RunTracerMed',
+        '/europe', 'Europe',
+        '/runEurope','RunTracerEurope',
         '/klokhuis','Klokhuis',
         '/runKlok','RunTracerKlok',
         '/what', 'What',
@@ -258,10 +260,39 @@ class RunTracerMed:
         ret = ""
         if is_lacking_data(closest_index,'Mediterranean'):
             ret = json.dumps("Sorry, we have no data for that ocean area")
-        elif is_landpoint(closest_index,'Australia'):
+        elif is_landpoint(closest_index,'Mediterranean'):
             ret = json.dumps("You clicked on land, please click on the ocean")
         else:
             linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/MediterraneanCsv/Mediterranean_index"+str(closest_index).zfill(5)+".csv";
+            ret = json.dumps(linkfile)
+
+        return ret
+
+class Europe:
+    def GET(self):
+        i = web.input()
+        try:
+            return render.europe(lat=i.lat, lng=i.lng)
+        except AttributeError:
+            return render.europe()
+class RunTracerEurope:
+    def GET(self):
+        i = web.input()
+        try:
+            given_lat = float(i.lat)
+            given_lng = float(i.lng)
+        except AttributeError:
+            # if no attributes are given, return nothing.
+            return ""
+        logger.info(str(web.ctx.ip) + " europe," + str(given_lat) + "," + str(given_lng))
+        closest_index = get_closest_index(given_lat, given_lng,'Europe')
+        ret = ""
+        if is_lacking_data(closest_index,'Europe'):
+            ret = json.dumps("Sorry, we have no data for that ocean area")
+        elif is_landpoint(closest_index,'Europe'):
+            ret = json.dumps("You clicked on land, please click on the ocean")
+        else:
+            linkfile = "https://swift.rc.nectar.org.au/v1/AUTH_24efaa1ca77941c18519133744a83574/europeCsv/Europe_index"+str(closest_index).zfill(5)+".csv";
             ret = json.dumps(linkfile)
 
         return ret
